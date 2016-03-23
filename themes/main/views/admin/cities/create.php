@@ -1,0 +1,12 @@
+<?php
+$this->breadcrumbs=array(
+	Yii::t('adminModule','Admin')=>Yii::app()->createUrl('/admin'),
+	Yii::t('adminModule','Cities')=>array('index'),
+	Yii::t('adminModule','Create'),
+);
+
+?>
+
+<h1><?=Yii::t('adminModule','Create City')?></h1>
+
+<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

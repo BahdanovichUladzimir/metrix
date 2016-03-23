@@ -1,0 +1,8 @@
+assets/*
+!assets/.gitignore
+protected/runtime/*
+!protected/runtime/.gitignore
+.idea
+uploads/*
+sphinx/dev/data/*
+sphinx/production/data/*

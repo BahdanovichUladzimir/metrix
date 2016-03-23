@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title></title>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE"/>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,600italic,700,700italic,400italic&subset=latin,greek,cyrillic,cyrillic-ext' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+	<link href="css/reset.css" rel="stylesheet"/>
+	<link href="css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css/bootstrap-select.min.css" rel="stylesheet"/>
+	<link href="css/jquery.fancybox.css" rel="stylesheet"/>
+	<link href="css/jquery.jscrollpane.css" rel="stylesheet"/>
+	<link href="css/stl.css" rel="stylesheet"/>
+	<link href="css/cross.css" rel="stylesheet"/>
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<!--[if lte IE 7]><script src="http://phpbbex.com/oldies/oldies.js" charset="utf-8"></script><![endif]-->
+</head>
+<body>
+	<div class="page user-page cf">
+		<header class="header-navbar">
+			<div class="main-menu a">
+				<div class="container">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-menu">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="#"><img src="images/logo-min.png" alt="" class="logo-min-mob" /></a>
+					<nav class="user-nav mob">
+						<ul class="nav navbar-nav navbar-right cf">
+							<li><a href="#" class="favorites-icon icon b-spr"></a></li>
+							<li>
+								<a class="icon icon city-choice b-spr  dropdown-toggle" data-toggle="dropdown"></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Москва</a></li>
+									<li><a href="#">Санкт-Петербург</a></li>
+									<li><a href="#">Нижний Новгород</a></li>
+								</ul>
+							</li>
+							<li class="dropdown"><a href="#" class="user-icon icon b-spr dropdown-toggle" data-toggle="dropdown"><span class="notif">2</span></a>
+								<ul class="dropdown-menu">
+									<li><span class="user-title">Иван Петров</span></li>
+									<li><a href="#">Сообщения</a><span class="badge">2</span></li>
+									<li><a href="#">Действия на сайте</a><span class="badge">2</span></li>
+									<li><a href="#">Настройки</a></li>
+									<li><a href="#">Выход</a></li>
+								</ul>
+							</li>
+							<li>
+								<a href="#" class="btn btn-primary menu-btn a-spr">Объявление</a>
+							</li>
+						</ul>
+					</nav>
+					<div class="row">
+						<div class="collapse navbar-collapse" id="main-menu">
+							<div class="menu-wrap">
+								<div class="search mob">
+									<input type="text" />
+									<input type="submit" value=""/>
+								</div>
+								<a href="#"><img src="images/logo-min.png" alt="" class="logo-min" /></a>
+								<nav>
+									<ul class="nav navbar-nav">
+										<li class="dropdown" ><a href="#" class="dropdown-toggle" data-toggle="dropdown">Свадьба</a>
+											<ul class="dropdown-menu columns">
+												<li>
+													<ul>
+														<li><a href="#">Кольца</a></li>
+														<li><a href="#">Платья</a></li>
+														<li><a href="#">Костюмы</a></li>
+														<li><a href="#">Цветы</a></li>
+														<li><a href="#">Медовый месяц</a></li>
+														<li><a href="#">Декор</a></li>
+														<li><a href="#">Кольца</a></li>
+														<li><a href="#">Платья</a></li>
+														<li><a href="#">Костюмы</a></li>
+														<li><a href="#">Цветы</a></li>
+													</ul>
+												</li>
+												<li>
+													<ul>
+														<li><a href="#">Кольца</a></li>
+														<li><a href="#">Платья</a></li>
+														<li><a href="#">Костюмы</a></li>
+														<li><a href="#">Цветы</a></li>
+														<li><a href="#">Медовый месяц</a></li>
+														<li><a href="#">Декор</a></li>
+														<li><a href="#">Кольца</a></li>
+														<li><a href="#">Платья</a></li>
+														<li><a href="#">Костюмы</a></li>
+														<li><a href="#">Цветы</a></li>
+													</ul>
+												</li>
+												<li>
+													<ul>
+														<li><a href="#">Кольца</a></li>
+														<li><a href="#">Платья</a></li>
+														<li><a href="#">Костюмы</a></li>
+														<li><a href="#">Цветы</a></li>
+													</ul>
+												</li>
+											</ul>
+										</li>
+										<li class="dropdown"><a href="#"  class="dropdown-toggle" data-toggle="dropdown">Вечеринка</a>
+											<ul class="dropdown-menu">
+												<li><a href="#">Выпускной</a></li>
+												<li><a href="#">Корпоратив</a></li>
+												<li><a href="#">Еда</a></li>
+											</ul>
+										</li>
+										<li><a href="#">Детский праздник</a></li>
+									</ul>
+								</nav>
+							</div> 
+							<div class="search-toggle">
+								<form>
+									<input type="text" name="" id="" placeholder="Поиск">
+									<input type="submit" value="">
+								</form>
+							</div>
+							<nav class="user-nav desc">
+								<ul class="nav navbar-nav navbar-right cf">
+									<li class="search-hdn"><a href="#" class="search-icon icon b-spr"></a></li>
+									<li><a href="#" class="favorites-icon icon b-spr"><span class="notif">3</span></a></li>
+									<li>
+										<a class="icon icon city-choice b-spr  dropdown-toggle" data-toggle="dropdown"></a>
+										<ul class="dropdown-menu spec-select">
+											<li><a href="#" class="act b-spr">Москва</a></li>
+											<li><a href="#">Санкт-Петербург</a></li>
+											<li><a href="#">Нижний Новгород</a></li>
+										</ul>
+									</li>
+									<li class="dropdown"><a href="#" class="user-icon icon b-spr dropdown-toggle" data-toggle="dropdown"><span class="notif">2</span></a>
+										<ul class="dropdown-menu ">
+											<li><a href="#" class="user-title">Иван Петров</a></li>
+											<li><a href="#">Сообщения</a><span class="badge">2</span></li>
+											<li><a href="#">Действия на сайте</a><span class="badge">2</span></li>
+											<li><a href="#">Настройки</a></li>
+											<li><a href="#">Выход</a></li>
+										</ul>
+									</li>
+									<li>
+										<a href="#" class="btn btn-primary menu-btn a-spr">Объявление</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<div class="container">
+			<ol class="breadcrumb">
+				<li><a href="#">Фото и Видео</a></li>
+				<li class="active">Свадебное фото в Санкт Петербурге с выездом за город</li>
+			</ol>
+			<section>
+				<div class="row">
+					<div class="col-lg-3 col-lg-offset-1">
+						<div class="panel">
+							<div class="panel-body messages">
+								<h5 class="title border h5">Сообщения</h5>
+								<div class="scroll-wrap">
+									<div class="scroll-pane">
+										<ul class="list-group">
+											<li class="list-group-item">
+												<a href="#">
+												<img src="images/ava-blank.png" alt="" />
+												<span class="name">Михаил Боярский</span></a>
+											</li>
+											<li class="list-group-item">
+												<a href="#">
+												<img src="images/ava-blank.png" alt="" />
+												<span class="badge">42</span>
+												<span class="name">Ириша Алегрова</span></a>
+											</li>
+											<li class="list-group-item">
+												<a href="#">
+												<img src="images/ava-blank.png" alt="" />
+												<span class="badge">142</span>
+												<span class="name">Лариса Долина</span></a>
+											</li>
+											<li class="list-group-item">
+												<a href="#">
+												<img src="images/ava-blank.png" alt="" />
+												<span class="badge">4</span>
+												<span class="name">Стас Пьеха</span></a>
+											</li>
+											<li class="list-group-item">
+												<a href="#">
+												<img src="images/ava-blank.png" alt="" />
+												<span class="name">Степан</span></a>
+											</li>
+											<li class="list-group-item">
+												<a href="#">
+												<img src="images/ava-blank.png" alt="" />
+												<span class="name">Григорий Schweppes</span></a>
+											</li>
+											<li class="list-group-item">
+												<a href="#">
+												<img src="images/ava-blank.png" alt="" />
+
+												<span class="name">Михаил Боярский</span></a>
+											</li>
+											<li class="list-group-item">
+												<a href="#">
+												<img src="images/ava-blank.png" alt="" />
+												<span class="badge">77</span>
+												<span class="name">Валерия Длиннофамилиева-Трёхстрочная</span></a>
+											</li>
+											<li class="list-group-item">
+												<a href="#">
+												<img src="images/ava-blank.png" alt="" />
+												<span class="badge">42</span>
+												<span class="name">Михаил Боярский</span></a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-7">
+						<div class="panel">
+							<div class="panel-body">
+								<div class="edit-wrap settings">
+									<a href="#" class="edit b-spr"></a>
+									<ul class="dropdown-menu">
+										<li><a href="#">Заблокировать</a></li>
+										<li><a href="#">Это спам</a></li>
+										<li><a href="#" class="delete">Удалить диалог</a></li>
+									</ul>
+								</div>
+								<h5 class="title border h5">Диалог с <a href="#">Михаил Боярский</a></h5>	
+								<div class="scroll-wrap">
+									<div class="scroll-pane"  id="messages-wrap">
+										<div class="message-wrap">
+											<img src="images/ava-blank.png" alt="" />
+											<div class="message">
+												<span class="title">Михаил Боярский</span>
+												Привет Иван Петров! Посмотри мой новый фильм Три мушкетера 100 лет спустя!
+												<time>12.04.2015</time>
+												<span class="delete">&times;</span>
+											</div>
+										</div>
+										<div class="message-wrap">
+											<img src="images/ava-blank.png" alt="" />
+											<div class="message">
+												<span class="title">Михаил Боярский</span>
+												Привет Иван Петров! Посмотри мой новый фильм Три мушкетера 100 лет спустя!
+												<time>12.04.2015</time>
+												<span class="delete">&times;</span>
+											</div>
+										</div>
+										<div class="message-wrap">
+											<img src="images/ava-blank.png" alt="" />
+											<div class="message">
+												<span class="title">Михаил Боярский</span>
+												Привет Иван Петров! Посмотри мой новый фильм Три мушкетера 100 лет спустя!
+												<time>12.04.2015</time>
+												<span class="delete">&times;</span>
+											</div>
+										</div>
+										<div class="message-wrap">
+											<img src="images/ava-blank.png" alt="" />
+											<div class="message">
+												<span class="title">Михаил Боярский</span>
+												Привет Иван Петров! Посмотри мой новый фильм Три мушкетера 100 лет спустя!
+												<time>12.04.2015</time>
+												<span class="delete">&times;</span>
+											</div>
+										</div>
+										<div class="message-wrap">
+											<img src="images/ava-blank.png" alt="" />
+											<div class="message">
+												<span class="title">Михаил Боярский</span>
+												Привет Иван Петров! Посмотри мой новый фильм Три мушкетера 100 лет спустя!
+												<time>12.04.2015</time>
+												<span class="delete">&times;</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="send-mess-form message-wrap">
+									<img src="images/ava-blank.png" alt="" />
+									<div class="message">
+										<form>
+											<textarea placeholder="Введите текст"></textarea>
+											<div class="ta-r">
+												<a href="#" class="add"></a>
+												<input type="submit" class="btn btn-blue" value="Отправить"/>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+	<footer>
+		<div class="footer-nav">
+			<div class="container">
+				<nav>
+					<ul class="nav navbar-nav">
+						<li><a href="#">Фото и Видео</a>
+							<ul class="nav">
+								<li><a href="#">Видеоографы</a></li>
+								<li><a href="#">Фотографы</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Свадьба</a>
+							<ul class="nav">
+								<li><a href="#">Кольца</a></li>
+								<li><a href="#">Платья</a></li>
+								<li><a href="#">Костюмы</a></li>
+								<li><a href="#">Медовый месяц</a></li>
+								<li><a href="#">Декор</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Банкет</a>
+							<ul class="nav">
+								<li><a href="#">Костюмы</a></li>
+								<li><a href="#">Платья</a></li>
+								<li><a href="#">Прически</a></li>
+								<li><a href="#">Маникюр/Педикюр</a></li>
+								<li><a href="#">Макияж</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Развлечения</a>
+							<ul class="nav">
+								<li><a href="#">Ведущие</a></li>
+								<li><a href="#">Музыканты</a></li>
+								<li><a href="#">Танцоры</a></li>
+								<li><a href="#">Фокусники</a></li>
+								<li><a href="#">Fire - шоу</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Стиль</a>
+							<ul class="nav">
+								<li><a href="#">Рестораны</a></li>
+								<li><a href="#">Торты</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Авто</a></li>
+						<li><a href="#">Объявления</a></li>
+						<li><a href="#">Форум</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<div class="footer-nav-2">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8">
+						<ul class="nav navbar-nav">
+							<li><a href="#">Новости</a></li>
+							<li><a href="#">Статьи</a></li>
+							<li><a href="#">Пользовательское соглашение</a></li>
+							<li><a href="#">Инструкция</a></li>
+							<li><a href="#">FAQ </a></li>
+							<li><a href="#">Обратная связь</a></li>
+						</ul>
+					</div>
+					<div class="col-lg-4 col-xs-12">
+						<div class="webmoney">
+							<span class="wm-img1"></span>
+							<span class="wm-img2"></span>
+						</div>
+						<ul class="nav navbar-right navbar-nav socials">
+							<li><a href="#"></a></li>
+							<li><a href="#"></a></li>
+							<li><a href="#"></a></li>
+							<li><a href="#"></a></li>
+							<li><a href="#"></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copyright">
+			<div class="container">
+				<span>&copy; 2015  Россия, Санкт Петербург | Все права защищены | ALLFORHOLYDAYS.COM</span>
+			</div>
+		</div>
+	</footer>
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-select.js"></script>
+	<script src="js/jquery.fancybox.pack.js"></script>
+	<script src="js/jquery.jscrollpane.min.js"></script>
+	<script src="js/jquery.mousewheel.js"></script>
+    <script src="js/scripts.js"></script>
+    <script>
+		function initialize() {
+		  var myLatlng = new google.maps.LatLng(59.932049,30.350747);
+		  var mapOptions = {
+			zoom: 18,
+			center: myLatlng
+		  }
+		  var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+		  var marker = new google.maps.Marker({
+			  position: myLatlng,
+			  map: map,
+			  title: 'Hello World!'
+		  });
+		}
+
+		google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
+	
+	<div class="modal fade bs-example-modal-sm" role="dialog" aria-labelledby="login-pop-up" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+					<span class="title h3">Войти</span>
+				</div>
+				<div class="modal-body">
+					<form>
+						<input type="text" class="form-control"placeholder="Логин"/>
+						<input type="password" class="form-control"placeholder="Пароль"/>
+						<div class="login-options form-group">
+							<div>
+								<label class="checkbox">
+									<input type="checkbox" /><span class="a-spr"></span>
+									Запомнить
+								</label>
+							</div>
+							<div>
+								<a href="#">Забыли пароль?</a>
+							</div>
+						</div>
+						<input type="submit" class="btn btn-primary" value="Войти"/>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<a href="#">Создать аккаунт</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

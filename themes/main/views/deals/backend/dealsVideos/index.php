@@ -1,0 +1,205 @@
+<?php
+
+/**
+ * @var $model DealsVideos
+ */
+$this->breadcrumbs=array(
+	Yii::t('adminModule','Admin')=>Yii::app()->createUrl('/admin'),
+	Yii::t('dealsModule','Deals videos')=>array('index'),
+	Yii::t('dealsModule','Manage'),
+);
+?>
+<script>
+	$(document).ready(function(){
+		$(".fancybox").fancybox(
+			{
+				openEffect : 'fade',
+				closeEffect : 'elastic',
+				//prevEffect : 'none',
+				//nextEffect : 'none',
+				arrows : false,
+				helpers : {
+					media : {}
+				}
+			}
+		);
+		$(".fancy-video").click(function(){
+			var link = $(this).closest("tr").find("a.fancybox").attr("href");
+			$.fancybox({
+				href:link,
+				openEffect : 'fade',
+				closeEffect : 'elastic',
+				//prevEffect : 'none',
+				//nextEffect : 'none',
+				arrows : false,
+				helpers : {
+					media : {}
+				}
+			})
+		});
+	});
+</script>
+<h1><?=Yii::t('DealsVideos','Manage deals videos');?></h1>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<?=CHtml::ajaxButton(
+			'Approve selected',
+			Yii::app()->createUrl('/deals/backend/dealsVideos/approveSelected'),
+			array(
+				'type' => 'POST',
+				'data' => 'js:{value : $.fn.yiiGridView.getChecked("deals-videos-grid","approve_check")}',
+				'success'=>'js:function(data){
+					 $.fn.yiiGridView.update("deals-videos-grid");
+		}'
+			),
+			array(
+				'class' => 'btn btn-success'
+			)
+
+		);?>
+
+	</div>
+</div>
+<?php $this->widget('booster.widgets.TbGridView',
+	array(
+		'id'=>'deals-videos-grid',
+		'dataProvider'=>$model->adminSearch(),
+		'filter'=>$model,
+        'ajaxUpdate'=>false,
+        'columns'=>array(
+            array(
+                'class'=>'CCheckBoxColumn',
+                'id'=>'approve_check',
+                'header' => 'Approve',
+                'selectableRows' => 2,
+                'disabled' => '$data->approve',
+                'visible' => '$data->approve',
+            ),
+			array(
+				'name' => 'id',
+				'headerHtmlOptions' => array(
+					'class' => 'col-xs-1 col-sm-1 col-md-1 col-lg-1'
+				),
+				'type' => 'raw'
+			),
+			array(
+				'header' => 'Preview',
+				'class' => 'bootstrap.widgets.TbImageColumn',
+				'imagePathExpression'=> '$data->getSmallThumbUrl()',
+				'htmlOptions' => array(
+					'class' => 'col-xs-1 col-sm-1 col-md-1 col-lg-1',
+				),
+				'imageOptions' => array(
+					'class' => 'fancy-video thumbnail',
+				),
+			),
+            'description',
+			array(
+				'name' => 'deal_id',
+				'headerHtmlOptions' => array(
+					'class' => 'col-xs-1 col-sm-1 col-md-1'
+				),
+				'value' => 'CHtml::link($data->deal_id,array($data->deal->getPublicUrl()))',
+				'type' => 'raw'
+
+			),
+			array(
+				'name' => 'deal_id.user_id',
+				'header' => 'User',
+				'headerHtmlOptions' => array(
+					'class' => 'col-xs-1 col-sm-1 col-md-1'
+				),
+				'value' => 'CHtml::link($data->deal->user->username,$data->deal->user->getAdminUrl())',
+				'type' => 'raw'
+			),
+			array(
+				'name' => 'approve',
+				'header' => 'Approve',
+				'headerHtmlOptions' => array(
+					'class' => 'col-xs-1 col-sm-1 col-md-1 col-lg-1'
+				),
+				'type' => 'raw',
+				'value' => function($data) {
+					$html = $data->approve ? "<h5 class='text-success'><i class='glyphicon glyphicon-ok'></i></h5>" : "<h5 class='text-danger'><i class='glyphicon glyphicon-ban-circle'></i></h5>";
+					return $html;
+				},
+				'filter' => DealsVideos::getApproveListData(),
+			),
+			array(
+				'header' => Yii::t('ses', 'Edit'),
+				'class'=>'booster.widgets.TbButtonColumn',
+				'htmlOptions' => array('class' => 'col-lg-3 button-column'),
+				'template'=>'{approve} {view} {delete}',
+				'buttons'=>array(
+					'delete' => array(
+						'options' => array('class' => 'btn btn-danger delete'),
+						'visible' => 'Yii::app()->user->checkAccess("Deals.Backend.DealsVideos.Delete")',
+					),
+					'approve' => array(
+						'label'=>'<i class="glyphicon glyphicon-ok"></i>',
+						'url'=>'Yii::app()->createUrl("/deals/backend/dealsVideos/approve", array("id" => $data->id))',
+						//'imageUrl'=>'...',
+						'options' => array(
+							'class' => 'btn btn-default',
+							'rel' => 'tooltip',
+							'data-toggle' => 'tooltip',
+							'title' => Yii::t('dealsModule', 'Approve'),
+							'ajax' => array(
+								'type' => 'get',
+								'url'=>'js:$(this).attr("href")',
+								'beforeSend'=>'js:function(){return confirm("'.Yii::t('core','Are you sure you want to approve the link?').'");}',
+								'success' => 'js:function(data) { $.fn.yiiGridView.update("deals-videos-grid")}'
+							)
+						),
+						//'click'=>'...',
+						'visible'=>'$data->approve == 0',
+					),
+					'unapprove' => array(
+						'label'=>'<i class="glyphicon glyphicon-ok"></i>',
+						'url'=>'Yii::app()->createUrl("/deals/backend/dealsVideos/unApprove", array("id" => $data->id))',
+						//'imageUrl'=>'...',
+						'options' => array(
+							'class' => 'btn btn-success',
+							'rel' => 'tooltip',
+							'data-toggle' => 'tooltip',
+							'title' => Yii::t('dealsModule', 'UnApprove'),
+							'ajax' => array(
+                                'type' => 'get',
+                                'url'=>'js:$(this).attr("href")',
+                                'beforeSend'=>'js:function(){return confirm("'.Yii::t('core','Are you sure you want to reject the link?').'");}',
+                                'success' => 'js:function(data) { $.fn.yiiGridView.update("deals-videos-grid")}'
+                            )
+						),
+						//'click'=>'...',
+						'visible'=>'$data->approve == 1',
+					),
+					'view' => array(
+						'options' => array('class' => 'btn btn-info view fancybox'),
+						'url'=>'Yii::app()->request->baseUrl."/js/uppod.swf?file=".$data->url',
+					),
+				)
+			),
+		)
+	)
+); ?>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<?=CHtml::ajaxButton(
+			'Approve selected',
+			Yii::app()->createUrl('/deals/backend/dealsVideos/approveSelected'),
+			array(
+				'type' => 'POST',
+				'data' => 'js:{value : $.fn.yiiGridView.getChecked("deals-videos-grid","approve_check")}',
+				'success'=>'js:function(data){
+					 $.fn.yiiGridView.update("deals-videos-grid");
+		}'
+			),
+			array(
+				'class' => 'btn btn-success'
+			)
+
+		);?>
+
+	</div>
+</div>
+

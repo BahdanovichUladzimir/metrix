@@ -1,0 +1,127 @@
+<?php
+
+class FeedbackCategoriesStatusesController extends BackendController
+{
+
+    /**
+    * Creates a new model.
+    * If creation is successful, the browser will be redirected to the 'view' page.
+    */
+    public function actionCreate(){
+        $model=new FeedbackCategoriesStatuses;
+
+        $this->performAjaxValidation($model);
+
+        if(isset($_POST['FeedbackCategoriesStatuses'])){
+            $model->attributes=$_POST['FeedbackCategoriesStatuses'];
+            if($model->save()){
+                Yii::app()->user->setFlash('feedbackCategoriesStatusesSuccess', Yii::t("feedbackModule", "Category status <strong>{status}</strong> was created successfully!", array("{status}" => $model->name)));
+                $this->redirect(array('update', 'id' => $model->id));
+            }
+            else {
+                Yii::app()->user->setFlash('feedbackCategoriesStatusesError', Yii::t("feedbackModule", "When create category status <strong>{status}</strong> error occurred!", array("{status}" => $model->name)));
+            }
+
+        }
+
+        $this->render('create',array(
+            'model'=>$model,
+        ));
+    }
+
+    /**
+    * Updates a particular model.
+    * If update is successful, the browser will be redirected to the 'view' page.
+    * @param integer $id the ID of the model to be updated
+    */
+    public function actionUpdate($id){
+
+        $model=$this->loadModel($id);
+
+        /**
+         * @var $model Cities
+         */
+        $this->performAjaxValidation($model);
+
+        if(isset($_POST['FeedbackCategoriesStatuses'])){
+            $model->attributes=$_POST['FeedbackCategoriesStatuses'];
+            if($model->save()){
+                Yii::app()->user->setFlash('feedbackCategoriesStatusesSuccess', Yii::t("feedbackModule", "Category status <strong>{status}</strong> was updated successfully!", array("{status}" => $model->name)));
+                $this->redirect(array('update', 'id' => $model->id));
+            }
+            else {
+                Yii::app()->user->setFlash('feedbackCategoriesStatusesError', Yii::t("feedbackModule", "When update category status <strong>{status}</strong> error occurred!", array("{status}" => $model->name)));
+            }
+        }
+
+        $this->render(
+            'update',
+            array(
+                'model'=>$model,
+            )
+        );
+    }
+
+
+    /**
+     * @param $id
+     * @throws CDbException
+     * @throws CHttpException
+     */
+    public function actionDelete($id){
+        if(Yii::app()->request->isPostRequest){
+            // we only allow deletion via POST request
+            $this->loadModel($id)->delete();
+
+            // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+            if(!isset($_GET['ajax'])){
+                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+            }
+        }
+        else{
+            throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+        }
+    }
+
+    /**
+    * Manages all models.
+    */
+    public function actionIndex(){
+        $model=new FeedbackCategoriesStatuses('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['FeedbackCategoriesStatuses'])){
+            $model->attributes=$_GET['FeedbackCategoriesStatuses'];
+        }
+
+        $this->render(
+            'index',
+            array(
+                'model'=>$model,
+            )
+        );
+    }
+
+    /**
+     * @param $id
+     * @return FeedbackCategoriesStatuses
+     * @throws CHttpException
+     */
+    public function loadModel($id){
+        $model=FeedbackCategoriesStatuses::model()->findByPk($id);
+        if($model===null){
+            throw new CHttpException(404,'The requested page does not exist.');
+        }
+        return $model;
+    }
+
+    /**
+    * Performs the AJAX validation.
+    * @param CModel the model to be validated
+    */
+    protected function performAjaxValidation($model){
+        if(isset($_POST['ajax']) && $_POST['ajax']==='feedback-categories-statuses-form'){
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+    }
+}

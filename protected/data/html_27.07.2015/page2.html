@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title></title>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE"/>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+	<link href="css/reset.css" rel="stylesheet"/>
+	<link href="css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="css/bootstrap-select.min.css" rel="stylesheet"/>
+	<link href="css/jquery.fancybox.css" rel="stylesheet"/>
+	<link href="css/stl.css" rel="stylesheet"/>
+	<link href="css/cross.css" rel="stylesheet"/>
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<!--[if lte IE 7]><script src="http://phpbbex.com/oldies/oldies.js" charset="utf-8"></script><![endif]-->
+</head>
+<body>
+	<div class="page cf">
+		<header class="header-navbar">
+			<div class="container">
+				<div class="navbar-brand">
+					<img src="images/logo.png" alt="" class="logo" />
+				</div>
+				<div class="search form-group navbar-form navbar-left ">
+					<input type="text" class="form-control" />
+					<input type="submit" class="btn" value="Найти"/>
+					<a href="#">Расширенный поиск</a>
+				</div>
+				<ul class="login nav navbar-nav navbar-right">
+					<li><a href="#" class="btn" data-toggle="modal" data-target=".bs-example-modal-sm">Войти</a></li>
+					<li><a href="#" class="btn">Регистрация</a></li>
+				</ul>
+			</div>
+			<div class="main-menu">
+				<div class="container">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-menu">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<div class="row">
+						<div class="collapse navbar-collapse" id="main-menu">
+							<div class="col-lg-9">
+								<nav>
+									<ul class="nav navbar-nav">
+										<li><a href="#">Фото и Видео</a></li>
+										<li class="dropdown"><a href="#" class="dropdown-toggle">Свадьба</a>
+											<ul class="dropdown-menu">
+												<li><a href="#">Кольца</a></li>
+												<li><a href="#">Платья</a></li>
+												<li><a href="#">Костюмы</a></li>
+												<li><a href="#">Цветы</a></li>
+												<li><a href="#">Медовый месяц</a></li>
+												<li><a href="#">Декор</a></li>
+											</ul>
+										</li>
+										<li><a href="#">Банкет</a></li>
+										<li><a href="#">Развлечения</a></li>
+										<li><a href="#">Стиль</a></li>
+										<li><a href="#">Авто</a></li>
+										<li><a href="#">Объявления</a></li>
+										<li><a href="#">Форум</a></li>
+									</ul>
+								</nav>
+							</div> 
+							<div class="col-lg-3">
+								<nav class="user-nav">
+									<ul class="nav navbar-nav navbar-right cf">
+										<li class="min"><a href="#" class="search-icon b-spr"></a></li>
+										<li class="dropdown min"><a href="#" class="user-icon signal b-spr dropdown-toggle" data-toggle="dropdown"></a>
+											<ul class="dropdown-menu">
+												<li><span class="user-title">Иван Петров</span></li>
+												<li><a href="#">Сообщения</a><span class="badge">2</span></li>
+												<li><a href="#">Действия на сайте</a><span class="badge">2</span></li>
+												<li><a href="#">Настройки</a></li>
+												<li><a href="#">Выход</a></li>
+											</ul>
+										</li>
+										<li class="min"><a href="#" class="favorites-icon b-spr"></a></li>
+										<li>
+											<div class="city-choice b-spr">
+												<select>
+												<option>Москва</option>
+												<option>Санкт-Петербург</option>
+												<option>Нижний Новгород</option>
+												</select>
+											</div>
+										</li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<div class="container">
+			<ol class="breadcrumb">
+				<li><a href="#">Фото и Видео</a></li>
+				<li class="active">Фотографы</li>
+			</ol>
+			<div class="filter-m">
+				<a href="#" class="btn btn-default a filter-toggle">Фильтр</a>
+				<div class="panel filter-m-wrap">
+					<div class="panel-body filter-form">
+						<form>
+							<div class="form-group">
+								<label>Местоположение</label>
+								<select>
+									<option>Москва</option>
+									<option>Санкт-петербург</option>
+									<option>Нижний новгород</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label>Сортировать по:</label>
+								<select>
+									<option>Популярности</option>
+									<option>По цене</option>
+								</select>
+							</div>
+							<div class="price-choice cf">
+								<div>
+									<span>от</span>
+									<input type="text" />
+								</div>
+								<div>
+									<span>до</span>
+									<input type="text" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span> Агенства</label>
+							</div>
+							<div class="form-group">
+								<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span> Частные лица</label>
+							</div>
+							<input type="submit" class="btn btn-big btn-success"value="Найти" />
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<section class="col-lg-9">
+					<div class="cf">
+						<div class=" value-select pull-right">
+							<span>Валюта на сайте: </span>
+							<select>
+								<option>В рублях</option>
+								<option>В долларах</option>
+							</select>
+						</div>
+						<h1 class="title section-title h1">Фотографы</h1>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-body service-link cf">
+							<div class="service-info">
+								<a href="#">Свадебное фото в Санкт Петербурге c выездом в любую точку планеты</a>
+								<a href="#" class="author-link">Stars Agency</a>
+								<p class="ellipsis">У нас можно заказать также и фотосъёмку. Победитель в номинации Лучший.  Мы фотографируем в Беларуси и Италии, но всегда открыты У нас можно заказать также и фотосъёмку. Победитель в номинации Лучший.  Мы фотографируем в Беларуси и Италии, но всегда открыты</p>
+								<div class="bottom-container">
+									<div>
+										<a href="#" class="btn add-to-fav a-spr"></a>
+										<a href="#" class="more btn"><span class="a-spr">Подробнее</span></a>
+									</div>
+									<div class="price">
+										<span>Цена за услуги</span>
+										<span>от $350</span>
+									</div>
+									<div>
+										<span>Рейтинг на сайте</span>
+										<div class="rating">
+											<span>8</span>
+											<div class="rating-form static">
+												<span data-num="1" class="active"></span>
+												<span data-num="2" data-fix="1"></span>
+												<span data-num="3" data-fix="1"></span>
+												<span data-num="4" data-fix="1"></span>
+												<span data-num="5" data-fix="1"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="gallery">
+								<div>
+									<img src="http://placehold.it/128x128" alt="" />
+								</div>
+								<div>
+									<img src="http://placehold.it/128x128" alt="" />
+								</div>
+								<div>
+									<img src="http://placehold.it/128x128" alt="" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-body service-link cf">
+							<div class="service-info">
+								<a href="#">Свадебное фото в Санкт Петербурге c выездом в любую точку планеты</a>
+								<a href="#" class="author-link">Stars Agency</a>
+								<p class="ellipsis">У нас можно заказать также и фотосъёмку. Победитель в номинации Лучший.  Мы фотографируем в Беларуси и Италии, но всегда открыты У нас можно заказать также и фотосъёмку. Победитель в номинации Лучший.  Мы фотографируем в Беларуси и Италии, но всегда открыты</p>
+								<div class="bottom-container">
+									<div>
+										<a href="#" class="btn add-to-fav a-spr"></a>
+										<a href="#" class="more btn"><span class="a-spr">Подробнее</span></a>
+									</div>
+									<div class="price">
+										<span>Цена за услуги</span>
+										<span>от $350</span>
+									</div>
+									<div>
+										<span>Рейтинг на сайте</span>
+										<div class="rating">
+											<span>8</span>
+											<div class="rating-form static">
+												<span data-num="1" class="active"></span>
+												<span data-num="2" data-fix="1"></span>
+												<span data-num="3" data-fix="1"></span>
+												<span data-num="4" data-fix="1"></span>
+												<span data-num="5" data-fix="1"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="gallery not-available">
+								<div>
+									<span>Нет фотографий</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<nav>
+						<ul class="pagination">
+							<li>
+								<a href="#" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+							<li class="active"><a href="#" >1</a></li>
+							<li><a href="#">2</a></li>
+							<li><a href="#">3</a></li>
+							<li><a href="#">4</a></li>
+							<li><a href="#">5</a></li>
+							<li>
+								<a href="#" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</section>
+				<aside class="col-lg-3 filter">
+					<h2 class="title section-title h2">Фильтр</h2>
+					<div class="panel">
+						<div class="panel-body filter-form">
+							<form>
+								<div class="form-group">
+									<label>Подкатегория</label>
+									<select>
+										<option>Платья большие</option>
+										<option>Платья маленькие</option>
+										<option>Платья детские</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<div class="ch-box-wrap">
+										<span class="cat-name">
+											<span class="a">Цвет платья</span>
+										</span>
+										
+											<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span>Синий</label>
+										
+										
+											<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span>Красный</label>
+										
+											<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span>Орандевый</label>
+											<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span>Белый</label>
+											<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span>Черный</label>
+											<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span>Бежевый</label>
+											<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span>Розовый</label>
+									</div>
+									<div class="ch-box-wrap">
+										<span class="cat-name">
+											<span class="a">Материал платья</span>
+										</span>
+										
+											<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span>Синий</label>
+										
+										
+											<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span>Красный</label>
+										
+											<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span>Орандевый</label>
+											<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span>Белый</label>
+											<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span>Черный</label>
+											<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span>Бежевый</label>
+											<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span>Розовый</label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Местоположение</label>
+									<select>
+										<option>Москва</option>
+										<option>Санкт-петербург</option>
+										<option>Нижний новгород</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label>Сортировать по:</label>
+									<select>
+										<option>Популярности</option>
+										<option>По цене</option>
+									</select>
+								</div>
+								<div class="price-choice cf">
+									<div>
+										<span>от</span>
+										<input type="text" />
+									</div>
+									<div>
+										<span>до</span>
+										<input type="text" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span> Агенства</label>
+								</div>
+								<div class="form-group">
+									<label class="checkbox"><input type="checkbox" /><span class="a-spr"></span> Частные лица</label>
+								</div>
+								<input type="submit" class="btn btn-big btn-success"value="Найти" />
+							</form>
+						</div>
+					</div>
+				</aside>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<div class="footer-nav">
+			<div class="container">
+				<nav>
+					<ul class="nav navbar-nav">
+						<li><a href="#">Фото и Видео</a>
+							<ul class="nav">
+								<li><a href="#">Видеоографы</a></li>
+								<li><a href="#">Фотографы</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Свадьба</a>
+							<ul class="nav">
+								<li><a href="#">Кольца</a></li>
+								<li><a href="#">Платья</a></li>
+								<li><a href="#">Костюмы</a></li>
+								<li><a href="#">Медовый месяц</a></li>
+								<li><a href="#">Декор</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Банкет</a>
+							<ul class="nav">
+								<li><a href="#">Костюмы</a></li>
+								<li><a href="#">Платья</a></li>
+								<li><a href="#">Прически</a></li>
+								<li><a href="#">Маникюр/Педикюр</a></li>
+								<li><a href="#">Макияж</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Развлечения</a>
+							<ul class="nav">
+								<li><a href="#">Ведущие</a></li>
+								<li><a href="#">Музыканты</a></li>
+								<li><a href="#">Танцоры</a></li>
+								<li><a href="#">Фокусники</a></li>
+								<li><a href="#">Fire - шоу</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Стиль</a>
+							<ul class="nav">
+								<li><a href="#">Рестораны</a></li>
+								<li><a href="#">Торты</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Авто</a></li>
+						<li><a href="#">Объявления</a></li>
+						<li><a href="#">Форум</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<div class="footer-nav-2">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8">
+						<ul class="nav navbar-nav">
+							<li><a href="#">Новости</a></li>
+							<li><a href="#">Статьи</a></li>
+							<li><a href="#">Пользовательское соглашение</a></li>
+							<li><a href="#">Инструкция</a></li>
+							<li><a href="#">FAQ </a></li>
+							<li><a href="#">Обратная связь</a></li>
+						</ul>
+					</div>
+					<div class="col-lg-4 col-xs-12">
+						<div class="webmoney">
+							<span class="wm-img1"></span>
+							<span class="wm-img2"></span>
+						</div>
+						<ul class="nav navbar-right navbar-nav socials">
+							<li><a href="#"></a></li>
+							<li><a href="#"></a></li>
+							<li><a href="#"></a></li>
+							<li><a href="#"></a></li>
+							<li><a href="#"></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copyright">
+			<div class="container">
+				<span>&copy; 2015  Россия, Санкт Петербург | Все права защищены | ALLFORHOLYDAYS.COM</span>
+			</div>
+		</div>
+	</footer>
+	<script src="js/jquery-1.10.2.min.js"></script>
+	<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-select.js"></script>
+	<script src="js/jquery.fancybox.pack.js"></script>
+	<script src="js/jquery.jscrollpane.min.js"></script>
+	<script src="js/jquery.mousewheel.js"></script>
+    <script src="js/scripts.js"></script>
+	<div class="modal fade bs-example-modal-sm" role="dialog" aria-labelledby="login-pop-up" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+					<span class="title h3">Войти</span>
+				</div>
+				<div class="modal-body">
+					<form>
+						<input type="text" class="form-control"placeholder="Логин"/>
+						<input type="password" class="form-control"placeholder="Пароль"/>
+						<div class="login-options form-group">
+							<div>
+								<label class="checkbox">
+									<input type="checkbox" /><span class="a-spr"></span>
+									Запомнить
+								</label>
+							</div>
+							<div>
+								<a href="#">Забыли пароль?</a>
+							</div>
+						</div>
+						<input type="submit" class="btn btn-primary" value="Войти"/>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<a href="#">Создать аккаунт</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

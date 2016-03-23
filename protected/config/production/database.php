@@ -1,0 +1,16 @@
+<?php
+
+// This is the database connection configuration.
+return array(
+    //'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
+    // uncomment the following lines to use a MySQL database
+    //'tablePrefix' => 'tbl_',
+    'connectionString' => 'mysql:host=localhost;dbname=production',
+    'emulatePrepare' => true,
+    'username' => 'production',
+    'password' => '1MV66ZGWMNUApT',
+    'charset' => 'utf8',
+    'enableProfiling'=>true,
+    'enableParamLogging' => true,
+    'schemaCachingDuration' => YII_DEBUG ? 0 : 3600,
+);

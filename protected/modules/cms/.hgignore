@@ -1,0 +1,4 @@
+syntax: glob
+demo/assets/*
+demo/protected/runtime/*
+.idea/*

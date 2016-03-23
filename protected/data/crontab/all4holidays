@@ -1,0 +1,2 @@
+0 */1 * * * /usr/bin/indexer --config /var/www/all4holidays/sphinx/production/sphinx.conf --rotate a4h_deal > /dev/null 2>&1
+*/5 * * * * /usr/bin/indexer --config /var/www/all4holidays/sphinx/production/sphinx.conf --rotate a4h_deal_delta > /dev/null 2>&1

@@ -1,0 +1,228 @@
+.reg-wrap .btn.btn-big.btn-primary.captcha-recover {
+    margin-top: 8px;
+    display: inline-block;
+}
+.captcha-image{
+
+}
+.spacer{height: 20px;}
+.spacer-5{height: 5px;}
+.spacer-10{height: 10px;}
+.spacer-20{height: 20px;}
+.spacer-30{height: 30px;}
+.spacer-40{height: 40px;}
+.spacer-50{height: 50px;}
+.spacer-60{height: 60px;}
+.spacer-70{height: 70px;}
+.spacer-80{height: 80px;}
+.spacer-90{height: 90px;}
+.spacer-100{height: 100px;}
+.wgt-CommentsWidget-_comment .edit-comment,
+.wgt-CommentsWidget-_comment .delete-comment{
+    color: #656565;
+}
+.wgt-CommentsWidget-_comment .edit-comment{
+    cursor: pointer;
+}
+.wgt-CommentsWidget-_comment .edit-comment:hover{
+    text-decoration: underline;
+}
+.gmail-icon{
+    margin: 0 30px;
+}
+.gmail-invite-page-title{
+    font-size: 40px;
+    line-height: 1.3;
+}
+.gmail-invite-hr{
+    margin-top: 20px;
+}
+.not-registered-email span{
+    font-weight: bold;
+}
+.highlight{
+    background-color: #ffff99;
+}
+.subcategories-menu-list li{
+    list-style: none;
+    margin-left: 0;
+}
+.error-page-error-image, .list-empty-image{
+    display: inline-block;
+}
+.error-page-error-code{
+    font-size: 80px;
+    font-weight: bold;
+}
+.list-empty-title{
+    font-weight: bold;
+}
+.error-page-error{
+    text-transform: uppercase;
+}
+.agreement-container{
+    height: 350px;
+    overflow: auto;
+}
+#agreement_form{
+    padding: 10px;
+}
+.service-info > a.read-more-link{
+    font-size: 12px !important;
+}
+.banner-image{
+    width: 100%;
+}
+h1.for-adults{
+    padding: 2px 0 2px 32px;
+    background: url("/images/16plus.png") left center no-repeat;
+}
+.avatar-progress{
+    margin-top: 10px;
+}
+.filter-calendar-date-input{
+    min-width: 0;
+}
+.func-tab.calendar-tab > tbody > tr > td, .func-tab > tbody > tr > th {
+    text-align: left;
+}
+.add-element .checkbox.image-preview-checkbox-label{
+    margin:0;
+}
+.invitekey-copy-btn{
+    cursor: pointer;
+}
+.show-phone, .bottom-container > div > span.public-phone{
+    display: inline-block;
+}
+.show-phone{
+    margin-left: 5px;
+}
+#payments-grid > table.table > thead > tr > th{
+    background-color: #ffffff;
+    border: medium none;
+    color: #454545;
+}
+table.table.table-striped.table-contacts.alc-tab.g-total{
+    color: #878787;
+    margin-bottom: 50px;
+}
+table.table.func-tab.guest-tab{
+    margin-bottom: 36px;
+}
+.service-link {
+    min-height: 167px;
+}
+img.banner-preview{
+    height: 100px;
+}
+.banner-preview-link img{
+    display: inline;
+}
+.banner-row-margin-container{
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.user-service a.banner-publish{
+    display: inline;
+    font-size: 14px;
+}
+.banner-bg{
+    height: 479px;
+    background: url("/images/banner_bg_2.png") center no-repeat;
+}
+.competition-text-container{
+    margin-top: 20px;
+}
+.competition-title{
+    color: #ffffff;
+    font-family: "Times New Roman";
+    font-size: 38px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.gold{
+    color: #ffebcc;
+}
+.competition-title-note{
+    font-size: 20px;
+}
+.competition-tasks-list{
+    margin-top: 20px;
+    color: #ffffff;
+    margin-bottom: 50px;
+}
+.competition-tasks-list li{
+    list-style: none;
+    margin-left: 0;
+    margin-bottom: 15px;
+}
+.competition-tasks-list li a{
+    font-size: 16px;
+    color: #ffffff;
+    background:  rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 3px 12px;
+}
+.competition-tasks-list li a:hover, .competition-tasks-list li a:active{
+    color: #ffffff;
+    background:  rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+}
+
+.competition-read-more-link{
+    background: #e0dfd8;
+    color: #000000;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 17px;
+}
+.competition-read-more-link:hover, .competition-read-more-link:active{
+    text-decoration: none;
+    color: #000000;
+    background: #ffffff;
+}
+.competition-read-more-link span.glyphicon{
+    font-size: 14px;
+}
+.banner-container{
+    width: 100%;
+}
+.instead-of-content{
+    height: 479px;
+    background: url("/images/banner_bags.png") right bottom no-repeat;
+}
+.height90-block{
+    height: 90px;
+    width: 100%;
+}
+.main-menu{
+    background: #131313!important;
+}
+.user-page .service-info .bottom-container.user-deal{
+    border-top: none;
+    clear: both;
+    margin-top: 0;
+    padding: 0;
+}
+.reg-wrap .note.text-danger{
+    color: #a94442;
+}
+.rating-container{
+    margin-top: 10px;
+}
+.rating-title{
+    text-transform: uppercase;
+    font-size: 10px;
+}
+.rating-form span.category-rating-star, .rating-form span.cursor-def{
+    cursor: default;
+}
+.fancybox-video-vimeo{
+    min-height: 215px;
+}
+.deal-contacts-quality-submit-link{
+    width: 100px;
+}
+

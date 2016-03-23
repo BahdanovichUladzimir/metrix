@@ -1,0 +1,46 @@
+.rights-nav{
+    margin-bottom: 20px;
+}
+.table{
+    font-size: 12px;
+}
+.table .form-control{
+    height: 24px;
+    font-size: 12px;
+    padding: 3px;
+}
+tr.application-heading-row, tr.module-heading-row{
+    font-size: 20px;
+}
+.spacer{height: 20px;}
+.spacer-15{height: 5px;}
+.spacer-10{height: 10px;}
+.spacer-20{height: 20px;}
+.spacer-30{height: 30px;}
+.spacer-40{height: 40px;}
+.spacer-50{height: 50px;}
+.spacer-60{height: 60px;}
+.spacer-70{height: 70px;}
+.spacer-80{height: 80px;}
+.spacer-90{height: 90px;}
+.spacer-100{height: 100px;}
+.grid-view .button-column {
+    text-align: center;
+    width: 135px;
+}
+.deal-image-thumb-container, .deal-video-thumb-container{
+    margin-bottom: 20px;
+}
+.deal-image-thumb,.deal-video-thumb{
+    margin-bottom: 5px;
+    height: 110px;
+}
+.fancy-image.thumbnail, .fancy-video.thumbnail{
+    cursor: pointer;
+}
+#user_ips, #user_deals, #user_payments{
+    padding: 10px;
+}
+.banner-preview{
+    max-width: 100px;
+}
