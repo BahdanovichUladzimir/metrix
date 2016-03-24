@@ -18,6 +18,7 @@ $unapprovedImages = DealsImages::model()->findAll('approve=:approve',array(':app
 $unapprovedVideos = DealsVideos::model()->findAll('approve=:approve',array(':approve'=>'0'));
 $unapprovedLinks = DealLinks::model()->findAll('approve=:approve',array(':approve'=>'0'));
 $sizeOfUnapprovedBanners = Banners::model()->count('approve=:approve',array(':approve'=>'0'));
+$sizeOfUnapprovedComments = Comments::model()->count('approve=:approve',array(':approve'=>'0'));
 $sizeOfUnapprovedItems = sizeof($unapprovedDeals)+sizeof($unapprovedImages)+sizeof($unapprovedVideos)+sizeof($unapprovedLinks);
 
 $sizeOfFeedbackItems = Feedback::model()->count('status_id=:status_id',array(':status_id'=>2));
@@ -371,6 +372,28 @@ $sizeOfFeedbackItems = Feedback::model()->count('status_id=:status_id',array(':s
                             );?>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <?=CHtml::link(
+                                Yii::t('dealsModule', 'Deals contacts quality'),
+                                Yii::app()->createUrl('/deals/backend/dealsContactsQuality/index'),
+                                array(
+                                    'class' => ($moduleId == 'deals' && $controllerId == 'backend/dealsContactsQuality') ? $activeClass : ''
+                                )
+                            );?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?=CHtml::link(
+                                Yii::t('dealsModule', 'Bad deals'),
+                                Yii::app()->createUrl('/deals/backend/dealsStatistics/badDeals'),
+                                array(
+                                    'class' => ($moduleId == 'deals' && $controllerId == 'backend/dealsStatistics' && $actionId == 'badDeals') ? $activeClass : ''
+                                )
+                            );?>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -394,6 +417,9 @@ $sizeOfFeedbackItems = Feedback::model()->count('status_id=:status_id',array(':s
                                         </span>
                     <?=Yii::t('commentsModule', "Comments");?>
                 </a>
+                <?php if($sizeOfUnapprovedComments>0):?>
+                    <span class="label label-primary"><?=$sizeOfUnapprovedComments;?></span>
+                <?php endif;?>
             </h4>
         </div>
     </div>
@@ -430,13 +456,25 @@ $sizeOfFeedbackItems = Feedback::model()->count('status_id=:status_id',array(':s
                                 )
                             );?>
                         </td>
-                    </tr><tr>
+                    </tr>
+                    <tr>
                         <td>
                             <?=CHtml::link(
                                 Yii::t('core', 'Social media posts'),
                                 Yii::app()->createUrl('cms/socialMediaPosting/index'),
                                 array(
                                     'class' => ($moduleId == 'cms' && $controllerId == 'socialMediaPosting') ? $activeClass : ''
+                                )
+                            );?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?=CHtml::link(
+                                Yii::t('core', 'Dictionary'),
+                                Yii::app()->createUrl('cms/backend/dictionary/index'),
+                                array(
+                                    'class' => ($moduleId == 'cms' && $controllerId == 'backend/dictionary') ? $activeClass : ''
                                 )
                             );?>
                         </td>
@@ -670,6 +708,11 @@ $sizeOfFeedbackItems = Feedback::model()->count('status_id=:status_id',array(':s
                     <tr>
                         <td>
                             <?=CHtml::link(Yii::t('yiiseoModule', 'Categories Seo'),Yii::app()->createUrl('/yiiseo/dealsCategoriesSeo/index'));?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?=CHtml::link(Yii::t('yiiseoModule', 'Unfilled categories'),Yii::app()->createUrl('/yiiseo/dealsCategoriesSeo/unfilledCategories'));?>
                         </td>
                     </tr>
                 </table>

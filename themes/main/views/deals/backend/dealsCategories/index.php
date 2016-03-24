@@ -62,6 +62,8 @@ $this->breadcrumbs=array(
 
 		),
 		'priority',
+		'page_count',
+		'free_deals_count',
 		array(
 			'header' => Yii::t('ses', 'Edit'),
 			'class'=>'booster.widgets.TbButtonColumn',

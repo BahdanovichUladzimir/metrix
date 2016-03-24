@@ -10,7 +10,7 @@ class SearchController extends FrontendController{
 
 
     public $query = NULL;
-    public $defaultAction = 'index';
+    public $defaultAction = 'yaSearch';
 
     /**
      * Lists all models.
@@ -53,6 +53,16 @@ class SearchController extends FrontendController{
         ));
     }
 
+
+    public function actionYaSearch(){
+        $this->breadcrumbs=array(
+            Yii::t('dealsModule','Search'),
+        );
+
+        $this->render('yasearch');
+    }
+
+
     /**
      * @param $id
      * @return Deals
@@ -80,4 +90,5 @@ class SearchController extends FrontendController{
             Yii::app()->end();
         }
     }
+
 }

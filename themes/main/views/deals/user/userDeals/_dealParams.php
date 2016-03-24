@@ -37,7 +37,9 @@ CHtml::$afterRequiredLabel = "<span class='required'>*</span>";
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group<?=(sizeof($paramsModel->getErrors($categoriesParam->name))>0) ? ' has-error' : '';?>">
                         <?php if($fieldType == 'list'):?>
+                            <?php $list = NULL;?>
                             <?php if(!is_null($categoriesParam->list_id)):?>
+                                <?php $list = Lists::model()->findByPk($categoriesParam->list_id);?>
                                 <?php $data = CHtml::listData(ListItems::model()->findAll(':list_id=list_id',array(':list_id' => $categoriesParam->list_id)),'value','name');?>
                             <?php elseif($categoriesParam->range):?>
                                 <?php $data = DealCategoriesParams::range($categoriesParam->range);?>
@@ -45,10 +47,19 @@ CHtml::$afterRequiredLabel = "<span class='required'>*</span>";
                                 <?php $data = array(0=>'List items not found');?>
                             <?php endif;?>
                             <?php echo CHtml::activeLabel($paramsModel, $categoriesParam->label, array('required'=>$categoriesParam->required,'class' => 'control-label'));?>
-                            <?php echo CHtml::activeDropDownList($paramsModel, $categoriesParam->name, $data, array(
+                            <?php $htmlOptions = array(
                                 'selected' => $categoriesParam->default,
-                                'empty' => Yii::t('dealsModule', 'Empty')
-                            ));?>
+                                'empty' => Yii::t('dealsModule', 'Empty'),
+                            );?>
+                            <?php if(!is_null($list) && $list->type == 'multiple'):?>
+                                <?php $htmlOptions['multiple'] = 'multiple';?>
+                            <?php endif;?>
+                            <?php echo CHtml::activeDropDownList(
+                                $paramsModel,
+                                $categoriesParam->name,
+                                $data,
+                                $htmlOptions
+                            );?>
                         <?php elseif($fieldType == 'bool'):?>
                             <input type="hidden" name="DealCategoriesParams[<?=$categoriesParam->name;?>]" value="0" id="ytDealCategoriesParams_<?=$categoriesParam->name;?>">
                             <label class="checkbox">

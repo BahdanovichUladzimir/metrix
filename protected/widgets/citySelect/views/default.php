@@ -21,14 +21,19 @@
     <a class="icon icon city-choice b-spr  dropdown-toggle" data-toggle="dropdown"></a>
     <ul class="dropdown-menu spec-select">
         <?php foreach ($cities as $city):?>
-            <?php if($moduleId == 'deals' && $controllerId == 'frontend/catalog' && $actionId == 'deal'):?>
-                <?php if(!is_null($currentCategory)):?>
-                    <li><a href="<?=DealsCategories::getPublicUrlByCatId($currentCategory->id,$city->key);?>" <?=($city->key == $userCityKey)?'class="act b-spr"':"";?> ><?=$city->name;?></a></li>
-                <?php else:?>
-                    <li><a href="<?=Yii::app()->createUrl("/".$city->key);?>" <?=($city->key == $userCityKey)?'class="act b-spr"':"";?> ><?=$city->name;?></a></li>
-                <?php endif;?>
+            <?php if($moduleId == 'deals' && $controllerId == 'frontend/catalog'):?>
+                    <?php if($actionId == 'deal'):?>
+                        <?php if(!is_null($currentCategory)):?>
+                            <li><a href="<?=DealsCategories::getPublicUrlByCatId($currentCategory->id,$city->key);?>" <?=($city->key == $userCityKey)?'class="act b-spr"':"";?> ><?=$city->name;?></a></li>
+                        <?php else:?>
+                            <li><a href="<?=Yii::app()->createUrl("/".$city->key);?>" <?=($city->key == $userCityKey)?'class="act b-spr"':"";?> ><?=$city->name;?></a></li>
+                        <?php endif;?>
+                    <?php else:?>
+                        <li><a href="<?=Yii::app()->createUrl("/".$city->key."/".$uri);?>" <?=($city->key == $userCityKey)?'class="act b-spr"':"";?> ><?=$city->name;?></a></li>
+                    <?php endif;?>
+
             <?php else:?>
-                <li><a href="<?=Yii::app()->createUrl("/".$city->key."/".$uri);?>" <?=($city->key == $userCityKey)?'class="act b-spr"':"";?> ><?=$city->name;?></a></li>
+                <li><a href="<?=Yii::app()->createUrl($uri);?>" <?=($city->key == $userCityKey)?'class="act b-spr"':"";?> ><?=$city->name;?></a></li>
             <?php endif;?>
         <?php endforeach;?>
     </ul>

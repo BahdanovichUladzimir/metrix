@@ -36,7 +36,7 @@ class CommentsController extends FrontendController
 		{
             $model->setScenario('submit');
 			$model->attributes=$_POST['Comments'];
-            $model->approve = 1;
+            $model->approve = 0;
 		}
         if(Yii::app()->request->isAjaxRequest)
         {

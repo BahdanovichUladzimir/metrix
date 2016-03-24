@@ -30,9 +30,11 @@
 <body>
 <h5><?=Yii::t('dealsModule',"Deal contacts");?>:</h5>
 <?php foreach ($phones as $phone):?>
-    <p>
-        <?=$phone['param']->label;?>: <strong><?=DealCategoriesParams::getPublicPhoneNumber($phone['paramValue']->value);?></strong>
-    </p>
+    <?php if(strlen(trim($phone['paramValue']->value))>0):?>
+        <p>
+            <?=$phone['param']->label;?>: <strong><?=DealCategoriesParams::getPublicPhoneNumber($phone['paramValue']->value);?></strong>
+        </p>
+    <?php endif;?>
 <?php endforeach;?>
 <?php if(!is_null($deal->user->profile->email) && strlen(trim($deal->user->profile->email))>0):?>
     <p><?=Yii::t('dealsModule',"Email");?>: <a href="mailto:<?=$deal->user->profile->email;?>"><?=$deal->user->profile->email;?></a></p>

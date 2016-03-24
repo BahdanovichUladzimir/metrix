@@ -162,7 +162,64 @@ $this->breadcrumbs=array(
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="bottom-container">
-                                        <div><?=CHtml::link($deal->name,$deal->getPublicUrl());?></div>
+                                        <div>
+                                            <?=CHtml::link($deal->name,$deal->getPublicUrl());?>
+                                            <?php if($deal->exceeding_category_limit_hidden == '1'):?>
+                                                <p class="text-danger deal-exceeding-category-limit-info" <?=($deal->exceeding_category_limit_hidden == 1) ? "style='display:block'" : "style='display:none'";?> >
+                                                    <?=Yii::t("dealsModule","Exceeded limit deals for the category <strong>{categories}</strong>!",array('{categories}' => $deal->getExceedingLimitCategoriesString()));?>
+                                                </p>
+                                                <?=CHtml::ajaxLink(
+                                                    Yii::t('dealsModule','Enable paid impressions.'),
+                                                    array(
+                                                        '/deals/user/userDeals/payForLimit',
+                                                        'id'=>$deal->id,
+                                                        'enable'=>1,
+                                                    ),
+                                                    array(
+                                                        'type'=>'POST',
+                                                        'dataType'=> 'json',
+                                                        'success'=>'js:function(data){
+                                                                    if(data.status == "success"){
+                                                                        $("#enable_pay_for_limit_link_'.$deal->id.'").hide().prev().hide();
+                                                                        $("#disable_pay_for_limit_link_'.$deal->id.'").show();
+                                                                    }
+                                                                    $(".messages").append(data.html);
+                                                                }',
+                                                    ),
+                                                    array(
+                                                        'id' => 'enable_pay_for_limit_link_'.$deal->id,
+                                                        'class' => 'btn btn-success turn-paid-impressions-btn',
+                                                        'style' => ($deal->exceeding_limit_paid == 0) ? "display:block" : "display:none",
+                                                        'confirm'=>Yii::t('userModule','Are you sure you want to enable paid impressions to deal "{name}"?', array("{name}" => $deal->name))
+                                                    )
+                                                );?>
+                                                <?=CHtml::ajaxLink(
+                                                    Yii::t('dealsModule','Disable paid impressions.'),
+                                                    array(
+                                                        '/deals/user/userDeals/payForLimit',
+                                                        'id'=>$deal->id,
+                                                        'enable'=>0,
+                                                    ),
+                                                    array(
+                                                        'type'=>'POST',
+                                                        'dataType'=> 'json',
+                                                        'success'=>'js:function(data){
+                                                                    if(data.status == "success"){
+                                                                        $("#disable_pay_for_limit_link_'.$deal->id.'").hide();
+                                                                        $("#enable_pay_for_limit_link_'.$deal->id.'").show().prev().show();
+                                                                    }
+                                                                    $(".messages").append(data.html);
+                                                                }',
+                                                    ),
+                                                    array(
+                                                        'id' => 'disable_pay_for_limit_link_'.$deal->id,
+                                                        'class' => 'btn btn-success turn-paid-impressions-btn',
+                                                        'style' => ($deal->exceeding_limit_paid == 1) ? "display:block" : "display:none",
+                                                        'confirm'=>Yii::t('userModule','Are you sure you want to enable paid impressions to deal "{name}"?', array("{name}" => $deal->name))
+                                                    )
+                                                );?>
+                                            <?php endif;?>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -207,6 +264,57 @@ $this->breadcrumbs=array(
                                                         );?>
                                                     </li>
                                                     <!--<li><a href="#">Скрыть</a></li>-->
+                                                    <li id="set_paid_list_item_<?=$deal->id;?>" <?=($deal->paid == 0) ? "style='display:block'" : "style='display:none'";?> >
+                                                        <?=CHtml::ajaxLink(
+                                                            Yii::t('dealsModule','Enable paid impressions'),
+                                                            array(
+                                                                '/deals/user/userDeals/setPaid',
+                                                                'id'=>$deal->id,
+                                                                'paid'=>1,
+                                                            ),
+                                                            array(
+                                                                'type'=>'POST',
+                                                                'dataType'=> 'json',
+                                                                'success'=>'js:function(data){
+                                                                    if(data.status == "success"){
+                                                                        $("#set_paid_list_item_'.$deal->id.'").hide();
+                                                                        $("#set_notpaid_list_item_'.$deal->id.'").show();
+                                                                    }
+                                                                    $(".messages").append(data.html);
+                                                                }',
+                                                            ),
+                                                            array(
+                                                                'class' => 'delete',
+                                                                'confirm'=>Yii::t('userModule','Are you sure you want to enable paid impressions to deal "{name}"?', array("{name}" => $deal->name))
+                                                            )
+                                                        );?>
+                                                    </li>
+                                                    <li id="set_notpaid_list_item_<?=$deal->id;?>" <?=($deal->paid == 1) ? "style='display:block'" : "style='display:none'";?> >
+                                                        <?=CHtml::ajaxLink(
+                                                            Yii::t('dealsModule','Disable paid impressions'),
+                                                            array(
+                                                                '/deals/user/userDeals/setPaid',
+                                                                'id'=>$deal->id,
+                                                                'paid'=>0,
+                                                            ),
+                                                            array(
+                                                                'type'=>'POST',
+                                                                'dataType'=> 'json',
+                                                                'success'=>'js:function(data){
+                                                                if(data.status == "success"){
+                                                                        $("#set_notpaid_list_item_'.$deal->id.'").hide();
+                                                                        $("#set_paid_list_item_'.$deal->id.'").show();
+                                                                    }
+                                                                    $(".messages").append(data.html);
+                                                                }',
+                                                            ),
+                                                            array(
+                                                                'class' => 'delete',
+                                                                'confirm'=>Yii::t('userModule','Are you sure you want to disable paid impressions to deal "{name}"?', array("{name}" => $deal->name))
+                                                            )
+                                                        );?>
+                                                    </li>
+
                                                     <li>
                                                         <?=CHtml::ajaxLink(
                                                             Yii::t('ses','Delete'),

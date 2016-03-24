@@ -115,7 +115,7 @@ $this->breadcrumbs=array(
 		'header' => Yii::t('ses', 'Edit'),
 		'class'=>'booster.widgets.TbButtonColumn',
 		'htmlOptions' => array('class' => 'col-lg-3 button-column'),
-		'template'=>'{approve} {update} {delete} {forRevision} {publishToVk}',
+		'template'=>'{approve} {unapprove} {update} {delete} {forRevision} {publishToVk}',
 		'buttons'=>array(
 			'delete' => array(
                 'options' => array('class' => 'btn btn-danger delete'),
@@ -150,7 +150,7 @@ $this->breadcrumbs=array(
                 ),
 				'visible'=>'$data->approve == 0 || $data->approve == 2',
             ),
-            /*'unapprove' => array(
+            'unapprove' => array(
                 'label'=>'<i class="glyphicon glyphicon-ok"></i>',
                 'url'=>'Yii::app()->createUrl("/deals/backend/deals/unApprove", array("id" => $data->id))',
                 //'imageUrl'=>'...',
@@ -168,7 +168,7 @@ $this->breadcrumbs=array(
                 ),
                 //'click'=>'...',
                 'visible'=>'$data->approve == 1',
-            ),*/
+            ),
             'forRevision' => array(
                 'label'=>'<i class="glyphicon glyphicon-question-sign"></i>',
                 'url'=>'Yii::app()->createUrl("/deals/backend/deals/sentBackForRevision", array("id" => $data->id))',

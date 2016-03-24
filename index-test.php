@@ -30,7 +30,7 @@ else {
     defined('YII_ENV') or define('YII_ENV','production');
 }
 
-$yii=dirname(__FILE__).'/../../lib/yii-1.1.16/framework/yii.php';
+$yii=dirname(__FILE__).'/../../lib/yii-1.1.17/framework/yii.php';
 $config=dirname(__FILE__).'/protected/config/'.YII_ENV.'/test.php';
 
 require_once($yii);

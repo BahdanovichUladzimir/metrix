@@ -3,11 +3,17 @@
 class DealsCategoriesSeoController extends BackendController
 {
     /**
-    * Creates a new model.
-    * If creation is successful, the browser will be redirected to the 'view' page.
-    */
-    public function actionCreate(){
+     * @param null|int $category_id
+     * @param null|int $city_id
+     */
+    public function actionCreate($category_id = NULL, $city_id = NULL){
         $model=new DealsCategoriesSeo;
+        if(!is_null($category_id)){
+            $model->category_id = $category_id;
+        }
+        if(!is_null($city_id)){
+            $model->city_id = $city_id;
+        }
 
         $this->performAjaxValidation($model);
 
@@ -24,7 +30,7 @@ class DealsCategoriesSeoController extends BackendController
 
         $this->render('create',array(
             'model'=>$model,
-            'categoriesList' => DealsCategories::getDropdownItems(0,1,3),
+            'categoriesList' => DealsCategories::getDropdownItems(0,1,4),
             'citiesList' => Cities::getAllCitiesListData(),
             'languagesList' => Countries::getLanguagesListData()
         ));
@@ -92,6 +98,36 @@ class DealsCategoriesSeoController extends BackendController
             'index',
             array(
                 'model'=>$model,
+            )
+        );
+    }
+
+    public function actionUnfilledCategories(){
+        $categories = DealsCategories::model()->findAll();
+        $cities = Cities::model()->findAll();
+        $citiesCategories = array();
+        foreach($cities as $city){
+            /**
+             * @var Cities $city
+             */
+            foreach($categories as $category){
+                /**
+                 * @var DealsCategories $category
+                 */
+                if(is_null(DealsCategoriesSeo::model()->findByAttributes(array('city_id' => $city->id, 'category_id' => $category->id)))){
+                    $citiesCategories[$city->name][] = array(
+                        'city' => $city,
+                        'category' => $category
+                    );
+                };
+
+            }
+        }
+
+        $this->render(
+            'unfilled_categories',
+            array(
+                'citiesCategories'=>$citiesCategories,
             )
         );
     }

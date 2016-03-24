@@ -27,7 +27,7 @@
 			),
 	)
 ); ?>
-<?php /*echo $form->passwordFieldGroup(
+<?php echo $form->passwordFieldGroup(
 	$model,
 	'password',
 	array(
@@ -42,7 +42,7 @@
 			),
 		),
 	)
-); */?>
+); ?>
 <?php echo $form->textFieldGroup(
 	$model,
 	'email',

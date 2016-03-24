@@ -58,11 +58,17 @@ class DealCategoriesParams extends CFormModel
 		if(!is_null($this->_deal)){
 			$dealParams = $this->_deal->dealsParamsValues;
 			foreach($dealParams as $dealParam){
+
 				if($dealParam->param->name == "coordinates"){
 					$currentParams['longitude'] = explode(':',$dealParam->value)[0];
 					$currentParams['latitude'] = explode(':',$dealParam->value)[1];
 				}
-				$currentParams[$dealParam->param->name] = $dealParam->value;
+                if($dealParam->param->type->name == "list"){
+                    $currentParams[$dealParam->param->name][] = $dealParam->value;
+                }
+                else{
+                    $currentParams[$dealParam->param->name] = $dealParam->value;
+                }
 			}
 		}
 

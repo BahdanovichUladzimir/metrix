@@ -63,10 +63,10 @@ class DealsStatisticsController extends BackendController
     }
 
     /**
-    * Deletes a particular model.
-    * If deletion is successful, the browser will be redirected to the 'admin' page.
-    * @param integer $id the ID of the model to be deleted
-    */
+     * @param $id
+     * @throws CDbException
+     * @throws CHttpException
+     */
     public function actionDelete($id){
         if(Yii::app()->request->isPostRequest){
             // we only allow deletion via POST request
@@ -100,11 +100,71 @@ class DealsStatisticsController extends BackendController
         );
     }
 
+    public function actionBadDeals(){
+        $criteria = new CDbCriteria();
+        $criteria->with = array('dealsImages');
+        $criteria->condition = '(SELECT COUNT(`i`.`deal_id`) FROM `DealsImages` `i` WHERE `i`.`deal_id` = `t`.`id`)<4';
+        $insufficientImagesCountDealsDataProvider =  new CActiveDataProvider(
+            'Deals',
+            array(
+            'criteria'=>$criteria,
+            'pagination'=>array(
+                'pageSize'=>20,
+            ),
+        ));
+        unset($criteria);
+        $criteria = new CDbCriteria();
+        $criteria->with = array('dealsImages');
+        $criteria->condition = '(SELECT COUNT(`i`.`deal_id`) FROM `DealsImages` `i` WHERE `i`.`deal_id` = `t`.`id`)>50';
+        $tooManyImagesCountDealsDataProvider =  new CActiveDataProvider(
+            'Deals',
+            array(
+                'criteria'=>$criteria,
+                'pagination'=>array(
+                    'pageSize'=>20,
+                ),
+            ));
+
+        unset($criteria);
+        $criteria = new CDbCriteria();
+        $criteria->condition = 'LENGTH(`t`.`description`)<150';
+        $insufficientDescLengthDealsDataProvider =  new CActiveDataProvider(
+            'Deals',
+            array(
+                'criteria'=>$criteria,
+                'pagination'=>array(
+                    'pageSize'=>20,
+                ),
+            ));
+
+        unset($criteria);
+        $criteria = new CDbCriteria();
+        $criteria->condition = 'status_id=2 OR status_id=3 OR approve=0 OR archive=1';
+        $deactivatedDealsDataProvider =  new CActiveDataProvider(
+            'Deals',
+            array(
+                'criteria'=>$criteria,
+                'pagination'=>array(
+                    'pageSize'=>20,
+                ),
+            ));
+
+        $this->render(
+            'bad_deals',
+            array(
+                'insufficientImagesCountDealsDataProvider'=>$insufficientImagesCountDealsDataProvider,
+                'tooManyImagesCountDealsDataProvider'=>$tooManyImagesCountDealsDataProvider,
+                'insufficientDescLengthDealsDataProvider'=>$insufficientDescLengthDealsDataProvider,
+                'deactivatedDealsDataProvider'=>$deactivatedDealsDataProvider,
+            )
+        );
+    }
+
     /**
-    * Returns the data model based on the primary key given in the GET variable.
-    * If the data model is not found, an HTTP exception will be raised.
-    * @param integer the ID of the model to be loaded
-    */
+     * @param $id
+     * @return DealsStatistics
+     * @throws CHttpException
+     */
     public function loadModel($id){
         $model=DealsStatistics::model()->findByPk($id);
         if($model===null){

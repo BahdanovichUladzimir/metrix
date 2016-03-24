@@ -51,7 +51,8 @@ $this->breadcrumbs=array(
             'value' => 'CHtml::link($data->appCategory->name,array("/admin/appCategories/update", "id" => $data->appCategory->id))',
         ),
         array(
-            'name' => 'app_category_id',
+            //'name' => 'app_category_id',
+            'header' => 'App category item',
             'type' => 'raw',
             'value' => '$data->getAppCategoryItemLink()',
         ),

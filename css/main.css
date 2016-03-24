@@ -225,4 +225,137 @@ img.banner-preview{
 .deal-contacts-quality-submit-link{
     width: 100px;
 }
+.inputs-wrap label {
+    display: inline-block;
+    margin-right: 30px;
+}
+.fancybox-public-avatar{
+    cursor: pointer;
+}
+.send-message.btn{
+    background: transparent linear-gradient(#ffffff, #fafafa) repeat scroll 0 0;
+    border-color: #dfdfdf;
+}
+#readMoreReadLess1{
+    margin-bottom: 10px;
+}
+.service-info>a.read-more-link{
+    margin: 0 0 10px 0;
+}
+.service-info.inner .bottom-container > div {
+    margin-right: 20px;
+}
+
+
+
+/*yandex search styles*/
+
+
+
+.search-toggle input.ya-site-form__input-text {
+    border: medium none;
+    border-radius: 5px;
+    box-shadow: none;
+    font-size: 13px;
+    height: 33px;
+    padding-left: 13px;
+    transition: all 0.3s ease 0s;
+    width: 390px!important;
+}
+.search-toggle table{
+    width: 390px!important;
+}
+.search-toggle table th,.search-toggle table th{
+    padding: 0!important;
+}
+#ya-site-form0 .ya-site-form__search-input, #ya-site-form1 .ya-site-form__search-input {
+    padding: 0!important;
+}
+.ya-site-form__search-wrap{
+    padding: 0!important;
+}
+#ya-site-form0 .ya-site-form__submit, #ya-site-form1 .ya-site-form__submit{
+    background: rgba(0, 0, 0, 0) url("../images/sprite.png") repeat scroll -58px -82px!important;
+    height: 13px;
+    position: absolute;
+    right: 12px;
+    top: 10px;
+    width: 12px!important;
+}
+html body #ya-site-form0 .ya-site-suggest-elem:link,
+html body #ya-site-form0 .ya-site-suggest-elem-link,
+html body #ya-site-form1 .ya-site-suggest-elem:link,
+html body #ya-site-form1 .ya-site-suggest-elem-link
+{
+    color: #878787 !important;
+    text-shadow: none;
+}
+#ya-site-form0 .ya-site-form__search-input, #ya-site-form1 .ya-site-form__search-input {
+    padding: 0!important;
+}
+.search.mob #ya-site-form0 .ya-site-form__submit{
+    background-image: url("../images/sprite.png");
+    background-position: -58px -82px;
+    height: 13px;
+    position: absolute;
+    right: 25px;
+    top: 9px;
+    width: 12px;
+}
+.search.mob #ya-site-form0 input[type="search"].ya-site-form__input-text{
+    background-color: #e2e2e2!important;
+    border-radius: 0;
+    box-shadow: none;
+    height: 31px;
+}
+table.b-head_type_search-simple th, table.b-head_type_search-simple td {
+    border: none;
+    padding: 10px;
+}
+#ya-site-results {
+    background: #f9f9f9 none repeat scroll 0 0!important;
+    color: #000000;
+}
+
+
+/*yandex search styles*/
+.turn-paid-impressions-btn{
+    width: 150px;
+    height: 25px;
+}
+.user-service a.turn-paid-impressions-btn{
+    font-size: 12px;
+    line-height: 12px;
+}
+table.deal-params-table{
+    word-wrap: break-word;
+}
+
+hr.dictionary-hr{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+ul.dictionary-letter-words-list>li{
+    margin: 0;
+    list-style: none;
+}
+/*h2.dictionary-letter{
+    font-weight: bold;
+}*/
+.dictionary-menu-letter{
+    font-size: 16px;
+    padding: 3px;
+}
+.dictionary-menu-letter.active{
+    font-weight:bold;
+}
+a.dictionary-word{
+    line-height: 2;
+}
+a.dictionary-word, a.dictionary-word:hover, a.dictionary-word:active{
+    color: #454545;
+}
+a.dictionary-word:visited{
+    color: #777;
+}
 

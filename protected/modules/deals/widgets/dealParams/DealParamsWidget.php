@@ -10,6 +10,7 @@ class DealParamsWidget extends CWidget{
      */
     public $deal = NULL;
     public $template = 'default';
+    public $userCurrency = NULL;
     public static $widgetId = 0;
 
     public function init(){
@@ -23,10 +24,14 @@ class DealParamsWidget extends CWidget{
         if((sizeof($this->deal->params) == 0)){
             return false;
         }
+        if (isset(Yii::app()->request->cookies['currencyId'])){
+            $this->userCurrency = Currencies::model()->findByPk((int)Yii::app()->request->cookies['currencyId']->value);
+        }
         $this->render(
             $this->template,
             array(
                 'deal' => $this->deal,
+                'userCurrency' => $this->userCurrency,
                 'widgetId' => self::$widgetId
             )
         );

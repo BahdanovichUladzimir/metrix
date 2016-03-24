@@ -13,6 +13,7 @@
  */
 class DealsContactsQuality extends CActiveRecord
 {
+	public $dealName = NULL;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -33,7 +34,7 @@ class DealsContactsQuality extends CActiveRecord
 			array('deal_id', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, deal_id, quality', 'safe', 'on'=>'search'),
+			array('id, deal_id, quality, dealName', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,9 +56,9 @@ class DealsContactsQuality extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'deal_id' => 'Deal',
-			'quality' => 'Quality',
+			'id' => Yii::t('dealsModule','ID'),
+			'deal_id' => Yii::t('dealsModule','Deal'),
+			'quality' => Yii::t('dealsModule','Quality'),
 		);
 	}
 
@@ -78,10 +79,18 @@ class DealsContactsQuality extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
+        $criteria->with = array(
+            'deal',
+        );
+        $criteria->together=true;
+        $criteria->order='t.quality ASC';
 
-		$criteria->compare('id',$this->id,true);
-		$criteria->compare('deal_id',$this->deal_id,true);
-		$criteria->compare('quality',$this->quality);
+		$criteria->compare('t.id',$this->id,true);
+		$criteria->compare('t.deal_id',$this->deal_id,true);
+		$criteria->compare('t.quality',$this->quality);
+        if(!is_null($this->dealName)){
+            $criteria->compare('deal.name',$this->dealName,true);
+        }
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

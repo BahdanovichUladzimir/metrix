@@ -146,7 +146,9 @@ class SocialMediaPosting extends CActiveRecord
     }
 	public function beforeSave(){
 		$this->title = strip_tags(trim($this->title));
-		$this->description = strip_tags(trim($this->description));
+		if(!$this->type == '1'){
+			$this->description = strip_tags(trim($this->description));
+		}
 		return parent::BeforeSave();
 	}
 

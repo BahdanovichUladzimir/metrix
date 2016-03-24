@@ -7,6 +7,14 @@
 <?php $moduleId = Yii::app()->controller->module->getId();?>
 <?php $controllerId = Yii::app()->controller->getId();?>
 <?php $actionId = Yii::app()->controller->action->getId();?>
+<?php
+$user = Yii::app()->user;
+if($user->isGuest){
+	return false;
+}
+$dbUser = User::model()->findByPk($user->getId());
+
+;?>
 <html lang="en">
 	<head>
         <?php $this->renderPartial("//layouts/partials/_backend_head");?>
@@ -37,6 +45,11 @@
 							array('url'=>Yii::app()->getModule('user')->registrationUrl, 'label'=>Yii::app()->getModule('user')->t("Register"), 'visible'=>Yii::app()->user->isGuest),
 							//array('url'=>Yii::app()->getModule('user')->profileUrl, 'label'=>Yii::app()->getModule('user')->t("Profile"), 'visible'=>!Yii::app()->user->isGuest),
 							array('url'=>Yii::app()->getModule('user')->logoutUrl, 'label'=>Yii::app()->getModule('user')->t("Logout").' ('.Yii::app()->user->name.')', 'visible'=>!Yii::app()->user->isGuest),
+							array(
+                                'url'=>Yii::app()->createUrl('/messages/user/dialogues/index',array('#' => 'main_menu_container')),
+                                'label'=>Yii::t('userModule','New messages')."(".$user->getNewMessagesCount().")",
+                                'visible'=>$user->getNewMessagesCount()>0
+                            ),
 							//'---',
 							/*array(
 								'label' => 'Dropdown',
@@ -57,6 +70,7 @@
 				),
 			)
 		);?>
+
 		<div class="container">
             <div class="row row-offcanvas row-offcanvas-right">
                 <div class="col-sm-3 col-md-3">

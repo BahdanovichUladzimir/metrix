@@ -61,21 +61,67 @@
         )
     ); ?>
 
-        <?php echo $form->textFieldGroup(
-            $model,
-            'url_segment',
-            array(
-                'widgetOptions'=>array(
-                    'htmlOptions'=>array(
-                        'class'=>'col-xs-12 col-sm-5 col-md-5 col-lg-5',
-                        'maxlength'=>255
-                    )
-                ),
-                'wrapperHtmlOptions' => array(
-                    'class' => 'col-xs-12 col-sm-6 col-md-6 col-lg-6',
-                ),
-            )
-        ); ?>
+	<?php echo $form->textFieldGroup(
+		$model,
+		'url_segment',
+		array(
+			'widgetOptions'=>array(
+				'htmlOptions'=>array(
+					'class'=>'col-xs-12 col-sm-5 col-md-5 col-lg-5',
+					'maxlength'=>255
+				)
+			),
+			'wrapperHtmlOptions' => array(
+				'class' => 'col-xs-12 col-sm-6 col-md-6 col-lg-6',
+			),
+		)
+	); ?>
+
+<?php echo $form->textFieldGroup(
+		$model,
+		'page_count',
+		array(
+				'widgetOptions'=>array(
+						'htmlOptions'=>array(
+								'class'=>'col-xs-12 col-sm-5 col-md-5 col-lg-5',
+								'maxlength'=>255
+						)
+				),
+				'wrapperHtmlOptions' => array(
+						'class' => 'col-xs-12 col-sm-6 col-md-6 col-lg-6',
+				),
+		)
+); ?>
+<?php echo $form->textFieldGroup(
+		$model,
+		'free_deals_count',
+		array(
+				'widgetOptions'=>array(
+						'htmlOptions'=>array(
+								'class'=>'col-xs-12 col-sm-5 col-md-5 col-lg-5',
+								'maxlength'=>255
+						)
+				),
+				'wrapperHtmlOptions' => array(
+						'class' => 'col-xs-12 col-sm-6 col-md-6 col-lg-6',
+				),
+		)
+); ?>
+<?php echo $form->textFieldGroup(
+		$model,
+		'paid_placement_price',
+		array(
+				'widgetOptions'=>array(
+						'htmlOptions'=>array(
+								'class'=>'col-xs-12 col-sm-5 col-md-5 col-lg-5',
+								'maxlength'=>255
+						)
+				),
+				'wrapperHtmlOptions' => array(
+						'class' => 'col-xs-12 col-sm-6 col-md-6 col-lg-6',
+				),
+		)
+); ?>
 
 <?php echo $form->dropDownListGroup(
 		$model,

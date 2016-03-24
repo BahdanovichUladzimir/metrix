@@ -220,20 +220,20 @@ class User extends CActiveRecord
 
         $criteria=new CDbCriteria;
         
-        $criteria->compare('id',$this->id);
-        $criteria->compare('username',$this->username,true);
-        $criteria->compare('password',$this->password);
-        $criteria->compare('email',$this->email,true);
-        $criteria->compare('activkey',$this->activkey);
-        $criteria->compare('invitekey',$this->invitekey);
-        $criteria->compare('create_at',$this->create_at);
-        $criteria->compare('lastvisit_at',$this->lastvisit_at);
-        $criteria->compare('superuser',$this->superuser);
-        $criteria->compare('status',$this->status);
-        $criteria->compare('identity',$this->identity);
-        $criteria->compare('provider',$this->provider);
-        $criteria->compare('state',$this->state);
-        $criteria->compare('full_name',$this->full_name);
+        $criteria->compare('user.id',$this->id);
+        $criteria->compare('user.username',$this->username,true);
+        $criteria->compare('user.password',$this->password);
+        $criteria->compare('user.email',$this->email,true);
+        $criteria->compare('user.activkey',$this->activkey);
+        $criteria->compare('user.invitekey',$this->invitekey);
+        $criteria->compare('user.create_at',$this->create_at);
+        $criteria->compare('user.lastvisit_at',$this->lastvisit_at);
+        $criteria->compare('user.superuser',$this->superuser);
+        $criteria->compare('user.status',$this->status);
+        $criteria->compare('user.identity',$this->identity);
+        $criteria->compare('user.provider',$this->provider);
+        $criteria->compare('user.state',$this->state);
+        $criteria->compare('user.full_name',$this->full_name);
 
         return new CActiveDataProvider(get_class($this), array(
             'criteria'=>$criteria,
@@ -373,6 +373,20 @@ class User extends CActiveRecord
 
 
         return parent::beforeSave();
+    }
+    public function beforeDelete(){
+        $criteria = new CDbCriteria();
+        $criteria->condition = 'sender_id=:sender_id OR receiver_id=:receiver_id';
+        $criteria->params = array(
+            ':sender_id' => $this->id,
+            ':receiver_id' => $this->id
+        );
+        if(Dialogues::model()->deleteAll($criteria)){
+            return parent::beforeDelete();
+        }
+        else{
+            return false;
+        }
     }
 
     public function hasDeals(){

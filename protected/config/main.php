@@ -302,6 +302,13 @@ return array(
 					'categories'=>'application.commands.dealPaidCommand.paymentForDealPriority',
                     'logFile' => 'paymentForDealPriority'
 				),
+				array(
+						'class'=>'CFileLogRoute',
+						'levels'=>'trace, info, error',
+						'categories'=>'application.payments.webMoney.recharge',
+						'logFile' => 'webmoney.log'
+				),
+
 				// uncomment the following to show log messages on web pages
 				/*
 				array(

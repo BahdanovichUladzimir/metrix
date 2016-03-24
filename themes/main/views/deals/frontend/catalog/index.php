@@ -25,7 +25,7 @@ $('.slider').owlCarousel({
         <div class="row">
             <?php $counter = 1;?>
             <?php foreach($categories as $category):?>
-                <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <a href="<?=$category->getPublicUrl($this->userCityKey);?>" class="main-link thumbnail">
                         <div class="image a">
                             <span><span class="a"><?=Yii::t("dealsModule","Move on");?></span></span>

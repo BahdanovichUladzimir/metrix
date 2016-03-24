@@ -21,8 +21,12 @@
  * @property string|int $published_date
  * @property integer $priority
  * @property integer $paid
+ * @property integer $exceeding_limit_paid
  * @property integer $minPrice
+ * @property integer $contacts_shows
  * @property bool $forAdults
+ * @property integer $exceeding_category_limit_hidden
+ * @property array $contactsQualitiesCounts
  *
  * The followings are the available model relations:
  * @property DealsStatuses $status
@@ -42,6 +46,7 @@
  * @property DealLinks[] $frontendDealLinks
  * @property DealsStatistics $dealsCurrentStatistics
  * @property DealsCategories[] $categories
+ * @property DealsContactsQuality[] contactsQuality
  * @property array $params
  */
 class Deals extends CActiveRecord
@@ -81,6 +86,8 @@ class Deals extends CActiveRecord
      */
     public $forAdults = false;
 
+    public $contactsQualitiesCounts = array();
+
     /**
      * @var null|int
      */
@@ -88,6 +95,7 @@ class Deals extends CActiveRecord
     public static $userCityId = NULL;
     public static $paidStatuses = array();
     public static $dealsContactsQualities = array();
+    public static $calendarParamId = 179;
 
     public function init(){
         parent::init();
@@ -101,13 +109,23 @@ class Deals extends CActiveRecord
             0 => Yii::t('dealsModule', 'Unpaid'),
             1 => Yii::t('dealsModule', 'Paid'),
         );
+        self::setDealsContactsQualities();
+        self::$calendarParamId = DealsParams::model()->findByAttributes(array('name' => 'calendar'))->id;
+
+    }
+
+    public static function getDealsContactsQualities(){
+        self::setDealsContactsQualities();
+        return self::$dealsContactsQualities;
+    }
+
+    public static function setDealsContactsQualities(){
         self::$dealsContactsQualities = array(
             1 => Yii::t('dealsModule', 'The phone works'),
             2 => Yii::t('dealsModule', 'The phone doesn\'t respond'),
             3 => Yii::t('dealsModule', 'The phone is not available'),
             4 => Yii::t('dealsModule', 'Wrong number'),
         );
-
     }
 
     /**
@@ -146,7 +164,7 @@ class Deals extends CActiveRecord
         $descrptionPurifier = new CHtmlPurifier();
         $descrptionPurifier->options = array(
             'HTML.AllowedElements' => Yii::app()->config->get('DEALS_MODULE.DESCRIPTION_ALLOWED_TAGS'),
-            'HTML.AllowedAttributes' => 'img.src,a.href,*.class'
+            'HTML.AllowedAttributes' => '*.class'
         );
         $introPurifier = new CHtmlPurifier();
         $introPurifier->options = array(
@@ -160,19 +178,20 @@ class Deals extends CActiveRecord
 			array('categories', 'required', 'message' => Yii::t('dealsModule','You must select category.')),
 			array('city_id', 'required', 'message' => Yii::t('dealsModule','You must select city.')),
 			array('user_id', 'required', 'on' => 'adminUpdate, adminCreate, userCreate'),
-			array('currency_id, city_id, user_id, approve, archive, priority, paid', 'numerical', 'integerOnly'=>true),
+			array('currency_id, city_id, user_id, approve, archive, priority, paid, exceeding_limit_paid, exceeding_category_limit_hidden', 'numerical', 'integerOnly'=>true),
 			array('name, url_segment, randSort', 'length', 'max'=>255),
 			array('description', 'length', 'max'=>50000),
 			array('status_id', 'length', 'max'=>3),
-			array('approve, archive, negotiable, priority, paid', 'length', 'max'=>1),
+			array('exceeding_category_limit_hidden', 'length', 'max'=>2),
+			array('approve, archive, negotiable, priority, paid, exceeding_limit_paid', 'length', 'max'=>1),
 			array('created_date, published_date, updated_date', 'length', 'max'=>12),
 			array('intro', 'length', 'max'=>200),
             array('description','filter','filter'=>array($obj=$descrptionPurifier,'purify')),
             array('intro','filter','filter'=>array($obj=$introPurifier,'purify')),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, intro, approve, archive, description, user_id, city_id, currency_id, status_id, created_date, updated_date, published_date, priority, paid, categoriesSearch', 'safe', 'on'=>'search'),
-			array('name, approve, archive, status_id, created_date, published_date, priority, paid, categoriesSearch', 'safe', 'on'=>'userSearch'),
+			array('id, name, intro, approve, archive, description, user_id, city_id, currency_id, status_id, created_date, updated_date, published_date, priority, paid, exceeding_limit_paid, categoriesSearch', 'safe', 'on'=>'search'),
+			array('name, approve, archive, status_id, created_date, published_date, priority, paid, exceeding_limit_paid, categoriesSearch', 'safe', 'on'=>'userSearch'),
 		);
 	}
 
@@ -250,6 +269,7 @@ class Deals extends CActiveRecord
             'session' => array(self::MANY_MANY,  'Session', 'SessionFavorites(deal_id, session_id)'),
             'users' => array(self::MANY_MANY,  'User', 'UsersFavorites(deal_id, user_id)'),
             'calendar' =>  array(self::HAS_MANY, 'Calendar', 'deal_id'),
+            'contactsQuality' =>  array(self::HAS_MANY, 'DealsContactsQuality', 'deal_id'),
         );
         return $relations;
     }
@@ -277,6 +297,8 @@ class Deals extends CActiveRecord
 			'published_date' => Yii::t('dealsModule','Published date'),
 			'priority' => Yii::t('dealsModule','Priority'),
 			'categories' => Yii::t('dealsModule','Categories'),
+			'exceeding_limit_paid' => Yii::t('dealsModule','Exceeding limit paid'),
+			'paid' => Yii::t('dealsModule','Paid'),
 		);
 	}
 
@@ -379,7 +401,7 @@ class Deals extends CActiveRecord
     }
 
 
-	public function search()
+	public function search($pageSize = '50')
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
@@ -390,11 +412,12 @@ class Deals extends CActiveRecord
             'calendar'
 		);
 		$criteria->together=true;
-        $criteria->condition ='t.status_id=:status_id AND t.approve=:approve AND t.`archive`=:archive';
+        $criteria->condition ='t.status_id=:status_id AND t.approve=:approve AND t.`archive`=:archive AND t.`exceeding_category_limit_hidden`=:exceeding_category_limit_hidden';
         $criteria->params = array(
             ':status_id' => '1',
             ':approve' => '1',
             ':archive' => '0',
+            ':exceeding_category_limit_hidden' => '0',
         );
         if(is_null($this->randSort)){
             $criteria->order = 't.priority DESC';
@@ -583,7 +606,7 @@ class Deals extends CActiveRecord
 			'criteria'=>$criteria,
 			'withKeenLoading' => array('categories'),
 			'pagination'=>array(
-				'pageSize'=>50, //could put 1, 2, 3, 10, 20, 30, etc. however many you want to display per page.
+				'pageSize'=>$pageSize, //could put 1, 2, 3, 10, 20, 30, etc. however many you want to display per page.
 			),
 		));
 	}
@@ -846,15 +869,11 @@ class Deals extends CActiveRecord
                 break;
             }
         }
-        foreach($this->dealsParamsValues as $paramValue){
-            if(strlen(trim($paramValue->value))>0){
-                if($paramValue->param->type->name == 'calendar'){
-                    $this->isShowCalendar = true;
-                    $calendarEvents = Calendar::model()->findAllByAttributes(array('deal_id' => $this->id));
-                    if(sizeof($calendarEvents)>0){
-                        $this->isShowPublicCalendar = true;
-                    }
-                }
+        if(!is_null(DealsParamsValues::model()->findByAttributes(array('deal_id' => $this->id, 'param_id' => self::$calendarParamId, 'value' => '1')))){
+            $this->isShowCalendar = true;
+            $calendarEventsCount = Calendar::model()->countByAttributes(array('deal_id' => $this->id));
+            if($calendarEventsCount>0){
+                $this->isShowPublicCalendar = true;
             }
         }
     }
@@ -908,6 +927,35 @@ class Deals extends CActiveRecord
         }
 		return parent::beforeDelete();
 	}
+    public function afterDelete(){
+        if(sizeof($this->categories)>0){
+            foreach($this->categories as $category){
+                $criteria = new CDbCriteria();
+                $criteria->with='categories';
+                $criteria->condition = 't.user_id=:user_id AND exceeding_category_limit_hidden=:exceeding_category_limit_hidden AND categories.id=:category_id';
+                $criteria->params = array(
+                    ':user_id' => $this->user_id,
+                    ':category_id' => $category->id,
+                    ':exceeding_category_limit_hidden' => 0
+                );
+                $userCategoryDealsCount = Deals::model()->count($criteria);
+                if($userCategoryDealsCount<$category->free_deals_count){
+                    /**
+                     * @var $newVisibleDeal Deals
+                     */
+                    $criteria->params[':exceeding_category_limit_hidden'] = 1;
+                    $newVisibleDeal = Deals::model()->find($criteria);
+                    if(!is_null($newVisibleDeal)){
+                        $newVisibleDeal->setScenario('recountVisibleDealsAfterDealDelete');
+                        $newVisibleDeal->exceeding_category_limit_hidden = 0;
+                        $newVisibleDeal->exceeding_limit_paid = 0;
+                        $newVisibleDeal->save();
+                    }
+                }
+            }
+        }
+        return parent::afterDelete();
+    }
 
     public function getMinPrice(){
         //Config::var_dump($this->params);
@@ -1050,8 +1098,14 @@ class Deals extends CActiveRecord
     }
 
     public function beforeSave(){
-        if($this->getScenario() != "writeOffForDealsPriorityPlacement"){
-
+        $excludedScenarios = array(
+            'writeOffForDealsPriorityPlacement',
+            'clearDealDescription',
+            'showContacts',
+            'writeOffForDealsPriorityPlacement',
+            'recountVisibleDealsAfterDealDelete'
+        );
+        if(!in_array($this->getScenario(),$excludedScenarios)){
             if($this->isNewRecord){
                 $this->status_id = 1;
             }
@@ -1092,13 +1146,14 @@ class Deals extends CActiveRecord
             'categories',
         );
         $criteria->together=true;
-        $criteria->condition = 't.id<>:id AND t.city_id=:city_id AND t.status_id=:status_id AND t.approve=:approve AND t.archive=:archive AND t.user_id NOT IN('.Yii::app()->config->get('DEALS_MODULE.HIDDEN_USERS').')';
+        $criteria->condition = 't.id<>:id AND t.city_id=:city_id AND t.status_id=:status_id AND t.approve=:approve AND t.archive=:archive AND t.exceeding_category_limit_hidden=:exceeding_category_limit_hidden AND t.user_id NOT IN('.Yii::app()->config->get('DEALS_MODULE.HIDDEN_USERS').')';
         $criteria->params = array(
             ':id' => $this->id,
             ':city_id' => $this->city_id,
             ':status_id' => 1,
             ':approve' => 1,
             ':archive' => 0,
+            ':exceeding_category_limit_hidden' => 0
         );
         $criteria->addNotInCondition('categories.id',CHtml::listData($this->categories, 'id', 'id'));
         return self::model()->findAll($criteria);
@@ -1132,12 +1187,68 @@ class Deals extends CActiveRecord
         return $this->isShowPublicMap;
     }
 
+    /**
+     * @return DealsCategories[]
+     */
+    public function getExceedingLimitCategories(){
+        $categories = array();
+        foreach($this->categories as $category){
+            $criteria = new CDbCriteria();
+            $criteria->with='categories';
+            $criteria->condition = 't.user_id=:user_id AND categories.id=:category_id';
+            $criteria->params = array(
+                ':user_id' => $this->user_id,
+                ':category_id' => $category->id
+            );
+            $userCategoryDealsCount = Deals::model()->count($criteria);
+            if($userCategoryDealsCount>$category->free_deals_count){
+                $categories[] = $category;
+
+            }
+        }
+        return $categories;
+    }
+
+    public function getExceedingLimitCategoriesString(){
+        $categories = array();
+
+        foreach($this->getExceedingLimitCategories() as $category){
+            $categories[] = $category->name;
+        }
+        return implode(", ", $categories);
+    }
+
+    public function getPaidAmountForExceedingLimitCategories(){
+        $paidCategories = $this->getExceedingLimitCategories();
+        //Config::var_dump($paidCategories);
+
+        $amount = 0;
+        foreach ($paidCategories as $paidCategory) {
+            /**
+             * @var $paidCategory DealsCategories
+             */
+            if($amount<$paidCategory->paid_placement_price){
+                $amount = $paidCategory->paid_placement_price;
+            }
+        }
+        return $amount;
+    }
+
+    public function getContactsQualities(){
+        if(sizeof($this->contactsQualitiesCounts) == 0){
+            foreach(self::$dealsContactsQualities as $k=>$v){
+                $this->contactsQualitiesCounts[$k] = DealsContactsQuality::model()->countByAttributes(array('deal_id' => $this->id, 'quality' => $k));
+            }
+        }
+        return $this->contactsQualitiesCounts;
+    }
+
     public static function text2Link($text) {
         //$text = html_entity_decode($text);
         $text = str_replace('<'," <", $text);
         $text = htmlentities($text);
         $text = str_replace("&nbsp;",' ',$text);
-        $text =  preg_replace('/\b(https?:\/\/[\S]+)/si', '<a target="_blank" rel="nofollow" href="$1">$1</a>', $text);
+        $text =  preg_replace('/\b(https?:\/\/[\S]+[^\s,.;]{1})/si', '<a target="_blank" rel="nofollow" href="$1">$1</a>', $text);
         return (html_entity_decode($text));
     }
 

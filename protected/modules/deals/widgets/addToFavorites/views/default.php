@@ -18,7 +18,7 @@
                             link.addClass("loading");
                         },
                         'success':function(json){
-                            var data = $.parseJSON(json)
+                            var data = $.parseJSON(json);
                             if(data.status == "success"){
                                 link.removeClass("loading").removeClass("act").attr("id","addToFavoritesBtn_<?=$deal->id;?>");
                                 $(window).trigger('dealsModule.deleteFromFavorites');
@@ -38,7 +38,7 @@
                             link.addClass("loading");
                         },
                         'success':function(json){
-                            var data = $.parseJSON(json)
+                            var data = $.parseJSON(json);
                             if(data.status == "success"){
                                 link.removeClass("loading").addClass("act").attr("id","deleteFromFavoritesBtn_<?=$deal->id;?>");
                                 $(window).trigger('dealsModule.addToFavorites');

@@ -39,7 +39,8 @@
                 'attribute' => 'start',
                 'options' => array(
                     //'datepicker'=>false,
-                    'format'=>'d.m.Y H:i'
+                    'format'=>'d.m.Y H:i',
+                    'lang'=>'ru',
                 ), //DateTimePicker options
                 'htmlOptions' => array(
                     'class' => 'form-control ct-form-control',
@@ -67,7 +68,8 @@
                 'attribute' => 'end',
                 'options' => array(
                     //'datepicker'=>false,
-                    'format'=>' d.m.Y H:i'
+                    'format'=>' d.m.Y H:i',
+                    'lang'=>'ru',
                 ), //DateTimePicker options
                 'htmlOptions' => array(
                     'class' => 'form-control ct-form-control',

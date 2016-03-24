@@ -25,11 +25,11 @@ class CommentsWidget extends CWidget{
         }
 
         $criteria = new CDbCriteria;
-        $criteria->condition = 'app_category_id=:app_category_id AND app_category_item_id=:app_category_item_id AND approve=:approve';
+        $criteria->condition = 'app_category_id=:app_category_id AND app_category_item_id=:app_category_item_id';
         $criteria->params = array(
             ':app_category_id' => $this->appCategoryId,
-            ':app_category_item_id' => $this->appCategoryItemId,
-            ':approve' => 1,
+            ':app_category_item_id' => $this->appCategoryItemId
+            //':approve' => 1,
         );
         $comments = Comments::model()->findAll($criteria);
 

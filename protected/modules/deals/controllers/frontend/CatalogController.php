@@ -160,7 +160,7 @@ class CatalogController extends FrontendController
         if(is_null($model)){
             throw new CHttpException(404, Yii::t('core','Page not found.'));
         }
-        if(($model->approve == 0 || $model->status_id == 2)&& $userId !== $model->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(($model->approve == 0 || $model->status_id == 2 || $model->exceeding_category_limit_hidden == '1')&& $userId !== $model->user_id && !Yii::app()->getModule('user')->isAdmin()){
             throw new CHttpException(404, Yii::t('core','Page not found.'));
         }
 
@@ -428,6 +428,9 @@ class CatalogController extends FrontendController
 
     public function actionGetDealContacts($deal_id){
         $model = Deals::model()->findByPk($deal_id);
+        $model->contacts_shows = $model->contacts_shows+1;
+        $model->setScenario('showContacts');
+        $model->save();
         $phones = array();
         foreach($model->params as $param){
             if($param->type->name == 'phone'){

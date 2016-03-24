@@ -21,12 +21,6 @@ class PaymentsController extends UserFrontendController
     */
     public function actionIndex(){
 
-        $webmoneyModel = new WebmoneyPayments();
-        $webmoneyModel->user_id = $this->userId;
-        $webmoneyModel->purse = Yii::app()->config->get("PAYMENT_MODULE.WMB_RUR_PURSE");
-        $webmoneyModel->description = Yii::t('paymentModule','Recharge online all4holidays.com');
-        $webmoneyModel->status = 1;
-        $webmoneyModel->save(false);
 
         $dbUser = $this->user;
         $model=new Payments('search');
@@ -39,7 +33,6 @@ class PaymentsController extends UserFrontendController
             'index',
             array(
                 'model'=>$model,
-                'webmoneyModel' => $webmoneyModel,
                 'dbUser' => $dbUser
             )
         );

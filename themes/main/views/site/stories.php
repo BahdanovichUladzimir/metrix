@@ -28,6 +28,19 @@ $this->breadcrumbs=array(
             ),
             'template' => '{pager}{items}{pager}',
             'enablePagination' => true,
+            'pager' => array(
+                'maxButtonCount' => 12,
+                'firstPageLabel' => '<<',
+                'lastPageLabel' => '>>',
+                'prevPageLabel' => '<',
+                'nextPageLabel' => '>',
+                'footer' => '</nav>',
+                'header' => '<nav>',
+                'selectedPageCssClass' => 'active',
+                'htmlOptions' => array(
+                    'class' => 'pagination'
+                )
+            ),
             //'ajaxUpdate'=>false,
         )); ?>
     </div>

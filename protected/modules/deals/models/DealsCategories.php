@@ -16,6 +16,10 @@
  * @property int $no_index
  * @property int $for_adults
  * @property int $priority
+ * @property int $page_count
+ * @property int $free_deals_count
+ * @property int $paid_placement_price
+ * @property DealsCategoriesSeo $seo
  *
  * The followings are the available model relations:
  * @property DealsCategoriesStatuses $status
@@ -86,18 +90,21 @@ class DealsCategories extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('name, parent_id, status, url_segment', 'required'),
+            array('name, parent_id, status, url_segment, paid_placement_price', 'required'),
             array('parent_id', 'length', 'max'=>11),
-            array('name, url_segment, image', 'length', 'max'=>255),
+            array('page_count, free_deals_count', 'length', 'max'=>10),
+            array('page_count', 'default', 'value'=>20),
+            array('free_deals_count', 'default', 'value'=>20),
+            array('name, url_segment, image, paid_placement_price', 'length', 'max'=>255),
             array('no_index, for_adults', 'length', 'max'=>1),
             array('priority', 'length', 'max'=>2),
-            array('no_index', 'numerical', 'integerOnly'=>true),
+            array('no_index, page_count, free_deals_count, paid_placement_price', 'numerical', 'integerOnly'=>true),
             array('status_id', 'length', 'max'=>3),
             array('description', 'safe'),
 
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, parent_id, name, url_segment, image, description, status_id, no_index, for_adults, priority', 'safe', 'on'=>'search'),
+            array('id, parent_id, name, url_segment, image, description, status_id, no_index, for_adults, priority, page_count, free_deals_count, paid_placement_price', 'safe', 'on'=>'search'),
         );
     }
 
@@ -127,6 +134,7 @@ class DealsCategories extends CActiveRecord
             'params' => array(self::MANY_MANY,  'DealsParams', 'DealsCategoriesParams(deal_category_id, deal_param_id)'),
             'ratings' => array(self::MANY_MANY,  'Ratings', 'DealsCategoriesRatings(category_id, rating_id)'),
             'deals' => array(self::MANY_MANY,  'Deals', 'Deals_DealsCategories(category_id, deal_id)'),
+            'seo' => array(self::HAS_ONE,  'DealsCategoriesSeo', 'category_id'),
 
         );
     }
@@ -158,6 +166,9 @@ class DealsCategories extends CActiveRecord
             'no_index' => Yii::t('dealsModule','No index'),
             'for_adults' => Yii::t('dealsModule','For adults'),
             'priority' => Yii::t('dealsModule','Priority'),
+            'page_count' => Yii::t('dealsModule','Page deals count'),
+            'free_deals_count' => Yii::t('dealsModule','Free deals count'),
+            'paid_placement_price' => Yii::t('dealsModule','Paid placement price'),
         );
     }
 
@@ -220,6 +231,8 @@ class DealsCategories extends CActiveRecord
         //$criteria->compare('description',$this->description,true);
         $criteria->compare('status_id',$this->status_id,true);
         $criteria->compare('for_adults',$this->for_adults);
+        $criteria->compare('free_deals_count',$this->free_deals_count);
+        $criteria->compare('page_count',$this->page_count);
         //$criteria->compare('image',$this->image,true);
 
         return new CActiveDataProvider($this, array(
@@ -626,6 +639,16 @@ class DealsCategories extends CActiveRecord
 
     public static function getNoIndexListData(){
         return array('0' => 'index', '1' => 'no index');
+    }
+
+    public static function getRootParent($id){
+        $category = self::model()->findByPk($id);
+        if(!$category->hasParent()){
+            return $category;
+        }
+        else{
+            return self::getRootParent($category->getParent()->id);
+        }
     }
 
 

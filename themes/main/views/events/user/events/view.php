@@ -327,6 +327,28 @@ else{
         </div>
     </div>
 <?php endif;?>
+<?php if(sizeof($model->schedules)>0):?>
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="padding-wrap">
+                        <span class="title icon-ttl b-spr it-3"><?=Yii::t('eventsModule','Daily schedules for the event.');?></span>
+                        <table class="table table-striped table-contacts alc-tab g-total">
+                            <?php foreach($model->schedules as $schedule):?>
+                                <tr>
+                                    <th><?=$schedule->date;?></th>
+                                    <td><?=CHtml::link($schedule->name,Yii::app()->createUrl("/events/user/dailySchedules/view", array('id' => $schedule->id)));?></td>
+                                </tr>
+                            <?php endforeach;?>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif;?>
+
 <?php if(Yii::app()->user->getId() == $model->user_id || Yii::app()->getModule("user")->isAdmin()):?>
     <?php if(sizeof($model->eventsGuests)==0):?>
         <div class="panel">
@@ -346,6 +368,13 @@ else{
         <div class="panel">
             <div class="panel-body">
                 <a href="<?=Yii::app()->createUrl('/events/user/eventsDoings/index', array('event_id' => $model->id));?>" class="add-g b-spr"><?=Yii::t("eventsModule","To-do list for the event");?></a>
+            </div>
+        </div>
+    <?php endif;?>
+    <?php if(sizeof($model->schedules)==0):?>
+        <div class="panel">
+            <div class="panel-body">
+                <a href="<?=Yii::app()->createUrl('/events/user/dailySchedules/create', array('event_id' => $model->id));?>" class="add-g b-spr"><?=Yii::t("eventsModule","Daily schedules for the event");?></a>
             </div>
         </div>
     <?php endif;?>

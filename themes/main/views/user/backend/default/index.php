@@ -11,6 +11,7 @@ $this->breadcrumbs=array(
 	'id'=>'user-grid',
 	'type'=>'striped condensed',
 	'dataProvider'=>$model->search(),
+	'ajaxUpdate' => false,
 	'filter'=>$model,
 
 	'columns'=>array(

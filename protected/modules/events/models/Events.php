@@ -27,6 +27,7 @@
  * @property EventsGuests[] $eventsGuests
  * @property EventsDoings[] $eventsDoings
  * @property Doings[] $doings
+ * @property DailySchedules[] $schedules
  * @property EventsInvitedUsers[] $eventsInvitedUsers
  */
 class Events extends CActiveRecord
@@ -75,6 +76,7 @@ class Events extends CActiveRecord
 			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 			'eventsGuests' => array(self::HAS_MANY, 'EventsGuests', 'event_id'),
 			'eventsDoings' => array(self::HAS_MANY, 'EventsDoings', 'event_id'),
+			'schedules' => array(self::HAS_MANY, 'DailySchedules', 'event_id'),
 			'eventsInvitedUsers' => array(self::HAS_MANY, 'EventsInvitedUsers', 'event_id'),
 			'alcohol' => array(self::HAS_ONE, 'Alcohol', 'event_id'),
 		);

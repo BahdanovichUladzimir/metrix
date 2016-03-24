@@ -56,12 +56,12 @@ $this->breadcrumbs=array(
             'disabled' => '$data->approve'
         ),
 		array(
-			'name' => 'name',
+			'header' => Yii::t('dealsModule','Image size'),
 			'headerHtmlOptions' => array(
 				'class' => 'col-xs-1 col-sm-1 col-md-1 col-lg-1'
 			),
 			'type' => 'raw',
-            'value' => '$data->name'
+            'value' => '$data->width."x".$data->height'
 		),
 		array(
 			'header' => 'Photo',

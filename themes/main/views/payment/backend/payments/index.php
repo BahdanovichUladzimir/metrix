@@ -14,7 +14,7 @@ $this->breadcrumbs=array(
 
 <?php $this->widget('booster.widgets.TbGridView',array(
 	'id'=>'payments-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$model->adminSearch(),
 	'filter'=>$model,
 	'columns'=>array(
 		'id',

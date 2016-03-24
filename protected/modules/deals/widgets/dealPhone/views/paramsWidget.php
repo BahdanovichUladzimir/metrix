@@ -11,6 +11,7 @@
 ;?>
 
 <span class="params-public-phone public-phone"><?=$invisiblePhone;?></span>
-<a class="gr-btn show-phone params-show-phone fancybox.ajax" href="<?=Yii::app()->createUrl('/deals/frontend/catalog/getDealContacts', array('deal_id' => $deal->id));?>" data-param_name="<?=$dealParamName;?>"><?=Yii::t('dealsModule',"Show phone");?></a>
+<a class="gr-btn show-phone params-show-phone fancybox.ajax hidden-xs" href="<?=Yii::app()->createUrl('/deals/frontend/catalog/getDealContacts', array('deal_id' => $deal->id));?>" data-param_name="<?=$dealParamName;?>"><?=Yii::t('dealsModule',"Show phone");?></a>
+<a class="gr-btn show-phone params-show-phone fancybox.ajax hidden-sm hidden-md hidden-lg" href="<?=Yii::app()->createUrl('/deals/frontend/catalog/getDealContacts', array('deal_id' => $deal->id));?>" data-param_name="<?=$dealParamName;?>"><?=Yii::t('dealsModule',"Show");?></a>
 <span class="text-danger"></span>
 <?/*=CHtml::link(DealCategoriesParams::getPublicPhoneNumber($paramValue->value),"tel:".$paramValue->value);*/?>

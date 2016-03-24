@@ -60,7 +60,7 @@ class CmsModule extends CWebModule
 	{
 		if (parent::beforeControllerAction($controller, $action))
 		{
-			$publicRoutes = array('page/view', 'language/change');
+			$publicRoutes = array('page/view', 'language/change', 'frontend/dictionary/index', 'frontend/dictionary/letter', 'frontend/dictionary/view');
 			$route = $controller->id.'/'.$action->id;
 			if (!in_array($route, $publicRoutes) && !Yii::app()->cms->checkAccess())
 				throw new CHttpException(403, Yii::t('CmsModule.core', 'You are not allowed to access this page.'));

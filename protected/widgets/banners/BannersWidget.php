@@ -10,10 +10,12 @@ class BannersWidget extends CWidget{
     public $view = 'default';
     public $categoryId = NULL;
     public $cityId = NULL;
+    private $_rootParent = NULL;
     public function init(){
     }
 
     public function run(){
+        $this->_rootParent = DealsCategories::getRootParent($this->categoryId);
         $criteria = new CDbCriteria();
         $criteria->condition = 'published=:published AND approve=:approve AND paid_end_date>=:paid_end_date';
         $criteria->with = array(
@@ -26,7 +28,7 @@ class BannersWidget extends CWidget{
             'categories' => array(
                 'condition' => 'categories.id=:category_id',
                 'params' => array(
-                    ':category_id' => $this->categoryId
+                    ':category_id' => $this->_rootParent->id
                 ),
             ),
         );

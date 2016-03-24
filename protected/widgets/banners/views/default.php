@@ -10,7 +10,7 @@
 <div id="bannersWidget_<?=$widgetId;?>">
     <?php foreach($banners as $banner):?>
         <div class="banner-container panel" id="banner_container_<?=$banner->id;?>">
-            <?=CHtml::link(CHtml::image($banner->getImageUrl(),$banner->name, array("class"=>"banner-image",'target' => "_blank")),Yii::app()->createUrl("/banners/frontend/banners/banner", array("id" => $banner->id)));?>
+            <?=CHtml::link(CHtml::image($banner->getImageUrl(),$banner->name, array("class"=>"banner-image")),Yii::app()->createUrl("/banners/frontend/banners/banner", array("id" => $banner->id)), array('target' => "_blank"));?>
         </div>
     <?php endforeach;?>
 </div>

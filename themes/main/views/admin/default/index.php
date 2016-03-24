@@ -24,12 +24,7 @@
  */
 ;?>
 <h1><?=Yii::t("adminModule","Welcome to admin panel");?></h1>
-<div class="alert alert-danger alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <p>Уважаемые коллеги! Не удаляйте пожалуйста тестовые объявления, которые созданы пользователем <strong>admin</strong>! Я с ними работаю.</p>
-    <p>Заранее благодарю!</p>
-    <p>C уважением. Владимир (разработчик).</p>
-</div>
+
 <h3><?=Yii::t("adminModule","Site statistic");?></h3>
 <div>
     <!-- Nav tabs -->

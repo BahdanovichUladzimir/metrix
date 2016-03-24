@@ -64,6 +64,8 @@ class AuthCommand extends CConsoleCommand{
         $this->_createTask('Cms.Block.*');
         $this->_createTask('Cms.Language.*');
         $this->_createTask('Cms.Page.*');
+        $this->_createTask('Cms.Backend.Dictionary.*');
+        $this->_createTask('Cms.Frontend.Dictionary.*');
         $this->_createTask('Comments.Backend.Comments.*');
         $this->_createTask('Comments.Frontend.Comments.*');
         $this->_createTask('Deals.Backend.Deals.*');
@@ -125,6 +127,8 @@ class AuthCommand extends CConsoleCommand{
         $this->_createTask('Events.User.Alcohol.*');
         $this->_createTask('Events.User.EventsGuests.*');
         $this->_createTask('Events.User.EventsDoings.*');
+        $this->_createTask('Events.User.DailySchedules.*');
+        $this->_createTask('Events.User.DailySchedulesEvents.*');
         $this->_createTask('Events.Backend.EventsGuests.*');
         $this->_createTask('Events.Backend.Events.InvitedUsers.*');
         $this->_createTask('Banners.*');
@@ -175,6 +179,8 @@ class AuthCommand extends CConsoleCommand{
         $this->_addItemChild("Admin",'Cms.Block.*');
         $this->_addItemChild("Admin",'Cms.Language.*');
         $this->_addItemChild("Admin",'Cms.Page.*');
+        $this->_addItemChild("Admin",'Cms.Frontend.Dictionary.*');
+        $this->_addItemChild("Admin",'Cms.Backend.Dictionary.*');
         $this->_addItemChild("Admin",'Comments.Backend.Comments.*');
         $this->_addItemChild("Admin",'Comments.Frontend.Comments.*');
         $this->_addItemChild("Admin",'Deals.Backend.Deals.*');
@@ -267,7 +273,10 @@ class AuthCommand extends CConsoleCommand{
         $this->_addItemChild("Authenticated",'Events.User.Alcohol.*');
         $this->_addItemChild("Authenticated",'Events.User.EventsDoings.*');
         $this->_addItemChild("Authenticated",'Events.User.EventsGuests.*');
+        $this->_addItemChild("Authenticated",'Events.User.DailySchedules.*');
+        $this->_addItemChild("Authenticated",'Events.User.DailySchedulesEvents.*');
         $this->_addItemChild("Authenticated",'Banners.User.Banners.*');
+        $this->_addItemChild("Authenticated",'Cms.Frontend.Dictionary.*');
 
 
         //$this->_addItemChild("Guest",'Deals.Frontend.Catalog.*');
@@ -302,6 +311,7 @@ class AuthCommand extends CConsoleCommand{
         $this->_addItemChild("Guest",'Payment.User.WebMoney.Result');
         $this->_addItemChild("Guest",'Payment.User.WebMoney.Success');
         $this->_addItemChild("Guest",'Payment.User.WebMoney.Fail');
+        $this->_addItemChild("Guest",'Cms.Frontend.Dictionary.*');
 
         $this->_assignUsers();
 
@@ -344,5 +354,13 @@ class AuthCommand extends CConsoleCommand{
         $command->reset();
         echo "User ".$userId." was assigned to role \"".$role."\" successfully.\r\n";
 
+    }
+
+    public function actionAssignAuthenticatedRoleToAllUsers(){
+
+        foreach(User::model()->findAll() as $user){
+            $this->_assign("Authenticated",$user->id);
+            echo $user->id."\r\n";
+        }
     }
 }

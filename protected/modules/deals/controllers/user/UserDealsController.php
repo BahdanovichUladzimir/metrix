@@ -137,6 +137,30 @@ class UserDealsController extends UserFrontendController
             $categoriesIds = array();
             if(isset($_POST['Deals']['categories']) && sizeof($_POST['Deals']['categories'])>0){
                 $categories = DealsCategories::model()->findAllByPk($_POST['Deals']['categories']);
+                if(sizeof($categories)>0){
+                    foreach($categories as $category){
+                        $criteria = new CDbCriteria();
+                        $criteria->with='categories';
+                        $criteria->condition = 't.user_id=:user_id AND categories.id=:category_id';
+                        $criteria->params = array(
+                            ':user_id' => $this->userId,
+                            ':category_id' => $category->id
+                        );
+                        $userCategoryDealsCount = Deals::model()->count($criteria);
+                        if($userCategoryDealsCount>=$category->free_deals_count){
+                            $model->exceeding_category_limit_hidden = 1;
+                            Yii::app()->user->setFlash(
+                                'backendDealsError',
+                                Yii::t(
+                                    "dealsModule",
+                                    "Exceeded limit deals for the category <strong>{name}</strong>! Turn paid impressions.",
+                                    array('{name}' => $category->name)
+                                )
+                            );
+
+                        }
+                    }
+                }
                 $categoriesIds = $_POST['Deals']['categories'];
                 unset($_POST['Deals']['categories']);
                 $model->categories = $categories;
@@ -148,6 +172,13 @@ class UserDealsController extends UserFrontendController
             if(isset($_POST['DealCategoriesParams'])){
                 $dealCatsParams = $_POST['DealCategoriesParams'];
 
+                // если параметр имееет тип phone(телефон). Вырезаем все ненужные символы
+                foreach($dealCatsParams as $k=>$v){
+                    $param = DealsParams::model()->findByAttributes(array('name' => $k));
+                    if($param->type->name == 'phone'){
+                        $dealCatsParams[$k] = preg_replace("/[^0-9]/", "", $v);
+                    }
+                }
                 // получаем из виджета longitude И latitude если они пришли, и задаём параметр coordinates
                 // удаляем из массива longitude и latitude
                 if(isset($dealCatsParams['longitude']) || isset($dealCatsParams['latitude'])){
@@ -176,23 +207,54 @@ class UserDealsController extends UserFrontendController
                             if($k == "latitude" || $k == "longitude"){
                                 continue;
                             }
-                            $dealsParamsValuesModel = new DealsParamsValues;
-                            $dealsParamsValuesModel->deal_id = (int)$model->id;
-                            $param = DealsParams::model()->find('name=:name',array(':name' => $k));
-                            $dealsParamsValuesModel->param_id = $param->id;
-                            $dealsParamsValuesModel->value = $v;
-                            if($dealsParamsValuesModel->validate()){
-                                if($dealsParamsValuesModel->save()){
-                                    $isParamSave = true;
-                                }
-                                else{
-                                    $isParamSave = false;
-                                    break;
+                            if(is_array($v)){
+                                foreach($v as $value){
+                                    $dealsParamsValuesModel = new DealsParamsValues;
+                                    $dealsParamsValuesModel->deal_id = (int)$model->id;
+                                    $param = DealsParams::model()->find('name=:name',array(':name' => $k));
+                                    $dealsParamsValuesModel->param_id = $param->id;
+                                    if($param->type->name == "phone"){
+                                        $v=preg_replace("#[^0-9]#i","",$value);
+                                    }
+                                    $dealsParamsValuesModel->value = $value;
+                                    if($dealsParamsValuesModel->validate()){
+                                        if($dealsParamsValuesModel->save()){
+                                            $isParamSave = true;
+                                        }
+                                        else{
+                                            $isParamSave = false;
+                                            break;
+                                        }
+                                    }
+                                    else{
+                                        $transaction->rollback();
+                                        Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", "When update deal <strong>{name}</strong> error occurred!", array('{name}' => $model->name)));
+                                    }
                                 }
                             }
                             else{
-                                $transaction->rollback();
-                                Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", "When create deal <strong>{name}</strong> error occurred!", array('{name}' => $model->name)));
+                                $dealsParamsValuesModel = new DealsParamsValues;
+                                $dealsParamsValuesModel->deal_id = (int)$model->id;
+                                $param = DealsParams::model()->find('name=:name',array(':name' => $k));
+                                $dealsParamsValuesModel->param_id = $param->id;
+                                if($param->type->name == "phone"){
+                                    $v=preg_replace("#[^0-9]#i","",$v);
+                                }
+                                $dealsParamsValuesModel->value = $v;
+                                if($dealsParamsValuesModel->validate()){
+                                    if($dealsParamsValuesModel->save()){
+                                        $isParamSave = true;
+                                    }
+                                    else{
+                                        $isParamSave = false;
+                                        break;
+                                    }
+                                }
+                                else{
+                                    $transaction->rollback();
+                                    Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", "When update deal <strong>{name}</strong> error occurred!", array('{name}' => $model->name)));
+                                }
+
                             }
                         }
                         if($isParamSave){
@@ -289,7 +351,16 @@ class UserDealsController extends UserFrontendController
             $paramsValid = true;
             if(isset($_POST['DealCategoriesParams'])){
                 $dealCatsParams = $_POST['DealCategoriesParams'];
+                //Config::var_dump($dealCatsParams);
 
+
+                // если параметр имееет тип phone(телефон). Вырезаем все ненужные символы
+                foreach($dealCatsParams as $k=>$v){
+                    $param = DealsParams::model()->findByAttributes(array('name' => $k));
+                    if($param->type->name == 'phone'){
+                        $dealCatsParams[$k] = preg_replace("/[^0-9]/", "", $v);
+                    }
+                }
                 // получаем из виджета longitude И latitude если они пришли, и задаём параметр coordinates
                 // удаляем из массива longitude и latitude
                 if(isset($dealCatsParams['longitude']) || isset($dealCatsParams['latitude'])){
@@ -320,28 +391,56 @@ class UserDealsController extends UserFrontendController
                             if($k == "latitude" || $k == "longitude"){
                                 continue;
                             }
-
-                            $dealsParamsValuesModel = new DealsParamsValues;
-                            $dealsParamsValuesModel->deal_id = (int)$model->id;
-                            $param = DealsParams::model()->find('name=:name',array(':name' => $k));
-                            $dealsParamsValuesModel->param_id = $param->id;
-                            if($param->type->name == "phone"){
-                                $v=preg_replace("#[^0-9]#i","",$v);
-                            }
-                            $dealsParamsValuesModel->value = $v;
-                            if($dealsParamsValuesModel->validate()){
-                                if($dealsParamsValuesModel->save()){
-                                    $isParamSave = true;
-                                }
-                                else{
-                                    $isParamSave = false;
-                                    break;
+                            if(is_array($v)){
+                                foreach($v as $value){
+                                    $dealsParamsValuesModel = new DealsParamsValues;
+                                    $dealsParamsValuesModel->deal_id = (int)$model->id;
+                                    $param = DealsParams::model()->find('name=:name',array(':name' => $k));
+                                    $dealsParamsValuesModel->param_id = $param->id;
+                                    if($param->type->name == "phone"){
+                                        $v=preg_replace("#[^0-9]#i","",$value);
+                                    }
+                                    $dealsParamsValuesModel->value = $value;
+                                    if($dealsParamsValuesModel->validate()){
+                                        if($dealsParamsValuesModel->save()){
+                                            $isParamSave = true;
+                                        }
+                                        else{
+                                            $isParamSave = false;
+                                            break;
+                                        }
+                                    }
+                                    else{
+                                        $transaction->rollback();
+                                        Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", "When update deal <strong>{name}</strong> error occurred!", array('{name}' => $model->name)));
+                                    }
                                 }
                             }
                             else{
-                                $transaction->rollback();
-                                Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", "When update deal <strong>{name}</strong> error occurred!", array('{name}' => $model->name)));
+                                $dealsParamsValuesModel = new DealsParamsValues;
+                                $dealsParamsValuesModel->deal_id = (int)$model->id;
+                                $param = DealsParams::model()->find('name=:name',array(':name' => $k));
+                                $dealsParamsValuesModel->param_id = $param->id;
+                                if($param->type->name == "phone"){
+                                    $v=preg_replace("#[^0-9]#i","",$v);
+                                }
+                                $dealsParamsValuesModel->value = $v;
+                                if($dealsParamsValuesModel->validate()){
+                                    if($dealsParamsValuesModel->save()){
+                                        $isParamSave = true;
+                                    }
+                                    else{
+                                        $isParamSave = false;
+                                        break;
+                                    }
+                                }
+                                else{
+                                    $transaction->rollback();
+                                    Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", "When update deal <strong>{name}</strong> error occurred!", array('{name}' => $model->name)));
+                                }
+
                             }
+
                         }
                         if($isParamSave){
                             $transaction->commit();
@@ -1640,6 +1739,195 @@ class UserDealsController extends UserFrontendController
         }
     }
 
+    public function actionSetPaid($id,$paid){
+        $deal = Deals::model()->findByPk($id);
+        if(!is_null($deal)){
+            if(Yii::app()->user->getId() != $deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+                throw new CHttpException(403,'Access denied!');
+            }
+            $deal->paid = $paid;
+            if($deal->save()){
+                if($paid == '1'){
+                    $paymentAmount = Yii::app()->config->get("DEALS_MODULE.PRIORITY_PLACEMENT_PAYMENT");
+                    if($deal->user->ballance>=$paymentAmount){
+                        $payment = new Payments();
+                        $payment->user_id = (int)$deal->user_id;
+                        $payment->type_id = 4;
+                        $payment->time = time();
+                        $payment->amount = (int)$paymentAmount;
+                        $payment->real_amount = (int)$paymentAmount;
+                        $payment->app_category_id = (int)AppCategories::model()->findByAttributes(array('name'=>'deals'))->id;
+                        $payment->app_item_id = (int)$deal->id;
+                        if($payment->save()){
+                            $deal->priority = 1;
+                            $deal->setScenario("writeOffForDealsPriorityPlacement");
+                            if($deal->save()){
+                                if(Yii::app()->request->isAjaxRequest){
+                                    $message = Yii::t('dealsModule',"Paid placement has been successfully enabled for deal <strong>{name}</strong>!", array("{name}" => $deal->name));
+                                    echo CJSON::encode(array(
+                                        'deal_id' => $id,
+                                        'status' => 'success',
+                                        'message' => $message,
+                                        'html' => $this->renderPartial('_message',array("model"=>$deal, "message" => $message, "status" => "success"),true),
+                                    ));
+                                    Yii::app()->end();
+                                }
+                            }
+                            else{
+                                if(Yii::app()->request->isAjaxRequest){
+                                    $message = Yii::t('dealsModule',"When the paid accommodation for the deal <strong>{name}</strong> the error occurred!", array("{name}" => $deal->name));
+                                    echo CJSON::encode(array(
+                                        'deal_id' => $id,
+                                        'status' => 'error',
+                                        'message' => $message,
+                                        'html' => $this->renderPartial('_message',array("model"=>$deal, "message" => $message, "status" => "danger"),true),
+                                    ));
+                                    Yii::app()->end();
+                                }
+
+                            };
+                        }
+                        else{
+                            if(Yii::app()->request->isAjaxRequest){
+                                $message = Yii::t('dealsModule',"When the paid accommodation for the deal <strong>{name}</strong> the error occurred!", array("{name}" => $deal->name));
+                                echo CJSON::encode(array(
+                                    'deal_id' => $id,
+                                    'status' => 'error',
+                                    'message' => $message,
+                                    'html' => $this->renderPartial('_message',array("model"=>$deal, "message" => $message, "status" => "danger"),true),
+                                ));
+                                Yii::app()->end();
+                            }
+                        }
+                    }
+                    else{
+                        if(Yii::app()->request->isAjaxRequest){
+                            $message = Yii::t('dealsModule',"When the paid accommodation for the deal <strong>{name}</strong> the error occurred! Insufficient funds.", array("{name}" => $deal->name));
+                            echo CJSON::encode(array(
+                                'deal_id' => $id,
+                                'status' => 'error',
+                                'message' => $message,
+                                'html' => $this->renderPartial('_message',array("model"=>$deal, "message" => $message, "status" => "danger"),true),
+                            ));
+                            Yii::app()->end();
+                        }
+                    }
+
+                }
+                elseif($paid == "0"){
+                    if(Yii::app()->request->isAjaxRequest){
+                        $message = Yii::t('dealsModule',"Paid placement has been successfully disabled for deal <strong>{name}</strong>!", array("{name}" => $deal->name));
+                        echo CJSON::encode(array(
+                            'deal_id' => $id,
+                            'status' => 'success',
+                            'message' => $message,
+                            'html' => $this->renderPartial('_message',array("model"=>$deal, "message" => $message, "status" => "success"),true),
+                        ));
+                        Yii::app()->end();
+                    }
+                }
+
+            };
+
+        }
+    }
+
+    public function actionPayForLimit($id,$enable){
+        /**
+         * @var $deal Deals
+         */
+        $deal = Deals::model()->findByPk($id);
+        if(!is_null($deal)){
+            if(Yii::app()->user->getId() != $deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+                throw new CHttpException(403,'Access denied!');
+            }
+            if($enable == '1'){
+                $paymentAmount = $deal->getPaidAmountForExceedingLimitCategories();
+                if($deal->user->ballance>=$paymentAmount){
+                    $payment = new Payments();
+                    $payment->user_id = (int)$deal->user_id;
+                    $payment->type_id = 7;
+                    $payment->time = time();
+                    $payment->amount = (int)$paymentAmount;
+                    $payment->real_amount = (int)$paymentAmount;
+                    $payment->app_category_id = (int)AppCategories::model()->findByAttributes(array('name'=>'deals'))->id;
+                    $payment->app_item_id = (int)$deal->id;
+                    if($payment->save()){
+                        $deal->setScenario("writeOffForDealsCategoryExceedingLimitPlacement");
+                        $deal->exceeding_category_limit_hidden = 0;
+                        $deal->exceeding_limit_paid = 1;
+                        if($deal->save()){
+                            if(Yii::app()->request->isAjaxRequest){
+                                $message = Yii::t('dealsModule',"Show has been successfully enabled for deal <strong>{name}</strong>!", array("{name}" => $deal->name));
+                                echo CJSON::encode(array(
+                                    'deal_id' => $id,
+                                    'status' => 'success',
+                                    'message' => $message,
+                                    'html' => $this->renderPartial('_message',array("model"=>$deal, "message" => $message, "status" => "success"),true),
+                                ));
+                                Yii::app()->end();
+                            }
+                        }
+                        else{
+                            if(Yii::app()->request->isAjaxRequest){
+                                $message = Yii::t('dealsModule',"When the paid accommodation for the deal <strong>{name}</strong> the error occurred!", array("{name}" => $deal->name));
+                                echo CJSON::encode(array(
+                                    'deal_id' => $id,
+                                    'status' => 'error',
+                                    'message' => $message,
+                                    'html' => $this->renderPartial('_message',array("model"=>$deal, "message" => $message, "status" => "danger"),true),
+                                ));
+                                Yii::app()->end();
+                            }
+
+                        };
+                    }
+                    else{
+                        if(Yii::app()->request->isAjaxRequest){
+                            $message = Yii::t('dealsModule',"When the paid accommodation for the deal <strong>{name}</strong> the error occurred!", array("{name}" => $deal->name));
+                            echo CJSON::encode(array(
+                                'deal_id' => $id,
+                                'status' => 'error',
+                                'message' => $message,
+                                'html' => $this->renderPartial('_message',array("model"=>$deal, "message" => $message, "status" => "danger"),true),
+                            ));
+                            Yii::app()->end();
+                        }
+                    }
+                }
+                else{
+                    if(Yii::app()->request->isAjaxRequest){
+                        $message = Yii::t('dealsModule',"When the paid accommodation for the deal <strong>{name}</strong> the error occurred! Insufficient funds.", array("{name}" => $deal->name));
+                        echo CJSON::encode(array(
+                            'deal_id' => $id,
+                            'status' => 'error',
+                            'message' => $message,
+                            'html' => $this->renderPartial('_message',array("model"=>$deal, "message" => $message, "status" => "danger"),true),
+                        ));
+                        Yii::app()->end();
+                    }
+                }
+
+            }
+            elseif($enable == "0"){
+                if(Yii::app()->request->isAjaxRequest){
+                    $deal->exceeding_category_limit_hidden = 1;
+                    $deal->exceeding_limit_paid = 0;
+                    if($deal->save()){
+                        $message = Yii::t('dealsModule',"Show has been successfully disabled for deal <strong>{name}</strong>!", array("{name}" => $deal->name));
+                        echo CJSON::encode(array(
+                            'deal_id' => $id,
+                            'status' => 'success',
+                            'message' => $message,
+                            'html' => $this->renderPartial('_message',array("model"=>$deal, "message" => $message, "status" => "success"),true),
+                        ));
+                        Yii::app()->end();
+                    }
+
+                }
+            }
+        }
+    }
     /**
      * @param $id
      * @return Deals

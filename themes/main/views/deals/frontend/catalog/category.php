@@ -78,7 +78,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/j
             <?php endif;?>
         </div>
         <?php $this->widget('zii.widgets.CListView', array(
-            'dataProvider'=>$model->search(),
+            'dataProvider'=>$model->search($category->page_count),
             'itemView'=>'_deal',   // refers to the partial view named '_post'
             'template' => '{pager}{items}{pager}',
             'summaryText' => '',

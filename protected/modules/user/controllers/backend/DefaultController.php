@@ -131,8 +131,8 @@ class DefaultController extends BackendController
 	 */
 	public function actionDelete()
 	{
-		if(Yii::app()->request->isPostRequest)
-		{
+		/*if(Yii::app()->request->isPostRequest)
+		{*/
 			// we only allow deletion via POST request
 			$model = $this->loadModel();
 			$profile = Profile::model()->findByPk($model->id);
@@ -141,9 +141,11 @@ class DefaultController extends BackendController
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_POST['ajax']))
 				$this->redirect(array('/admin/users'));
-		}
-		else
+		/*}
+		else{
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+
+		}*/
 	}
 	
 	/**

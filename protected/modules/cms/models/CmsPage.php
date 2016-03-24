@@ -103,6 +103,9 @@ class CmsPage extends CmsNode {
             'event' => array(
                 self::HAS_ONE, 'Event', 'pageId',
             ),
+            'cmsPagesDictionary' => array(self::HAS_MANY, 'CmsPagesDictionary', 'page_id'),
+            'dictionary'=>array(self::MANY_MANY, 'Dictionary', 'CmsPagesDictionary(dictionary_id, page_id)'),
+
         );
     }
 

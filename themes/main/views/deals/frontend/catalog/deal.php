@@ -2,6 +2,7 @@
 /**
  * @author Bahdanovich Uladzimir <bahdanovich.uladzimir@gmail.com>
  * @date 18.03.2015
+ * @var $deal Deals
  */
 
 ;?>
@@ -120,6 +121,17 @@
     <div class="panel panel-default">
         <div class="panel-body cf">
             <div class="service-info inner">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="pull-right">
+                            <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
+                            <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
+                            <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,gplus,twitter,linkedin"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row spacer-10"></div>
+
                 <?php if((!is_null(Yii::app()->user->getId()) && Yii::app()->user->getId() == $deal->user_id) || Yii::app()->getModule('user')->isAdmin()):?>
                     <div class="dropdown pull-right">
                         <a href="#" class="gr-btn dropdown-toggle" data-toggle="dropdown"><?=Yii::t('core','Edit');?></a>
@@ -235,11 +247,11 @@
                     <div id="readMoreReadLess1"><?=$deal->publicDescription;?></div>
                 <?php endif;?>
                 <div class="bottom-container">
-                    <div>
+                    <div class="text-center">
                         <?php $this->widget('modules.deals.widgets.addToFavorites.AddToFavoritesWidget', array(
                             'deal'=>$deal,
                         ));?>
-                        <a href="<?=Yii::app()->createUrl('/messages/user/dialogues/dialog', array("receiver_id" => $deal->user_id, '#' => 'main_menu_container'));?>" class="message btn"><?=Yii::t("dealsModule","Send message");?></a>
+                        <a href="<?=Yii::app()->createUrl('/messages/user/dialogues/dialog', array("receiver_id" => $deal->user_id, '#' => 'main_menu_container'));?>" class="send-message btn"><?=Yii::t("dealsModule","Send message");?></a>
                     </div>
                     <div class="price">
                         <?php $this->widget('modules.deals.widgets.dealPrice.DealPriceWidget', array(

@@ -119,6 +119,7 @@ class Comments extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+        $criteria->order = 'approve ASC';
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('parent_id',$this->parent_id,true);
@@ -186,7 +187,12 @@ class Comments extends CActiveRecord
     public function getAppCategoryItemLink(){
         if($this->appCategory->name == 'deals'){
             $deal = Deals::model()->findByPk($this->app_category_item_id);
-            return CHtml::link($deal->name,$deal->getAdminUrl());
+			if(!is_null($deal)){
+				return CHtml::link($deal->name,$deal->getPublicUrl());
+			}
+			else{
+				return false;
+			}
         }
         return false;
     }

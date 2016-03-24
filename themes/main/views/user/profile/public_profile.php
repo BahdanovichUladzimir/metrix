@@ -4,10 +4,28 @@
  * @var $model User
  * @var $deal Deals
  */
+$this->title = $model->username.", ".$model->getCommentUserName()." - all4holidays";
 $this->breadcrumbs=array(
     //Yii::t('userModule',"Users")=>'/users',
     CHtml::encode($model->username),
-);?>
+);
+Yii::app()->clientScript->registerCssFile(Yii::app()->request->baseUrl.'/css/jquery.fancybox.css');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.fancybox.pack.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/fancyBox/source/helpers/jquery.fancybox-buttons.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/fancyBox/source/helpers/jquery.fancybox-media.js');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/fancyBox/source/helpers/jquery.fancybox-thumbs.js');
+
+?>
+<script>
+    $(document).ready(function(){
+        $('.fancybox-public-avatar').click(function(){
+            var avatar = $(this);
+            $.fancybox({
+                'href': avatar.data('href')
+            });
+        });
+    });
+</script>
 <section>
     <h1 class="title section-title h1"><?php echo Yii::t('userModule','User profile'); ?></h1>
     <?php if( Yii::app()->user->hasFlash('profileMessage')):?>
@@ -26,7 +44,7 @@ $this->breadcrumbs=array(
     <div class="panel panel-default">
         <div class="panel-body cf">
             <div class="service-info inner">
-                <img src="<?=$profile->getMediumThumbUrl();?>" class="img-left avatar" alt="" />
+                <img src="<?=$profile->getMediumThumbUrl();?>" data-href="<?=$profile->getLargeThumbUrl();?>" class="img-left avatar fancybox-public-avatar" alt="<?=$model->username;?>" />
                 <h1 class="title section-title"><?php echo CHtml::encode($model->username);?></h1>
                 <?php if($profile->city):?>
                     <span class="location b-spr"><?=CHtml::encode($profile->city->name);?>, <?=CHtml::encode($profile->city->country->name);?></span>

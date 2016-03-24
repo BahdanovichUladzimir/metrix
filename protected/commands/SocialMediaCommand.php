@@ -29,16 +29,79 @@ class SocialMediaCommand extends CConsoleCommand{
             ':post_date_time' => date('Y-m-d H:i:s',time())
         );
         $posts = SocialMediaPosting::model()->findAll($criteria);
+
         if(sizeof($posts)>0){
             $vk = new VkApi($this->vkAppId,$this->vkAccessToken);
             foreach($posts as $post){
                 $response = array();
                 // Если тип страница, просто постим её
                 if($post->type == '1'){
-                    $response = $vk->wallPostMessage($this->vkGroupId, $post->description, (!is_null($post->link) && strlen(trim($post->link))>0) ? $post->link : "https://all4holidays.com");
+                    $photos = array();
+                    $dom = new domDocument();
+                    $dom->loadHTML($post->description);
+                    $dom->preserveWhiteSpace = false;
+                    $imgs  = $dom->getElementsByTagName("img");
+                    $links = array();
+                    for($i = 0; $i < $imgs->length; $i++) {
+                        $links[] = $imgs->item($i)->getAttribute("src");
+                    }
+                    $cleanDescription = html_entity_decode(strip_tags(trim($post->description)));
+                    if(sizeof($links)>0){
+                        $images = array();
+                        if(YII_ENV == "local.dev"){
+                            $rootPath = 'D:\OpenServer\domains\all4holidays';
+                        }
+                        elseif(YII_ENV == "dev"){
+                            $rootPath = '/var/www/dev.all4holidays';
+                        }
+                        elseif(YII_ENV == "rc"){
+                            $rootPath = '/var/www/rc.all4holidays';
+                        }
+                        else{
+                            $rootPath = '/var/www/all4holidays';
+                        }
+                        foreach($links as $link){
+                            $filePath = urldecode($rootPath.$link);
+
+                            if(file_exists($filePath)){
+                                $images[] = $filePath;
+                            }
+                            else{
+                                var_dump($filePath." - file not found");
+                            }
+                        }
+                        $result = $vk->uploadImages($this->vkAlbumId,$this->vkGroupId, $images, $post->title);
+                        if(isset($result->error)){
+                            Yii::log(
+                                "When upload images to Vk error occurred! Vk error code - ".$result->error->error_code.". Error message - ".$result->error->error_msg.".",
+                                CLogger::LEVEL_ERROR,
+                                'application.commands.socialMediaCommand.postingToVk');
+                        }
+                        elseif($result && is_array($result)&& sizeof($result)>0){
+                            Yii::log("Images uploaded to Vk successfully.", CLogger::LEVEL_INFO,'application.commands.socialMediaCommand.postingToVk');
+                            foreach ($result as $uploadedImages) {
+                                $photos[] = "photo".$uploadedImages->owner_id."_".$uploadedImages->pid;
+                            }
+                        }
+                        else{
+
+                        }
+                        if(!is_null($post->link) && strlen(trim($post->link))>0){
+                            $response = $vk->wallPostMessage($this->vkGroupId, $cleanDescription, $post->link.",".implode(',',$photos));
+                        }
+                        else{
+                            $response = $vk->wallPostMessage($this->vkGroupId, $cleanDescription,"https://all4holidays.com,".implode(',',$photos));
+                        }
+                    }
+                    else{
+                        $response = $vk->wallPostMessage($this->vkGroupId, $cleanDescription, (!is_null($post->link) && strlen(trim($post->link))>0) ? $post->link : "https://all4holidays.com");
+
+                    }
                 }
                 // Если тип deal, то выбираем картинки товара, загружаем их в альбом и привязываем к посту
                 elseif($post->type == "2"){
+                    //var_dump($post->type);
+                    $cleanDescription = strip_tags(trim($post->description));
                     $photos = array();
                     if(sizeof($post->images)>0){
                         $images = array();
@@ -76,12 +139,11 @@ class SocialMediaCommand extends CConsoleCommand{
                         }
                     }
                     if(!is_null($post->link) && strlen(trim($post->link))>0){
-                        $response = $vk->wallPostMessage($this->vkGroupId, $post->description, $post->link.",".implode(',',$photos));
+                        $response = $vk->wallPostMessage($this->vkGroupId, $cleanDescription, $post->link.",".implode(',',$photos));
                     }
                     else{
-                        $response = $vk->wallPostMessage($this->vkGroupId, $post->description,"https://all4holidays.com,".implode(',',$photos));
+                        $response = $vk->wallPostMessage($this->vkGroupId, $cleanDescription,"https://all4holidays.com,".implode(',',$photos));
                     }
-
                 }
                 if(isset($response->response->post_id)){
                     $post->status = 3;

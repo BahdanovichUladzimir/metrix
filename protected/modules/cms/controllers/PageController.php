@@ -58,9 +58,6 @@ class PageController extends NodeController {
 
         if (isset($_POST['CmsPage'])) {
             $model->attributes = $_POST['CmsPage'];
-            if($_POST['CmsPage']['vkPublished']){
-
-            }
             if ($model->save()) {
                 Yii::app()->user->setFlash($this->module->flashes['success'], Yii::t('page', 'Page created.'));
                 $this->redirect(array('update', 'id' => $model->id));

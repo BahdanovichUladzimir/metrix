@@ -1,7 +1,7 @@
 <?php
 
 $yiic=dirname(__FILE__).'/../../../lib/yii-1.1.16/framework/yiic.php';
-if(strpos(dirname(__FILE__),'\domains\holidaysguide') || strpos(dirname(__FILE__),'\domains\local.dev.all4holidays.com')){
+if(strpos(dirname(__FILE__),'\domains\all4holidays') || strpos(dirname(__FILE__),'\domains\local.dev.all4holidays.com')){
     error_reporting (E_ALL);
     defined('YII_DEBUG') or define('YII_DEBUG',true);
     defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);

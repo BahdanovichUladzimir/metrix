@@ -142,18 +142,31 @@ class MyController extends BackendController{
 
     }*/
 
-    public function actionClearDealsDescription(){
-        $criteria = new CDbCriteria();
-        //$criteria->limit = 100;
-        //$criteria->condition = 'id=:id';
-        //$criteria->params = array(':id' => 93);
-        foreach (Deals::model()->findAll() as $deal){
-            if($deal->save()){
+    /*public function actionClearDealsDescription(){
+        $deals = Deals::model()->findAll();
+
+        echo sizeof($deals)."<br>";
+        foreach ($deals as $deal){
+            $p = new CHtmlPurifier();
+            $p->options = array(
+                'HTML.AllowedElements' => Yii::app()->config->get('DEALS_MODULE.DESCRIPTION_ALLOWED_TAGS'),
+                'HTML.AllowedAttributes' => '*.class'
+
+            );
+            $deal->description = $p->purify($deal->description);
+            echo $deal->id."<br>";
+            //echo $deal->validate()."<br>";
+            $deal->setScenario("clearDealDescription");
+
+
+            if($deal->save(false)){
                 echo $deal->name." was saved successfully!<br>";
             }
             else{
+                Config::var_dump($deal->getErrors());
+
                 echo "When save deal ".$deal->name." error occurred!<br>";
             }
         }
-    }
+    }*/
 }

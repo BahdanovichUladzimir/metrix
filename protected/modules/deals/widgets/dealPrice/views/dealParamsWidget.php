@@ -16,7 +16,7 @@ if($dealPrice>0){
     <td>
         <span><?=$dealPrice;?> <?=(isset($deal->currency)) ? $deal->currency->key : $userCurrency->key;?></span>
         <?php if($dealPrice>0 && $userCurrency->key != $deal->currency->key):?>
-            <span><?/*=Yii::t('dealsModule','From');*/?> <?=ceil($userPrice);?> <?=(isset($deal->currency)) ? $userCurrency->key : $userCurrency->key;?></span>
+            <span><?=ceil($userPrice);?> <?=(isset($deal->currency)) ? $userCurrency->key : $userCurrency->key;?></span>
         <?php endif;?>
     </td>
 </tr>
