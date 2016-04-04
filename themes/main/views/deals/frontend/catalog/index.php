@@ -17,8 +17,9 @@ $('.slider').owlCarousel({
 ");
 ?>
 <h1 class="main-title a b">
-    <span class="head">Всё для организации</span>
-    <span>Свадьбы<span> & </span>Праздника</span>
+    <!--<span class="head">Всё для занятия спортом</span>
+    <span>Свадьбы<span> & </span>Праздника</span>-->
+    <span><?=Yii::t('dealsModule','All for sport in Belarus');?></span>
 </h1>
 <div class="slider">
     <div>

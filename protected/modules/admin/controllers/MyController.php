@@ -26,6 +26,7 @@ class MyController extends BackendController{
 
     }
 
+
     /*public function actionTestGeoip(){
 
         // IP-�����, ������� ����� ���������

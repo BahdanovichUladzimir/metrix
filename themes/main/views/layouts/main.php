@@ -26,7 +26,7 @@
         )
     );?>
     <section>
-        <?php if(Yii::app()->request->requestUri == '/'):?>
+        <?php /**  if(Yii::app()->request->requestUri == '/'):?>
             <div class="banner-container">
                 <div class="banner-bg">
                     <div class="container">
@@ -70,7 +70,7 @@
                     </div>
                 </div>
             </div>
-        <?php endif;?>
+        <?php endif;**/?>
         <div class="container">
             <?php // Не кэшируем хлебные крошки так как кэшируется ссылка на кабинет пользователя;?>
             <?php /*if($this->beginCache('breadcrumbs_'.$this->userCityId.'_'.Yii::app()->language."_".Yii::app()->request->url, array('duration' => 60*60*24))):*/?>
@@ -105,9 +105,9 @@
 <?php Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery-cookie/src/jquery.cookie.min.js', CClientScript::POS_END);?>
 <?php Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/scripts.js', CClientScript::POS_END);?>
 <?php Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/uppod-0.5.26.js', CClientScript::POS_END);?>
-<?php /*if(Yii::app()->user->checkAccess('Translate.Translate.Update') && Yii::app()->user->checkAccess('Translate.Translate.Create')):*/?><!--
-    <?php /*Yii::app()->translate->renderMissingTranslationsEditor();*/?>
---><?php /*endif;*/?>
+<?php if(Yii::app()->user->checkAccess('Translate.Translate.Update') && Yii::app()->user->checkAccess('Translate.Translate.Create')):?>
+    <?php Yii::app()->translate->renderMissingTranslationsEditor();?>
+<?php endif;?>
 
 
 

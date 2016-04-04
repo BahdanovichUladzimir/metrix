@@ -8,7 +8,19 @@ $this->breadcrumbs=array(
 	Yii::t('adminModule','Manage'),
 );
 ?>
+<?php if( Yii::app()->user->hasFlash('dealsCategoriesSuccess')):?>
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <?php echo Yii::app()->user->getFlash('dealsCategoriesSuccess'); ?>
+    </div>
+<?php endif; ?>
 
+<?php if( Yii::app()->user->hasFlash('dealsCategoriesError')):?>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <?php echo Yii::app()->user->getFlash('dealsCategoriesError'); ?>
+    </div>
+<?php endif; ?>
 <h1><?=Yii::t("dealsModule","Manage deals categories");?></h1>
 <p>
 	<?php echo CHtml::link(

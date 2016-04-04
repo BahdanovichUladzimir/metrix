@@ -116,7 +116,9 @@ class CatalogController extends FrontendController
 
         }
         else{
-            $categories = DealsCategories::getRootCategories(false,false);
+            $rootCategoriesIds = DealsCategories::getRootCategoriesIds(false,false);
+            //Config::var_dump($rootCategoriesIds, true);
+            $categories = DealsCategories::getCategoriesChildren($rootCategoriesIds);
             $this->render(
                 'index',
                 array(

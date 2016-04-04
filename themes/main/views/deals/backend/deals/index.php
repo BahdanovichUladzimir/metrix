@@ -17,12 +17,6 @@ $this->breadcrumbs=array(
 			'class'=>'btn btn-success',
 		)
 	);*/?>
-<div class="alert alert-danger alert-dismissible" role="alert">
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<p>Уважаемые коллеги! Не удаляйте пожалуйста тестовые объявления, которые созданы пользователем <strong>admin</strong>! Я с ними работаю.</p>
-	<p>Заранее благодарю!</p>
-	<p>C уважением. Владимир (разработчик).</p>
-</div>
 <?php $this->widget('booster.widgets.TbExtendedGridView',array(
 	'id'=>'deals-grid',
 	'dataProvider'=>$model->adminSearch(),

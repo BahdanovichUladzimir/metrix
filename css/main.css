@@ -358,4 +358,12 @@ a.dictionary-word, a.dictionary-word:hover, a.dictionary-word:active{
 a.dictionary-word:visited{
     color: #777;
 }
+.main-title, .main-title:first-child {
+    color: #131313;
+    display: block;
+    font-family: "Open Sans";
+    font-size: 36px;
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
 

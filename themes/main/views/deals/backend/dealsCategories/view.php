@@ -16,7 +16,7 @@ $this->breadcrumbs=array(
 
 <h1><small><?=Yii::t("dealsModule","View Category");?></small> <?php echo $model->name; ?></h1>
 <?php if(!is_null($model->image)):?>
-    <?=CHtml::image($model->getSmallThumbUrl(),$model->name);?>
+    <?=CHtml::image($model->getMediumThumbUrl(),$model->name);?>
 <?php endif;?>
 <?php $this->widget('booster.widgets.TbDetailView',array(
 	'data'=>$model,
@@ -61,6 +61,16 @@ $this->breadcrumbs=array(
 		Yii::t('adminModule', 'Edit'),
 		array(
 			'update', 'id'=>$model->id
+		),
+		array(
+			'class'=>'btn btn-success',
+		)
+	);?>
+
+	<?php echo CHtml::link(
+		Yii::t('adminModule', 'Create new category'),
+		array(
+			'create'
 		),
 		array(
 			'class'=>'btn btn-success',

@@ -20,6 +20,7 @@ class AuthCommand extends CConsoleCommand{
 
         self::$_users = User::model()->findAll();
         foreach(self::$_users as $user){
+            echo $user->username.'\r\n';
             $userRoles = $this->auth->getRoles($user->id);
             self::$_userRoles[$user->id] = $userRoles;
         }
@@ -318,13 +319,19 @@ class AuthCommand extends CConsoleCommand{
         echo "Command \"auth reinstall\" was finished.\r\n";
     }
 
-    private function _createTask($task){
-        $this->auth->createTask($task);
+    private function _createTask($task, $description = '', $bizRule = NULL, $data=NULL){
+        if(strlen(trim($description)) == 0){
+            $description = $task;
+        }
+        $this->auth->createTask($task, $description, $bizRule, $data);
         echo "Task \"".$task."\" was created successfully.\r\n";
     }
 
-    private function _createOperation($operation){
-        $this->auth->createOperation($operation);
+    private function _createOperation($operation, $description = '', $bizRule = NULL, $data=NULL){
+        if(strlen(trim($description)) == 0){
+            $description = $operation;
+        }
+        $this->auth->createOperation($operation, $description = '', $bizRule = NULL, $data=NULL);
         echo "Operation \"".$operation."\" was created successfully.\r\n";
     }
 

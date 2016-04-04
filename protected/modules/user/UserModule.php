@@ -105,7 +105,8 @@ class UserModule extends CWebModule
 	static private $_userByName=array();
 	static private $_admin;
 	static private $_admins;
-	
+	static private $_moderator;
+
 	/**
 	 * @var array
 	 * @desc Behaviors for models
@@ -215,6 +216,23 @@ class UserModule extends CWebModule
 					self::$_admin = false;	
 			}
 			return self::$_admin;
+		}
+	}
+
+	public static function isModerator(){
+		if(Yii::app()->user->isGuest){
+			return false;
+		}
+		else{
+            if (!isset(self::$_moderator)) {
+                if(Yii::app()->user->checkAccess('Moderator')){
+                    self::$_moderator = true;
+                }
+                else{
+                    self::$_moderator = false;
+                }
+            }
+            return self::$_moderator;
 		}
 	}
 

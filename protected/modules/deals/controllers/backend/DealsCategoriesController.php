@@ -47,7 +47,11 @@ class DealsCategoriesController extends BackendController
             $model->ratings = (isset($_POST['DealsCategories']["ratings"])) ? $_POST['DealsCategories']["ratings"] : NULL;
 
             if($model->saveWithRelated(array('params','ratings'))){
-                $this->redirect(array('view','id'=>$model->id));
+                Yii::app()->user->setFlash('dealsCategoriesSuccess', Yii::t("dealsModule", "Category <strong>{name}</strong> was created successfully!", array("{name}" => $model->name)));
+                $this->redirect(array('update','id'=>$model->id));
+            }
+            else{
+                Yii::app()->user->setFlash('dealsCategoriesError', Yii::t("dealsModule", "When creating category <strong>{name}</strong> error occurred!", array("{name}" => $model->name)));
             }
         }
 
@@ -78,7 +82,11 @@ class DealsCategoriesController extends BackendController
             $model->ratings = (isset($_POST['DealsCategories']["ratings"])) ? $_POST['DealsCategories']["ratings"] : NULL;
 
             if($model->saveWithRelated(array('params','ratings'))){
-                $this->redirect(array('view','id'=>$model->id));
+                Yii::app()->user->setFlash('dealsCategoriesSuccess', Yii::t("dealsModule", "Category <strong>{name}</strong> was updated successfully!", array("{name}" => $model->name)));
+                $this->redirect(array('index'));
+            }
+            else{
+                Yii::app()->user->setFlash('dealsCategoriesError', Yii::t("dealsModule", "When updating category <strong>{name}</strong> error occurred!", array("{name}" => $model->name)));
             }
         }
 

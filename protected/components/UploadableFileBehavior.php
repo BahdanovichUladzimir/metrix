@@ -124,9 +124,9 @@ class UploadableFileBehavior extends CActiveRecordBehavior{
                     $image->save($smallThumbPath);
                     chmod($smallThumbPath,0777);
                 }
-
             };
         }
+        return parent::afterSave($event);
     }
 
     // имейте ввиду, что методы-обработчики событий в поведениях должны иметь

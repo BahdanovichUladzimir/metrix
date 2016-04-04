@@ -3,7 +3,7 @@
 // This is the database connection configuration.
 return array(
 	'tablePrefix' => '',
-	'connectionString' => 'mysql:host=localhost;dbname=dev_dont_stop',
+	'connectionString' => 'mysql:host=localhost;dbname=metrix',
 	'emulatePrepare' => true,
 	'username' => "root",
 	'password' => "",

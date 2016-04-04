@@ -113,7 +113,7 @@ class Config extends CActiveRecord
 	public static function var_dump($data = NULL,$isExit = false){
 		if(Yii::app()->getModule('user')->isAdmin()){
 			echo "<pre>";
-			    var_dump($data);
+			    CVarDumper::dump($data, 10, true);
 			echo "</pre>";
 			if($isExit){
 				exit;

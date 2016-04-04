@@ -77,125 +77,100 @@ else{
                         <nav>
                             <ul class="nav navbar-nav">
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Свадьба</a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=DealsCategories::model()->findByPk(1)->name;?></a>
                                     <ul class="dropdown-menu columns">
                                         <li>
                                             <ul>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(1,$this->userCityKey);?>">Платья</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(14,$this->userCityKey);?>">Мужские костюмы</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(114,$this->userCityKey);?>">Свадебное белье</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(13,$this->userCityKey);?>">Обувь</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(15,$this->userCityKey);?>">Аксессуары/ украшения</a></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(1,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(8,$this->userCityKey);?>">Красота и здоровье тела</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(2,$this->userCityKey);?>">Обручальные кольца</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(4,$this->userCityKey);?>">Флористика</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(130,$this->userCityKey);?>">Пригласительные и другое</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(33,$this->userCityKey);?>">Хореография</a></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(8,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(124,$this->userCityKey);?>">Аренда отелей, коттеджей и ресторанов</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(139,$this->userCityKey);?>">Оформление свадебного торжества</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(5,$this->userCityKey);?>">Застолье и фуршет</a></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(124,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(34,$this->userCityKey);?>">Ведущие</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(35,$this->userCityKey);?>">DJ</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(7,$this->userCityKey);?>">Фото и видео</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(322,$this->userCityKey);?>">Координаторы мероприятий</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(6,$this->userCityKey);?>">Развлечение гостей</a></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(34,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(3,$this->userCityKey);?>">Транспорт</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(358,$this->userCityKey);?>">Свадебные агентства</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(200,$this->userCityKey);?>">Церемония и традиции</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(201,$this->userCityKey);?>">Журналы и выставки</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(129,$this->userCityKey);?>">Подарки</a></li>
-
+                                                <li><?=DealsCategories::getPublicLinkByCatId(3,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Вечеринка</a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=DealsCategories::model()->findByPk(2)->name;?></a>
                                     <ul class="dropdown-menu columns">
                                         <li>
                                             <ul>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(139,$this->userCityKey);?>">Оформление торжества</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(34,$this->userCityKey);?>">Ведущие</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(35,$this->userCityKey);?>">DJ</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(322,$this->userCityKey);?>">Координаторы мероприятий</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(7,$this->userCityKey);?>">Фото и видео</a></li>
-
-
+                                                <li><?=DealsCategories::getPublicLinkByCatId(5,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(8,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(14,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(10,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(5,$this->userCityKey);?>">Застолье и фуршет</a></li>
-                                                <?php /*отдых и городские мероприятия*/?>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(124,$this->userCityKey);?>">Аренда отелей, коттеджей и ресторанов</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(199,$this->userCityKey);?>">Путешествия</a></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(11,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(12,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(13,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(9,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(60,$this->userCityKey);?>">Вечерние платья</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(14,$this->userCityKey);?>">Мужские костюмы</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(15,$this->userCityKey);?>">Аксессуары/ украшения</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(13,$this->userCityKey);?>">Обувь</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <ul>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(30,$this->userCityKey);?>">Стилисты-визажисты</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(32,$this->userCityKey);?>">Маникюр</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(229,$this->userCityKey);?>">Парикмахеры</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(33,$this->userCityKey);?>">Хореография</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(3,$this->userCityKey);?>">Транспорт</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(129,$this->userCityKey);?>">Подарки</a></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(15,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(16,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(17,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(6,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Детский праздник</a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=DealsCategories::model()->findByPk(3)->name;?></a>
                                     <ul class="dropdown-menu columns">
                                         <li>
                                             <ul>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(34,$this->userCityKey);?>">Ведущие</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(35,$this->userCityKey);?>">DJ</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(322,$this->userCityKey);?>">Координаторы мероприятий</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(7,$this->userCityKey);?>">Фото и видео</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(79,$this->userCityKey);?>">Аниматоры</a></li>
-
+                                                <li><?=DealsCategories::getPublicLinkByCatId(34,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(88,$this->userCityKey);?>">Костюмы для мальчиков</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(162,$this->userCityKey);?>">Платья для девочек</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(316,$this->userCityKey);?>">Прокат детских нарядов</a></li>
-
-
+                                                <li><?=DealsCategories::getPublicLinkByCatId(88,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(5,$this->userCityKey);?>">Застолье и фуршет</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(319,$this->userCityKey);?>">Детские кафе</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(326,$this->userCityKey);?>">Базы отдыха</a></li>
-                                                <li><a href="<?=DealsCategories::getPublicUrlByCatId(139,$this->userCityKey);?>">Оформление торжества</a></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(5,$this->userCityKey);?></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=DealsCategories::model()->findByPk(4)->name;?></a>
+                                    <ul class="dropdown-menu columns">
+                                        <li>
+                                            <ul>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(34,$this->userCityKey);?></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(88,$this->userCityKey);?></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(5,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                     </ul>

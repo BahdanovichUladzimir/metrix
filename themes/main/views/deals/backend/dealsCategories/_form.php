@@ -6,6 +6,19 @@
  * @var array $statusesList
  */
 ;?>
+<?php if( Yii::app()->user->hasFlash('dealsCategoriesSuccess')):?>
+	<div class="alert alert-success alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<?php echo Yii::app()->user->getFlash('dealsCategoriesSuccess'); ?>
+	</div>
+<?php endif; ?>
+
+<?php if( Yii::app()->user->hasFlash('dealsCategoriesError')):?>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<?php echo Yii::app()->user->getFlash('dealsCategoriesError'); ?>
+	</div>
+<?php endif; ?>
 <?php $form=$this->beginWidget('booster.widgets.TbActiveForm',array(
 	'id'=>'deals-categories-form',
 	'enableAjaxValidation'=>true,
@@ -18,8 +31,8 @@
 <p class="help-block"><?=Yii::t("core","Fields with <span class='required'>*</span> are required.");?></p>
 <?php if(!is_null($model->image)):?>
     <div class="form-group">
-        <div class="col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
-            <?=CHtml::image($model->getSmallThumbUrl(),$model->name);?>
+        <div class="col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3 col-lg-9 col-md-9 col-sm-9 col-xs-9">
+            <?=CHtml::image($model->getMediumThumbUrl(),$model->name);?>
         </div>
     </div>
 <?php endif;?>

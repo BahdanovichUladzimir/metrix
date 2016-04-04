@@ -4,7 +4,7 @@
 // Any writable CConsoleApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'all4holidays.com',
+	'name'=>'metrix.by',
     'aliases' => array(
         'modules' => 'application.modules',
         'widgets' => 'application.widgets',
@@ -143,7 +143,7 @@ return array(
 
             ),
 		),
-        'Smtpmail'=>array(
+        /*'Smtpmail'=>array(
             'class'=>'ext.smtpmail.PHPMailer',
             'Host'=>"smtp.all4holidays.com",
             'Username'=>'info@all4holidays.com',
@@ -153,7 +153,7 @@ return array(
             'SMTPAuth'=>true,
             'SMTPSecure' => 'ssl',
             'CharSet'=>'utf-8'
-        ),
+        ),*/
         'config'=>array(
             'class'=>'DConfig',
             //'cache'=>3600,
@@ -172,7 +172,7 @@ return array(
     ),
     'params'=>array(
         // this is used in contact page
-        'adminEmail'=>'info@all4holidays.com',
+        'adminEmail'=>'bahdanovich.uladzimir@gmail.com',
         //'FromName'=>'Администрация сайта all4holidays',
         'gmail' => array(
             'clientId' => '615933906465-ujhtd13knc1l5n3hcq26qkn4pg9d5vsc.apps.googleusercontent.com',

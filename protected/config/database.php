@@ -5,10 +5,14 @@ return array(
 	//'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
 	// uncomment the following lines to use a MySQL database
 	'tablePrefix' => '',
-	'connectionString' => 'mysql:host=localhost;dbname=dev_dont_stop',
+
+	'connectionString' => 'mysql:host=localhost;dbname=metrixby_production',
 	'emulatePrepare' => true,
-	'username' => /*'tolstiy'*/"root",
-	'password' => "",//'656MGAuudF',
+	'username' => 'metrixby_admin',
+	'password' => '1Ty*2!8k5hMPE?D',
 	'charset' => 'utf8',
-	'schemaCachingDuration' => YII_DEBUG ? 0 : 3600,
+	'enableProfiling'=>true,
+	'enableParamLogging' => true,
+	'schemaCachingDuration' => YII_DEBUG ? 0 : 3600
+
 );

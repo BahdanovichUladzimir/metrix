@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'all4holidays.com',
+	'name'=>'metrix.by',
     'homeUrl'=>array('/deals/frontend/catalog/index'),
     'defaultController' => 'deals/frontend/catalog/index',
     'behaviors'=> array(
@@ -182,9 +182,9 @@ return array(
 			'defaultLocale' => 'ru',
 			'languages' => array('ru' => 'Русский', 'en' => 'English','uk'=>'Український'),
 		),
-		'cache' => array(
+		/*'cache' => array(
 			'class' => 'CFileCache',
-		),
+		),*/
 		'user'=>array(
 			'class'=>'RWebUser',
 			// enable cookie-based authentication
@@ -208,7 +208,7 @@ return array(
             'yiiCss' => true,
             'enableJS' => false,
 		),
-		'Smtpmail'=>array(
+		/*'Smtpmail'=>array(
 			'class'=>'ext.smtpmail.PHPMailer',
 			'Host'=>"smtp.all4holidays.com",
 			'Username'=>'info@all4holidays.com',
@@ -218,7 +218,7 @@ return array(
 			'SMTPAuth'=>true,
             'SMTPSecure' => 'ssl',
             'CharSet'=>'utf-8'
-		),
+		),*/
 		'messages' => array(
 			'class' => 'CDbMessageSource',
             //'onMissingTranslation'  => array('CDbMessageTranslator', 'appendMessage'),
@@ -332,8 +332,8 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'info@all4holidays.com',
-		//'FromName'=>'Администрация сайта all4holidays',
+		'adminEmail'=>'bahdanovich.uladzimir@gmail.com',
+		//'FromName'=>'Администрация сайта metrix.by',
         'gmail' => array(
             'clientId' => '615933906465-ujhtd13knc1l5n3hcq26qkn4pg9d5vsc.apps.googleusercontent.com',
             'apiKey' => 'AIzaSyBzu73SWUapN6rw5el2MG1VGWjVh2IX_c4',

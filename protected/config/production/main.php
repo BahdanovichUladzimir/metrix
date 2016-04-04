@@ -8,7 +8,7 @@
 $mainConfig = require(dirname(__FILE__).'/../main.php');
 // наследуемся от main.php
 return CMap::mergeArray($mainConfig, array(
-    'name'=>'all4holidays.com',
+    'name'=>'metrix.by',
     'import'=>array(
         'application.models.*',
         'application.components.*',
@@ -103,8 +103,8 @@ return CMap::mergeArray($mainConfig, array(
     ),
     'params'=>array(
         // this is used in contact page
-        'adminEmail'=>'info@all4holidays.com',
-        //'FromName'=>'Администрация сайта all4holidays',
+        'adminEmail'=>'bahdanovich.uladzimir@gmail.com',
+        //'FromName'=>'Администрация сайта metrix.by',
         'gmail' => array(
             'clientId' => '78880832702-d1r9p1df2bpoj1e8e05ri55kt9l2n4ch.apps.googleusercontent.com',
             'apiKey' => 'AIzaSyBllLFNE4r9Dg9ODJ3hJNmnTSfxRBZTAiY',

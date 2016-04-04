@@ -189,12 +189,12 @@ class DealsCategories extends CActiveRecord
                 'smallThumbEmptyPath' => Yii::app()->config->get("DEALS_MODULE.CATEGORY_SMALL_THUMB_EMPTY_PATH"),
                 'emptyImageUrl' => Yii::app()->config->get("DEALS_MODULE.CATEGORY_ORIGINAL_IMG_EMPTY_URL"),
                 'emptyImagePath' => Yii::app()->config->get("DEALS_MODULE.CATEGORY_ORIGINAL_IMG_EMPTY_PATH"),
-                'largeThumbWidth' => Yii::app()->config->get("DEALS_MODULE.LARGE_THUMB_WIDTH"),
-                'largeThumbHeight' => Yii::app()->config->get("DEALS_MODULE.LARGE_THUMB_HEIGHT"),
-                'mediumThumbWidth' => Yii::app()->config->get("DEALS_MODULE.MEDIUM_THUMB_WIDTH"),
-                'mediumThumbHeight' => Yii::app()->config->get("DEALS_MODULE.MEDIUM_THUMB_HEIGHT"),
-                'smallThumbWidth' => Yii::app()->config->get("DEALS_MODULE.SMALL_THUMB_WIDTH"),
-                'smallThumbHeight' => Yii::app()->config->get("DEALS_MODULE.SMALL_THUMB_HEIGHT"),
+                'largeThumbWidth' => Yii::app()->config->get("DEALS_MODULE.CATEGORY_LARGE_THUMB_WIDTH"),
+                'largeThumbHeight' => Yii::app()->config->get("DEALS_MODULE.CATEGORY_LARGE_THUMB_HEIGHT"),
+                'mediumThumbWidth' => Yii::app()->config->get("DEALS_MODULE.CATEGORY_MEDIUM_THUMB_WIDTH"),
+                'mediumThumbHeight' => Yii::app()->config->get("DEALS_MODULE.CATEGORY_MEDIUM_THUMB_HEIGHT"),
+                'smallThumbWidth' => Yii::app()->config->get("DEALS_MODULE.CATEGORY_SMALL_THUMB_WIDTH"),
+                'smallThumbHeight' => Yii::app()->config->get("DEALS_MODULE.CATEGORY_SMALL_THUMB_HEIGHT"),
                 'smallThumbPrefix' => Yii::app()->config->get("DEALS_MODULE.SMALL_THUMB_PREFIX"),
                 'mediumThumbPrefix' => Yii::app()->config->get("DEALS_MODULE.MEDIUM_THUMB_PREFIX"),
                 'largeThumbPrefix' => Yii::app()->config->get("DEALS_MODULE.LARGE_THUMB_PREFIX"),
@@ -481,6 +481,27 @@ class DealsCategories extends CActiveRecord
         return $categories;
     }
 
+    public static function getRootCategoriesIds($limit = 12,$rand = false){
+        $criteria = new CDbCriteria();
+        $criteria->condition = 'parent_id=:parent_id AND status_id=:status_id';
+        $criteria->select = 'id';
+        $criteria->params = array(
+            ':parent_id' => 0,
+            ':status_id' => 1
+        );
+        if($limit){
+            $criteria->limit = $limit;
+        }
+        $criteria->order = $rand ? 'rand()' : 'priority DESC, name ASC';
+        $categories = self::model()->findAll($criteria);
+        $ids = array();
+        foreach($categories as $category){
+            array_push($ids,$category->id);
+        }
+        return $ids;
+    }
+
+
     public function getAdminUrl() {
         if ($this->_url === null) {
             $this->_url = Yii::app()->createUrl('/deals/backend/dealsCategories/view', array('id' => $this->id));
@@ -500,6 +521,12 @@ class DealsCategories extends CActiveRecord
         $tempDealCat = self::model()->findByPk($cat_id);
         return $tempDealCat!==null ? $tempDealCat->getPublicUrl($cityKey) : '';
     }
+
+    public static function getPublicLinkByCatId($cat_id, $cityKey){
+        $tempDealCat = self::model()->findByPk($cat_id);
+        return $tempDealCat!==null ? CHtml::link($tempDealCat->name, $tempDealCat->getPublicUrl($cityKey)) : '';
+    }
+
 
     protected function afterFind(){
         parent::afterFind();
@@ -582,6 +609,7 @@ class DealsCategories extends CActiveRecord
                 $child->save();
             }
         }
+        return parent::afterSave();
     }
 
 
@@ -592,13 +620,32 @@ class DealsCategories extends CActiveRecord
         return false;
     }
 
-    public static function getCategoryChildren($categoryId){
+    public static function getCategoryChildren($categoryId, $published = true){
         $criteria = new CDbCriteria;
+
         $criteria->condition = ':parent_id=parent_id';
-        $criteria->order = 'name ASC';
         $criteria->params = array(
             ':parent_id' => $categoryId,
         );
+        if($published){
+            $criteria->addCondition('status_id=:status_id');
+            $criteria->params[':status_id'] = 1;
+        }
+        $criteria->order = 'name ASC';
+        return self::model()->findAll($criteria);
+    }
+
+    public static function getCategoriesChildren($categoriesIds = array(), $published = true){
+        $criteria = new CDbCriteria;
+        if($published){
+            $criteria->condition = 'status_id=:status_id';
+            $criteria->params = array(
+                ':status_id' => 1,
+            );
+        }
+
+        $criteria->addInCondition('parent_id',$categoriesIds);
+        $criteria->order = 'name ASC';
         return self::model()->findAll($criteria);
     }
 

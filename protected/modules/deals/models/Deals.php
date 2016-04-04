@@ -878,9 +878,6 @@ class Deals extends CActiveRecord
         }
     }
 
-
-
-
     public function beforeDelete(){
 		foreach($this->dealsImages as $image){
 			if(!$image->delete()){
@@ -927,6 +924,7 @@ class Deals extends CActiveRecord
         }
 		return parent::beforeDelete();
 	}
+
     public function afterDelete(){
         if(sizeof($this->categories)>0){
             foreach($this->categories as $category){
@@ -1109,7 +1107,7 @@ class Deals extends CActiveRecord
             if($this->isNewRecord){
                 $this->status_id = 1;
             }
-            if(!Yii::app()->getModule('user')->isAdmin()){
+            if(!Yii::app()->getModule('user')->isAdmin() && !Yii::app()->getModule('user')->isModerator()){
                 $this->approve = 0;
                 /*if(!is_null($this->user) && !is_null($this->user->email) && strlen(trim($this->user->email))>0){
                     $message = Yii::t(
