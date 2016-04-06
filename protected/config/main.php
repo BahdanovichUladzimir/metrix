@@ -237,7 +237,7 @@ return array(
         'ih'=>array(
             'class'=>'CImageHandler',
         ),
-        'search' => array(
+        /*'search' => array(
             'class' => 'application.components.DGSphinxSearch',
             'server' => '127.0.0.1',
             'port' => 9313,
@@ -249,7 +249,7 @@ return array(
                 'intro' => 500,
                 'description' => 300,
             ),
-        ),
+        ),*/
         /*'session' => array(
             'class' => 'system.web.CDbHttpSession',
             'connectionID'=>'db',

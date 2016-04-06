@@ -90,7 +90,7 @@ class DealsCategories extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('name, parent_id, status, url_segment, paid_placement_price', 'required'),
+            array('name, parent_id, status, url_segment, paid_placement_price, page_count, free_deals_count, status_id, description', 'required'),
             array('parent_id', 'length', 'max'=>11),
             array('page_count, free_deals_count', 'length', 'max'=>10),
             array('page_count', 'default', 'value'=>20),
@@ -509,7 +509,7 @@ class DealsCategories extends CActiveRecord
         return $this->_url;
     }
 
-    public function getPublicUrl($cityKey){
+    public function getPublicUrl($cityKey = 'mnsk'){
         if ($this->_publicUrl === null) {
             $this->_publicUrl = Yii::app()->createUrl("/deals/frontend/catalog/index", array('city' => $cityKey, 'urlSegment' => $this->url_segment));
         }

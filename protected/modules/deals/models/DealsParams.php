@@ -65,7 +65,7 @@ class DealsParams extends CActiveRecord
 			array('list_id', 'numerical', 'allowEmpty'=>true, 'integerOnly'=>true),
 			array('list_id', 'requiredListId'),
 			array('type_id', 'length', 'max'=>11),
-			array('field_size, field_size_min', 'length', 'max'=>3),
+			array('field_size, field_size_min', 'length', 'max'=>5),
 			array('filter', 'length', 'max'=>1),
 			array('required', 'length', 'max'=>1),
 			array('match, range, error_message, default, widget', 'length', 'max'=>255),

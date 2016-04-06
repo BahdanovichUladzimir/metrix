@@ -5,7 +5,7 @@
  * @var $deal Deals
  */
 $this->breadcrumbs=array(
-	Yii::t('userModule',"Profile"),
+    Yii::t('userModule',"Profile"),
 );?>
 <script>
     $(document).ready(function(){
@@ -63,36 +63,36 @@ $this->breadcrumbs=array(
                 <?php echo Yii::app()->user->getFlash('deleteDeal'); ?>
             </div>
         <?php endif; ?>
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4>Учавствуйте в <a href="https://all4holidays.com/konkurs-23.html">конкурсе</a> и выигрывайте ценные призы!</h4>
-            <ol>
-                <li><a href="<?=Yii::app()->createUrl('/deals/user/userDeals/create');?>">Добавляйте новые объявления!</a></li>
-                <?php
-                $url = Yii::app()->createAbsoluteUrl("user/registration/authorization?invite_code=".$model->invitekey);
-                $title = Yii::t('userModule',"all4holidays.com - all for holidays");
-                $description = Yii::t('userModule',"Join me on all4holidays.com");
-                $image = Yii::app()->createAbsoluteUrl('images/logo.png')
-                ;?>
-                <li>
-                    <a href="http://vk.com/share.php?url=<?=$url;?>&title=<?=$title;?>&description=<?=$description;?>&image=<?=$image;?>" target="_blank">
-                        Приглашайте коллег к участию!
-                    </a>
-                </li>
-                <?php /*<li>
-                    <p>Скопируй код приглашения и отправь его другу</p>
-                    <p><span class="invitekey"><?=$model->invitekey;?></span>&nbsp;&nbsp;<i class="glyphicon glyphicon-copy invitekey-copy-btn" id="invitekey_copy_btn"></i></p>
-                </li>*/;?>
-                <li>
-                    <p>Не забывайте делиться ссылкой с кодом приглашения:</p>
-                    <p><span class="invitekey"><?=Yii::app()->createAbsoluteUrl("user/registration/authorization?invite_code=".$model->invitekey);?></span>&nbsp;&nbsp;<i class="glyphicon glyphicon-copy invitekey-copy-btn" id="invitelink_copy_btn"></i></p>
-                    <p>Это многократно увеличит Ваши шансы на победу!</p>
-                </li>
-            </ol>
-            <p><a href="https://all4holidays.com/konkurs-23.html">Узнать больше...</a></p>
+        <?php /** <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4>Учавствуйте в <a href="https://all4holidays.com/konkurs-23.html">конкурсе</a> и выигрывайте ценные призы!</h4>
+        <ol>
+        <li><a href="<?=Yii::app()->createUrl('/deals/user/userDeals/create');?>">Добавляйте новые объявления!</a></li>
+        <?php
+        $url = Yii::app()->createAbsoluteUrl("user/registration/authorization?invite_code=".$model->invitekey);
+        $title = Yii::t('userModule',"all4holidays.com - all for holidays");
+        $description = Yii::t('userModule',"Join me on all4holidays.com");
+        $image = Yii::app()->createAbsoluteUrl('images/logo.png')
+        ;?>
+        <li>
+        <a href="http://vk.com/share.php?url=<?=$url;?>&title=<?=$title;?>&description=<?=$description;?>&image=<?=$image;?>" target="_blank">
+        Приглашайте коллег к участию!
+        </a>
+        </li>
+        <li>
+        <p>Скопируй код приглашения и отправь его другу</p>
+        <p><span class="invitekey"><?=$model->invitekey;?></span>&nbsp;&nbsp;<i class="glyphicon glyphicon-copy invitekey-copy-btn" id="invitekey_copy_btn"></i></p>
+        </li>
+        <li>
+        <p>Не забывайте делиться ссылкой с кодом приглашения:</p>
+        <p><span class="invitekey"><?=Yii::app()->createAbsoluteUrl("user/registration/authorization?invite_code=".$model->invitekey);?></span>&nbsp;&nbsp;<i class="glyphicon glyphicon-copy invitekey-copy-btn" id="invitelink_copy_btn"></i></p>
+        <p>Это многократно увеличит Ваши шансы на победу!</p>
+        </li>
+        </ol>
+        <p><a href="https://all4holidays.com/konkurs-23.html">Узнать больше...</a></p>
 
 
-        </div>
+        </div>*/;?>
 
 
     </div>
@@ -145,18 +145,18 @@ $this->breadcrumbs=array(
         </ul>
     </div>
     <div class="tab-content">
-            <div id="offers" class="tab-pane active">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <?=CHtml::link("+ ".Yii::t("dealsModule","Add deal"),Yii::app()->createUrl('/deals/user/userDeals/create'));?>
-                            </div>
+        <div id="offers" class="tab-pane active">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <?=CHtml::link("+ ".Yii::t("dealsModule","Add deal"),Yii::app()->createUrl('/deals/user/userDeals/create'));?>
                         </div>
                     </div>
                 </div>
-                <?php if(sizeof($model->deals)>0):?>
-                    <?php foreach($model->deals as $deal):?>
+            </div>
+            <?php if(sizeof($model->deals)>0):?>
+                <?php foreach($model->deals as $deal):?>
                     <div class="panel panel-default user-service" id="user_deal_<?=$deal->id;?>">
                         <div class="panel-body">
                             <div class="row">
@@ -346,21 +346,21 @@ $this->breadcrumbs=array(
                             </div>
                         </div>
                     </div>
-                    <?php endforeach;?>
-                <?php endif;?>
-            </div>
-            <div id="events" class="tab-pane">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <?=CHtml::link("+ ".Yii::t("eventsModule","Add event"),Yii::app()->createUrl('/events/user/events/create'));?>
-                            </div>
+                <?php endforeach;?>
+            <?php endif;?>
+        </div>
+        <div id="events" class="tab-pane">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <?=CHtml::link("+ ".Yii::t("eventsModule","Add event"),Yii::app()->createUrl('/events/user/events/create'));?>
                         </div>
                     </div>
                 </div>
-                <?php if(sizeof($model->events)>0):?>
-                    <?php foreach($model->events as $event):?>
+            </div>
+            <?php if(sizeof($model->events)>0):?>
+                <?php foreach($model->events as $event):?>
                     <div class="panel panel-default user-service" id="user_event_<?=$event->id;?>">
                         <div class="panel-body">
                             <div class="row">
@@ -409,23 +409,23 @@ $this->breadcrumbs=array(
                         </div>
                     </div>
                 <?php endforeach;?>
-                <?php endif;?>
-            </div>
-            <div id="banners" class="tab-pane">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <?=CHtml::link("+ ".Yii::t("bannersModule","Add banner"),Yii::app()->createUrl('/banners/user/banners/create'));?>
-                            </div>
+            <?php endif;?>
+        </div>
+        <div id="banners" class="tab-pane">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <?=CHtml::link("+ ".Yii::t("bannersModule","Add banner"),Yii::app()->createUrl('/banners/user/banners/create'));?>
                         </div>
                     </div>
                 </div>
-                <div id="banners_messages">
+            </div>
+            <div id="banners_messages">
 
-                </div>
-                <?php if(sizeof($model->banners)>0):?>
-                    <?php foreach($model->banners as $banner):?>
+            </div>
+            <?php if(sizeof($model->banners)>0):?>
+                <?php foreach($model->banners as $banner):?>
                     <div class="panel panel-default user-service" id="user_banner_<?=$banner->id;?>">
                         <div class="panel-body">
                             <div class="row">
@@ -462,7 +462,7 @@ $this->breadcrumbs=array(
                                                         'id' => 'banner_publish_link_'.$banner->id
                                                     )
                                                 );?>
-                                                 |
+                                                |
                                                 <span class="banner-approve"><?=Banners::$approves[$banner->approve];?></span>
                                             </div>
                                         </div>
@@ -564,8 +564,8 @@ $this->breadcrumbs=array(
                         </div>
                     </div>
                 <?php endforeach;?>
-                <?php endif;?>
-            </div>
+            <?php endif;?>
+        </div>
     </div>
 </section>
 

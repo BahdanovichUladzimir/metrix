@@ -9,7 +9,7 @@
 ;?>
 <header class="header-navbar">
     <?php $this->renderPartial(
-        '//layouts/partials/_frontend_menu_new',
+        '//layouts/partials/_frontend_menu',
         array(
             'moduleId' => $moduleId,
             'controllerId' => $controllerId,

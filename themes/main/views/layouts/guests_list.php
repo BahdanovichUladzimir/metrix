@@ -42,7 +42,7 @@
 </script>
 <div class="page cf <?=Yii::app()->user->isGuest ? '' : "user-page";?>">
     <?php $this->renderPartial(
-        '//layouts/partials/_frontend_header_new',
+        '//layouts/partials/_frontend_header',
         array(
             'moduleId' => $moduleId,
             'controllerId' => $controllerId,

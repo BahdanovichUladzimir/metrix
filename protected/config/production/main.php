@@ -62,7 +62,7 @@ return CMap::mergeArray($mainConfig, array(
             ),
         ),
 
-        'search' => array(
+        /*'search' => array(
             'class' => 'application.components.DGSphinxSearch',
             'server' => '127.0.0.1',
             'port' => 9313,
@@ -74,7 +74,7 @@ return CMap::mergeArray($mainConfig, array(
                 'intro' => 500,
                 'description' => 300,
             ),
-        ),
+        ),*/
         /*'clientScript' => array(
             'class' => 'application.extensions.NLSClientScript.NLSClientScript',
             //'excludePattern' => '/\.tpl/i', //js regexp, files with matching paths won't be filtered is set to other than 'null'

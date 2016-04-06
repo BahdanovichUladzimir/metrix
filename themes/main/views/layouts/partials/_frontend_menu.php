@@ -114,25 +114,25 @@ else{
                                                 <li><?=DealsCategories::getPublicLinkByCatId(5,$this->userCityKey);?></li>
                                                 <li><?=DealsCategories::getPublicLinkByCatId(8,$this->userCityKey);?></li>
                                                 <li><?=DealsCategories::getPublicLinkByCatId(14,$this->userCityKey);?></li>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(10,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(11,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(10,$this->userCityKey);?></li>
                                                 <li><?=DealsCategories::getPublicLinkByCatId(12,$this->userCityKey);?></li>
                                                 <li><?=DealsCategories::getPublicLinkByCatId(13,$this->userCityKey);?></li>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(9,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(18,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(15,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(9,$this->userCityKey);?></li>
                                                 <li><?=DealsCategories::getPublicLinkByCatId(16,$this->userCityKey);?></li>
                                                 <li><?=DealsCategories::getPublicLinkByCatId(17,$this->userCityKey);?></li>
                                                 <li><?=DealsCategories::getPublicLinkByCatId(6,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
+
                                     </ul>
                                 </li>
                                 <li class="dropdown">
@@ -160,19 +160,19 @@ else{
                                     <ul class="dropdown-menu columns">
                                         <li>
                                             <ul>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(34,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(22,$this->userCityKey);?></li>
+                                            </ul>
+                                        </li>
+                                        <!--<li>
+                                            <ul>
+                                                <li><?/*=DealsCategories::getPublicLinkByCatId(88,$this->userCityKey);*/?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(88,$this->userCityKey);?></li>
+                                                <li><?/*=DealsCategories::getPublicLinkByCatId(5,$this->userCityKey);*/?></li>
                                             </ul>
-                                        </li>
-                                        <li>
-                                            <ul>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(5,$this->userCityKey);?></li>
-                                            </ul>
-                                        </li>
+                                        </li>-->
                                     </ul>
                                 </li>
                             </ul>

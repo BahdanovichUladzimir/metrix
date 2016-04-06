@@ -89,7 +89,7 @@
 	array(
 		'widgetOptions'=>array(
 			'htmlOptions'=>array(
-				'maxlength'=>3
+				'maxlength'=>5
 			)
 		),
 		'wrapperHtmlOptions' => array(

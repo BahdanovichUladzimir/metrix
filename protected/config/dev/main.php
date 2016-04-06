@@ -8,7 +8,7 @@
 $mainConfig = require(dirname(__FILE__).'/../main.php');
 // наследуемся от main.php
 return CMap::mergeArray($mainConfig, array(
-	'name'=>'dev.all4holidays.com',
+	'name'=>'dev.metrix.by',
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
@@ -68,7 +68,7 @@ return CMap::mergeArray($mainConfig, array(
 				),
 			),
 		),
-        'search' => array(
+        /*'search' => array(
             'class' => 'application.components.DGSphinxSearch',
             'server' => '127.0.0.1',
             'port' => 9312,
@@ -79,7 +79,7 @@ return CMap::mergeArray($mainConfig, array(
                 'name' => 1000,
                 'description' => 500,
             ),
-        ),
+        ),*/
 
         'messages' => array(
             'class' => 'CDbMessageSource',
@@ -103,7 +103,7 @@ return CMap::mergeArray($mainConfig, array(
     ),
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'info@all4holidays.com',
+		'adminEmail'=>'bahdanovich.uladzimir@gmail.com',
 		//'FromName'=>'Администрация сайта all4holidays',
 		'fb' => array(
 			'appId' => '1667215703554968',
