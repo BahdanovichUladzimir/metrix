@@ -39,7 +39,7 @@
 <?php if(!is_null($deal->user->profile->email) && strlen(trim($deal->user->profile->email))>0):?>
     <p><?=Yii::t('dealsModule',"Email");?>: <a href="mailto:<?=$deal->user->profile->email;?>"><?=$deal->user->profile->email;?></a></p>
 <?php endif;?>
-<p><strong><?=Yii::t('dealsModule',"Do not forget to say that you have found this ad at the website all4holidais.com");?></strong></p>
+<p><strong><?=Yii::t('dealsModule',"Do not forget to say that you have found this ad at the website {name}", array('{name}' => Yii::app()->name));?></strong></p>
 <h5><?=Yii::t('dealsModule',"Please rate the quality of contact information");?>:</h5>
 <?=CHtml::beginForm(Yii::app()->createUrl('/deals/frontend/catalog/setContactsQuality'),'POST', array('class' => 'form','id' => 'setDealContactsQualityForm'));?>
 <?php $counter = 1;?>
