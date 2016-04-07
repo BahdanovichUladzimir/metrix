@@ -305,12 +305,24 @@ class DealsController extends BackendController
     public function actionDelete($id){
         /*if(Yii::app()->request->isPostRequest){*/
             // we only allow deletion via POST request
-            $model = $this->loadModel($id);
-            $model->delete();
-            // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        $model = $this->loadModel($id);
+        $delete = $model->delete();
+        if($delete){
             if(!isset($_GET['ajax'])){
+                Yii::app()->user->setFlash('backendDealsSuccess', Yii::t("dealsModule", 'Deal <strong>{name}</strong> was deleted successfully!', array('{name}'=> $model->name)));
                 $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
             }
+        }
+        else{
+            //Config::var_dump($model->getErrors());
+
+            if(!isset($_GET['ajax'])){
+                Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When delete deal <strong>{name}</strong> error occurred!', array('{name}'=> $model->name)));
+                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+            }
+
+        }
+            // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         /*}
         else{
             throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');

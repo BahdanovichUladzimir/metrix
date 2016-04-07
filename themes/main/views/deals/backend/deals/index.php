@@ -17,6 +17,19 @@ $this->breadcrumbs=array(
 			'class'=>'btn btn-success',
 		)
 	);*/?>
+<?php if( Yii::app()->user->hasFlash('backendDealsSuccess')):?>
+	<div class="alert alert-success alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<?php echo Yii::app()->user->getFlash('backendDealsSuccess'); ?>
+	</div>
+<?php endif; ?>
+
+<?php if( Yii::app()->user->hasFlash('backendDealsError')):?>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<?php echo Yii::app()->user->getFlash('backendDealsError'); ?>
+	</div>
+<?php endif; ?>
 <?php $this->widget('booster.widgets.TbExtendedGridView',array(
 	'id'=>'deals-grid',
 	'dataProvider'=>$model->adminSearch(),
