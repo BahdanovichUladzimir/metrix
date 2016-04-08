@@ -15,7 +15,7 @@
 */
 ;?>
 
-<?php Yii::app()->clientScript->registerScriptFile("https://maps.googleapis.com/maps/api/js?key=AIzaSyAtc_4SE2BhMel6_WVpSBAjAeF1iczXUow&sensor=false");?>
+<?php Yii::app()->clientScript->registerScriptFile("https://maps.googleapis.com/maps/api/js?sensor=true&language=ru");?>
 <?php if( Yii::app()->user->hasFlash('backendDealsSuccess')):?>
     <div class="alert alert-success alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

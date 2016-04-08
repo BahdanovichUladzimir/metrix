@@ -153,7 +153,7 @@ class UserDealsController extends UserFrontendController
                                 'backendDealsError',
                                 Yii::t(
                                     "dealsModule",
-                                    "Exceeded limit deals for the category <strong>{name}</strong>! Turn paid impressions.",
+                                    'Exceeded limit deals for the category "{name}"! Turn paid impressions.',
                                     array('{name}' => $category->name)
                                 )
                             );
@@ -228,7 +228,7 @@ class UserDealsController extends UserFrontendController
                                     }
                                     else{
                                         $transaction->rollback();
-                                        Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", "When update deal <strong>{name}</strong> error occurred!", array('{name}' => $model->name)));
+                                        Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When update deal "{name}" error occurred!', array('{name}' => $model->name)));
                                     }
                                 }
                             }
@@ -252,32 +252,32 @@ class UserDealsController extends UserFrontendController
                                 }
                                 else{
                                     $transaction->rollback();
-                                    Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", "When update deal <strong>{name}</strong> error occurred!", array('{name}' => $model->name)));
+                                    Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When update deal "{name}" error occurred!', array('{name}' => $model->name)));
                                 }
 
                             }
                         }
                         if($isParamSave){
                             $transaction->commit();
-                            Yii::app()->user->setFlash('backendDealsSuccess', Yii::t("dealsModule", "Deal <strong>{name}</strong> was created successfully!", array('{name}' => $model->name)));
+                            Yii::app()->user->setFlash('backendDealsSuccess', Yii::t("dealsModule", 'Deal "{name}" was created successfully!', array('{name}' => $model->name)));
                             $this->redirect(array('photo','id'=>$model->id));
                         }
                         else{
                             $transaction->rollback();
-                            Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", "When create deal <strong>{name}</strong> error occurred!", array('{name}' => $model->name)));
+                            Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When create deal "{name}" error occurred!', array('{name}' => $model->name)));
                         }
 
                     }
                     else{
                         $this->_clearParams($model);
                         $transaction->commit();
-                        Yii::app()->user->setFlash('backendDealsSuccess', Yii::t("dealsModule", "Deal <strong>{name}</strong> was created successfully!", array('{name}' => $model->name)));
+                        Yii::app()->user->setFlash('backendDealsSuccess', Yii::t("dealsModule", 'Deal "{name}" was created successfully!', array('{name}' => $model->name)));
                         $this->redirect(array('photo','id'=>$model->id));
                     }
                 }
                 else{
                     $transaction->rollback();
-                    Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", "When create deal <strong>{name}</strong> error occurred!", array('{name}' => $model->name)));
+                    Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When create deal "{name}" error occurred!', array('{name}' => $model->name)));
                 }
             }
 
@@ -412,7 +412,7 @@ class UserDealsController extends UserFrontendController
                                     }
                                     else{
                                         $transaction->rollback();
-                                        Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", "When update deal <strong>{name}</strong> error occurred!", array('{name}' => $model->name)));
+                                        Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When update deal "{name}" error occurred!', array('{name}' => $model->name)));
                                     }
                                 }
                             }
@@ -436,7 +436,7 @@ class UserDealsController extends UserFrontendController
                                 }
                                 else{
                                     $transaction->rollback();
-                                    Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", "When update deal <strong>{name}</strong> error occurred!", array('{name}' => $model->name)));
+                                    Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When update deal "{name}" error occurred!', array('{name}' => $model->name)));
                                 }
 
                             }
@@ -444,24 +444,24 @@ class UserDealsController extends UserFrontendController
                         }
                         if($isParamSave){
                             $transaction->commit();
-                            Yii::app()->user->setFlash('backendDealsSuccess', Yii::t("dealsModule", "Deal <strong>{name}</strong> was updated successfully!", array('{name}' => $model->name)));
+                            Yii::app()->user->setFlash('backendDealsSuccess', Yii::t("dealsModule", 'Deal "{name}" was updated successfully!', array('{name}' => $model->name)));
                             $this->redirect(array('photo','id'=>$model->id));
                         }
                         else{
                             $transaction->rollback();
-                            Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", "When update deal <strong>{name}</strong> error occurred!", array('{name}' => $model->name)));
+                            Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When update deal "{name}" error occurred!', array('{name}' => $model->name)));
                         }
                     }
                     else{
                         $this->_clearParams($model);
                         $transaction->commit();
-                        Yii::app()->user->setFlash('backendDealsSuccess', Yii::t("dealsModule", "Deal <strong>{name}</strong> was updated successfully!", array('{name}' => $model->name)));
+                        Yii::app()->user->setFlash('backendDealsSuccess', Yii::t("dealsModule", 'Deal "{name}" was updated successfully!', array('{name}' => $model->name)));
                         $this->redirect(array('photo','id'=>$model->id));
                     }
                 }
                 else{
                     $transaction->rollback();
-                    Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", "When update deal <strong>{name}</strong> error occurred!", array('{name}' => $model->name)));
+                    Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When update deal "{name}" error occurred!', array('{name}' => $model->name)));
                 }
             }
 
@@ -1763,7 +1763,7 @@ class UserDealsController extends UserFrontendController
                             $deal->setScenario("writeOffForDealsPriorityPlacement");
                             if($deal->save()){
                                 if(Yii::app()->request->isAjaxRequest){
-                                    $message = Yii::t('dealsModule',"Paid placement has been successfully enabled for deal <strong>{name}</strong>!", array("{name}" => $deal->name));
+                                    $message = Yii::t('dealsModule','Paid placement has been successfully enabled for deal "{name}"!', array("{name}" => $deal->name));
                                     echo CJSON::encode(array(
                                         'deal_id' => $id,
                                         'status' => 'success',
@@ -1775,7 +1775,7 @@ class UserDealsController extends UserFrontendController
                             }
                             else{
                                 if(Yii::app()->request->isAjaxRequest){
-                                    $message = Yii::t('dealsModule',"When the paid accommodation for the deal <strong>{name}</strong> the error occurred!", array("{name}" => $deal->name));
+                                    $message = Yii::t('dealsModule','When the paid accommodation for the deal "{name}" the error occurred!', array("{name}" => $deal->name));
                                     echo CJSON::encode(array(
                                         'deal_id' => $id,
                                         'status' => 'error',
@@ -1789,7 +1789,7 @@ class UserDealsController extends UserFrontendController
                         }
                         else{
                             if(Yii::app()->request->isAjaxRequest){
-                                $message = Yii::t('dealsModule',"When the paid accommodation for the deal <strong>{name}</strong> the error occurred!", array("{name}" => $deal->name));
+                                $message = Yii::t('dealsModule','When the paid accommodation for the deal "{name}" the error occurred!', array("{name}" => $deal->name));
                                 echo CJSON::encode(array(
                                     'deal_id' => $id,
                                     'status' => 'error',
@@ -1802,7 +1802,7 @@ class UserDealsController extends UserFrontendController
                     }
                     else{
                         if(Yii::app()->request->isAjaxRequest){
-                            $message = Yii::t('dealsModule',"When the paid accommodation for the deal <strong>{name}</strong> the error occurred! Insufficient funds.", array("{name}" => $deal->name));
+                            $message = Yii::t('dealsModule','When the paid accommodation for the deal "{name}" the error occurred! Insufficient funds.', array("{name}" => $deal->name));
                             echo CJSON::encode(array(
                                 'deal_id' => $id,
                                 'status' => 'error',
@@ -1816,7 +1816,7 @@ class UserDealsController extends UserFrontendController
                 }
                 elseif($paid == "0"){
                     if(Yii::app()->request->isAjaxRequest){
-                        $message = Yii::t('dealsModule',"Paid placement has been successfully disabled for deal <strong>{name}</strong>!", array("{name}" => $deal->name));
+                        $message = Yii::t('dealsModule','Paid placement has been successfully disabled for deal "{name}"!', array("{name}" => $deal->name));
                         echo CJSON::encode(array(
                             'deal_id' => $id,
                             'status' => 'success',
@@ -1858,7 +1858,7 @@ class UserDealsController extends UserFrontendController
                         $deal->exceeding_limit_paid = 1;
                         if($deal->save()){
                             if(Yii::app()->request->isAjaxRequest){
-                                $message = Yii::t('dealsModule',"Show has been successfully enabled for deal <strong>{name}</strong>!", array("{name}" => $deal->name));
+                                $message = Yii::t('dealsModule','Show has been successfully enabled for deal "{name}"!', array("{name}" => $deal->name));
                                 echo CJSON::encode(array(
                                     'deal_id' => $id,
                                     'status' => 'success',
@@ -1870,7 +1870,7 @@ class UserDealsController extends UserFrontendController
                         }
                         else{
                             if(Yii::app()->request->isAjaxRequest){
-                                $message = Yii::t('dealsModule',"When the paid accommodation for the deal <strong>{name}</strong> the error occurred!", array("{name}" => $deal->name));
+                                $message = Yii::t('dealsModule','When the paid accommodation for the deal "{name}" the error occurred!', array("{name}" => $deal->name));
                                 echo CJSON::encode(array(
                                     'deal_id' => $id,
                                     'status' => 'error',
@@ -1884,7 +1884,7 @@ class UserDealsController extends UserFrontendController
                     }
                     else{
                         if(Yii::app()->request->isAjaxRequest){
-                            $message = Yii::t('dealsModule',"When the paid accommodation for the deal <strong>{name}</strong> the error occurred!", array("{name}" => $deal->name));
+                            $message = Yii::t('dealsModule','When the paid accommodation for the deal "{name}" the error occurred!', array("{name}" => $deal->name));
                             echo CJSON::encode(array(
                                 'deal_id' => $id,
                                 'status' => 'error',
@@ -1897,7 +1897,7 @@ class UserDealsController extends UserFrontendController
                 }
                 else{
                     if(Yii::app()->request->isAjaxRequest){
-                        $message = Yii::t('dealsModule',"When the paid accommodation for the deal <strong>{name}</strong> the error occurred! Insufficient funds.", array("{name}" => $deal->name));
+                        $message = Yii::t('dealsModule','When the paid accommodation for the deal "{name}" the error occurred! Insufficient funds.', array("{name}" => $deal->name));
                         echo CJSON::encode(array(
                             'deal_id' => $id,
                             'status' => 'error',
@@ -1914,7 +1914,7 @@ class UserDealsController extends UserFrontendController
                     $deal->exceeding_category_limit_hidden = 1;
                     $deal->exceeding_limit_paid = 0;
                     if($deal->save()){
-                        $message = Yii::t('dealsModule',"Show has been successfully disabled for deal <strong>{name}</strong>!", array("{name}" => $deal->name));
+                        $message = Yii::t('dealsModule','Show has been successfully disabled for deal "{name}"!', array("{name}" => $deal->name));
                         echo CJSON::encode(array(
                             'deal_id' => $id,
                             'status' => 'success',

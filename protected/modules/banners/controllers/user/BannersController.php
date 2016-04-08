@@ -23,11 +23,11 @@ class BannersController extends UserFrontendController
             }
             $model->user_id = Yii::app()->user->getId();
             if($model->saveWithRelated(array("categories","cities"))){
-                Yii::app()->user->setFlash('bannersUserBannersSuccess', Yii::t("bannersModule", "Banner <strong>{banner}</strong> was created successfully!", array("{banner}" => $model->name)));
+                Yii::app()->user->setFlash('bannersUserBannersSuccess', Yii::t("bannersModule", 'Banner "{banner}" was created successfully!', array("{banner}" => $model->name)));
                 $this->redirect(array('update', 'id' => $model->id));
             }
             else{
-                Yii::app()->user->setFlash('bannersUserBannersError', Yii::t("bannersModule", "When create banner <strong>{banner}</strong> error occurred!", array("{banner}" => $model->name)));
+                Yii::app()->user->setFlash('bannersUserBannersError', Yii::t("bannersModule", 'When create banner "{banner}" error occurred!', array("{banner}" => $model->name)));
             }
         }
 
@@ -61,10 +61,10 @@ class BannersController extends UserFrontendController
             }
 
             if($model->saveWithRelated(array("categories","cities"))){
-                Yii::app()->user->setFlash('bannersUserBannersSuccess', Yii::t("bannersModule", "Banner <strong>{banner}</strong> was updated successfully!", array("{banner}" => $model->name)));
+                Yii::app()->user->setFlash('bannersUserBannersSuccess', Yii::t("bannersModule", 'Banner "{banner}" was updated successfully!', array("{banner}" => $model->name)));
             }
             else{
-                Yii::app()->user->setFlash('bannersUserBannersError', Yii::t("bannersModule", "When update banner <strong>{banner}</strong> error occurred!", array("{banner}" => $model->name)));
+                Yii::app()->user->setFlash('bannersUserBannersError', Yii::t("bannersModule", 'When update banner "{banner}" error occurred!', array("{banner}" => $model->name)));
 
             }
         }
@@ -91,7 +91,7 @@ class BannersController extends UserFrontendController
             if(Yii::app()->request->isPostRequest){
                 // we only allow deletion via POST request
                 if($model->delete()){
-                    $message = Yii::t('bannersModule',"Banner <strong>{name}</strong> was deleted successfully!", array("{name}" => $model->name));
+                    $message = Yii::t('bannersModule','Banner "{name}" was deleted successfully!', array("{name}" => $model->name));
                     if(Yii::app()->request->isAjaxRequest){
                         echo CJSON::encode(array(
                             'status' => 'success',
@@ -107,7 +107,7 @@ class BannersController extends UserFrontendController
                 }
                 else{
                     if(Yii::app()->request->isAjaxRequest){
-                        $message = Yii::t('dealsModule',"When delete banner <strong>{name}</strong> error occurred!", array("{name}" => $model->name));
+                        $message = Yii::t('dealsModule','When delete banner "{name}" error occurred!', array("{name}" => $model->name));
                         echo CJSON::encode(array(
                             'status' => 'error',
                             'message' => $message,
@@ -171,7 +171,7 @@ class BannersController extends UserFrontendController
                 $model->paid_end_date = date("Y-m-d H:i:s", $periodStart+60*60*24*$days);
                 if($model->save()){
                     $transaction->commit();
-                    $message = Yii::t('bannersModule','Showing a banner <strong>{name}</strong> successfully extended by {days} days.', array('{days}' => $days, "{name}" => $model->name));
+                    $message = Yii::t('bannersModule','Showing a banner "{name}" successfully extended by {days} days.', array('{days}' => $days, "{name}" => $model->name));
                     echo CJSON::encode(array(
                         'message' => $message,
                         'html' => $this->renderPartial('_message',array("model"=>$model, "message" => $message, "status" => "success"),true),
@@ -213,7 +213,7 @@ class BannersController extends UserFrontendController
         }
         $model->published = ($model->published == '0') ? '1' : '0';
         if($model->save()){
-            $message = Yii::t('bannersModule','Banner <strong>{name}</strong> public status has been changed to "{status}" successfully.', array("{name}" => $model->name, "{status}" => Banners::$publishes[$model->published]));
+            $message = Yii::t('bannersModule','Banner "{name}" public status has been changed to "{status}" successfully.', array("{name}" => $model->name, "{status}" => Banners::$publishes[$model->published]));
             echo CJSON::encode(array(
                 'message' => $message,
                 'html' => $this->renderPartial('_message',array("model"=>$model, "message" => $message, "status" => "success"),true),
@@ -222,7 +222,7 @@ class BannersController extends UserFrontendController
             ));
         }
         else{
-            $message = Yii::t('bannersModule','When set publish status to banner <strong>{name}</strong> error occurred.', array("{name}" => $model->name));
+            $message = Yii::t('bannersModule','When set publish status to banner "{name}" error occurred.', array("{name}" => $model->name));
             echo CJSON::encode(array(
                 'message' => $message,
                 'html' => $this->renderPartial('_message',array("model"=>$model, "message" => $message, "status" => "danger"),true),

@@ -3,7 +3,7 @@
  * @var $model Underground
  */
 ;?>
-<?php Yii::app()->clientScript->registerScriptFile("https://maps.googleapis.com/maps/api/js?key=AIzaSyAtc_4SE2BhMel6_WVpSBAjAeF1iczXUow&sensor=false");?>
+<?php Yii::app()->clientScript->registerScriptFile("https://maps.googleapis.com/maps/api/js?sensor=true&language=ru");?>
 
 <?php if( Yii::app()->user->hasFlash('adminUndergroundSuccess')):?>
 	<div class="alert alert-success alert-dismissible" role="alert">
