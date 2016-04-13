@@ -156,7 +156,7 @@ class DailySchedulesEventsController extends BackendController
      * @throws CHttpException
      */
     private function _checkingAccess(DailySchedules $schedule){
-        if(Yii::app()->user->getId() != $schedule->event->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() != $schedule->event->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(403,'Access denied.');
         }
     }

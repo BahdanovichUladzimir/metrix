@@ -12,7 +12,7 @@ class EventsDoingsController extends UserFrontendController
             if(isset($_POST['EventsDoings'])){
                 $model->attributes=$_POST['EventsDoings'];
                 $event = Events::model()->findByPk($_POST['EventsDoings']['event_id']);
-                if(Yii::app()->user->getId() != $event->user_id && !Yii::app()->getModule('user')->isAdmin()){
+                if(Yii::app()->user->getId() != $event->user_id && !Yii::app()->getModule('user')->isModerator()){
                     throw new CHttpException(403,'Access denied!');
                 }
 
@@ -49,7 +49,7 @@ class EventsDoingsController extends UserFrontendController
     public function actionUpdate($id){
 
         $model=$this->loadModel($id);
-        if(Yii::app()->user->getId() != $model->event->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() != $model->event->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(403,'Access denied!');
         }
 
@@ -90,7 +90,7 @@ class EventsDoingsController extends UserFrontendController
         if(Yii::app()->request->isPostRequest && Yii::app()->request->isAjaxRequest){
             // we only allow deletion via POST request
             $model = $this->loadModel($id);
-            if(Yii::app()->user->getId() != $model->event->user_id && !Yii::app()->getModule('user')->isAdmin()){
+            if(Yii::app()->user->getId() != $model->event->user_id && !Yii::app()->getModule('user')->isModerator()){
                 throw new CHttpException(403,'Access denied!');
             }
 
@@ -123,7 +123,7 @@ class EventsDoingsController extends UserFrontendController
      */
     public function actionIndex($event_id){
         $model = $this->loadEventsModel($event_id);
-        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(403,'Access denied!');
         }
 
@@ -188,7 +188,7 @@ class EventsDoingsController extends UserFrontendController
     public function actionSetCategory(){
         if(isset($_POST) && isset($_POST['category_id']) && isset($_POST['doing_id'])){
             $doing = EventsDoings::model()->findByAttributes(array('id' => $_POST['doing_id']));
-            if(Yii::app()->user->getId() != $doing->event->user_id && !Yii::app()->getModule('user')->isAdmin()){
+            if(Yii::app()->user->getId() != $doing->event->user_id && !Yii::app()->getModule('user')->isModerator()){
                 throw new CHttpException(403,'Access denied!');
             }
 
@@ -220,7 +220,7 @@ class EventsDoingsController extends UserFrontendController
     public function actionSetStatus(){
         if(isset($_POST) && isset($_POST['status_id']) && isset($_POST['doing_id'])){
             $doing = EventsDoings::model()->findByAttributes(array('id' => $_POST['doing_id']));
-            if(Yii::app()->user->getId() != $doing->event->user_id && !Yii::app()->getModule('user')->isAdmin()){
+            if(Yii::app()->user->getId() != $doing->event->user_id && !Yii::app()->getModule('user')->isModerator()){
                 throw new CHttpException(403,'Access denied!');
             }
 
@@ -252,7 +252,7 @@ class EventsDoingsController extends UserFrontendController
         if(isset($_POST) && isset($_POST['ids']) && sizeof($_POST['ids'])>0 && isset($_POST['status'])){
             foreach($_POST['ids'] as $id){
                 $doing = EventsDoings::model()->findByPk((int)$id);
-                if(Yii::app()->user->getId() != $doing->event->user_id && !Yii::app()->getModule('user')->isAdmin()){
+                if(Yii::app()->user->getId() != $doing->event->user_id && !Yii::app()->getModule('user')->isModerator()){
                     throw new CHttpException(403,'Access denied!');
                 }
 
@@ -272,7 +272,7 @@ class EventsDoingsController extends UserFrontendController
         if(isset($_POST) && isset($_POST['ids']) && sizeof($_POST['ids'])>0 && isset($_POST['category_id'])){
             foreach($_POST['ids'] as $id){
                 $doing = EventsDoings::model()->findByPk((int)$id);
-                if(Yii::app()->user->getId() != $doing->event->user_id && !Yii::app()->getModule('user')->isAdmin()){
+                if(Yii::app()->user->getId() != $doing->event->user_id && !Yii::app()->getModule('user')->isModerator()){
                     throw new CHttpException(403,'Access denied!');
                 }
 
@@ -293,7 +293,7 @@ class EventsDoingsController extends UserFrontendController
             $doings = EventsDoings::model()->findAllByPk($_POST['ids']);
             if(sizeof($doings)>0){
                 foreach($doings as $doing){
-                    if(Yii::app()->user->getId() != $doing->event->user_id && !Yii::app()->getModule('user')->isAdmin()){
+                    if(Yii::app()->user->getId() != $doing->event->user_id && !Yii::app()->getModule('user')->isModerator()){
                         throw new CHttpException(403,'Access denied!');
                     }
                     $doing->delete();

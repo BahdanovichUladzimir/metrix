@@ -141,6 +141,9 @@ class CmsPage extends CmsNode {
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'pagination'=>array(
+                'pageSize'=>50, //could put 1, 2, 3, 10, 20, 30, etc. however many you want to display per page.
+            ),
         ));
     }
 

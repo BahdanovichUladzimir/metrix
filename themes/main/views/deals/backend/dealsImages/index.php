@@ -30,7 +30,8 @@ $this->breadcrumbs=array(
 				'type' => 'POST',
 				'data' => 'js:{value : $.fn.yiiGridView.getChecked("deals-images-grid","approve_check")}',
 				'success'=>'js:function(data){
-					 $.fn.yiiGridView.update("deals-images-grid");
+                    //console.log(data);
+                    $.fn.yiiGridView.update("deals-images-grid");
 				}'
 			),
 			array(

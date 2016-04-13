@@ -169,7 +169,7 @@ class Banners extends CActiveRecord
 		if($this->getIsNewRecord()){
 			$this->paid_end_date = date('Y-m-d H:i:s',time());
 		}
-		if(!Yii::app()->getModule('user')->isAdmin()){
+		if(!Yii::app()->getModule('user')->isModerator()){
 			$this->approve = 0;
 			if(!is_null($this->user) && !is_null($this->user->email) && strlen(trim($this->user->email))>0){
 				$message = Yii::t(

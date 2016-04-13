@@ -80,7 +80,7 @@
     });
 </script>
 <section>
-    <?php if(Yii::app()->user->getId() == $deal->user_id || Yii::app()->getModule("user")->isAdmin()):?>
+    <?php if(Yii::app()->user->getId() == $deal->user_id || Yii::app()->getModule("user")->isModerator()):?>
         <?php if($deal->status_id == "2"):?>
             <div class="alert alert-warning alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -132,7 +132,7 @@
                 </div>
                 <div class="row spacer-10"></div>
 
-                <?php if((!is_null(Yii::app()->user->getId()) && Yii::app()->user->getId() == $deal->user_id) || Yii::app()->getModule('user')->isAdmin()):?>
+                <?php if((!is_null(Yii::app()->user->getId()) && Yii::app()->user->getId() == $deal->user_id) || Yii::app()->getModule('user')->isModerator()):?>
                     <div class="dropdown pull-right">
                         <a href="#" class="gr-btn dropdown-toggle" data-toggle="dropdown"><?=Yii::t('core','Edit');?></a>
                         <ul class="dropdown-menu edit-func">

@@ -122,7 +122,7 @@ class AlcoholController extends UserFrontendController
         if(Yii::app()->request->isPostRequest){
             // we only allow deletion via POST request
             $model = $this->loadModel($id);
-            if(Yii::app()->user->getId() != $model->event->user_id && !Yii::app()->getModule('user')->isAdmin()){
+            if(Yii::app()->user->getId() != $model->event->user_id && !Yii::app()->getModule('user')->isModerator()){
                 throw new CHttpException(403,'Access denied!');
             }
 

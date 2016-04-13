@@ -24,7 +24,7 @@
 <div class="panel panel-default" id="deal_calendar_widget_<?=$widgetId;?>">
     <div class="panel-body cf">
         <div class="service-info inner">
-            <?php if((!is_null(Yii::app()->user->getId()) && Yii::app()->user->getId() == $deal->user_id) || Yii::app()->getModule('user')->isAdmin()):?>
+            <?php if((!is_null(Yii::app()->user->getId()) && Yii::app()->user->getId() == $deal->user_id) || Yii::app()->getModule('user')->isModerator()):?>
                 <div class="dropdown pull-right">
                     <a href="#" class="gr-btn dropdown-toggle" data-toggle="dropdown"><?=Yii::t('core','Edit');?></a>
                     <ul class="dropdown-menu edit-func">

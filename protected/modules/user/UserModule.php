@@ -235,7 +235,7 @@ class UserModule extends CWebModule
             return self::$_moderator;
 		}
 	}
-
+    
 	/**
 	 * Return admins.
 	 * @return array syperusers names

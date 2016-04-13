@@ -43,7 +43,7 @@ class BannersController extends UserFrontendController
     public function actionUpdate($id){
 
         $model=$this->loadModel($id);
-        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(403,'Access denied!');
         }
 
@@ -85,7 +85,7 @@ class BannersController extends UserFrontendController
     public function actionDelete($id){
         $model = Banners::model()->findByPk((int)$id);
         if(!is_null($model)){
-            if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isAdmin()){
+            if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isModerator()){
                 throw new CHttpException(403,'Access denied!');
             }
             if(Yii::app()->request->isPostRequest){
@@ -208,7 +208,7 @@ class BannersController extends UserFrontendController
     public function actionPublish($id){
 
         $model = $this->loadModel($id);
-        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(403,'Access denied!');
         }
         $model->published = ($model->published == '0') ? '1' : '0';

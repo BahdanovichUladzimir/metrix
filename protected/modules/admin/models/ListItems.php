@@ -82,7 +82,7 @@ class ListItems extends CActiveRecord
 	{
 		return array(
 			'id' => Yii::t('adminModule','ID'),
-			'list_id' => Yii::t('adminModule','List ID'),
+			'list_id' => Yii::t('adminModule','List'),
 			'name' => Yii::t('adminModule','Name'),
 			'value' => Yii::t('adminModule','Value'),
 			'sort' => Yii::t('adminModule','Sort'),

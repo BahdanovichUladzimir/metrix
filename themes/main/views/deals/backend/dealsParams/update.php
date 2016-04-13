@@ -10,7 +10,7 @@
 $this->breadcrumbs=array(
 	Yii::t('adminModule','Admin')=>Yii::app()->createUrl('/admin'),
 	Yii::t('adminModule','Deals params')=>array('index'),
-	$model->name=>array('update','id'=>$model->id),
+	$model->label=>array('update','id'=>$model->id),
 	Yii::t('core','Update'),
 );
 

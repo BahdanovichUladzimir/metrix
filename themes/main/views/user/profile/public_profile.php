@@ -97,7 +97,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/f
                             <div class="panel panel-default">
                                 <div class="panel-body service-link recommended cf">
                                     <?php
-                                    if(Yii::app()->user->getId() == $deal->user_id || Yii::app()->getModule('user')->isAdmin()){
+                                    if(Yii::app()->user->getId() == $deal->user_id || Yii::app()->getModule('user')->isModerator()){
                                         $images = $deal->dealsImages;
                                     }
                                     else{

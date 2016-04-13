@@ -6,7 +6,7 @@ class EventsController extends UserFrontendController
 
     public function actionGuestsList($id){
         $model = $this->loadModel($id);
-        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(403,'Access denied!');
         }
 
@@ -178,7 +178,7 @@ class EventsController extends UserFrontendController
             ||
             $model->user_id == Yii::app()->user->getId()
             ||
-            Yii::app()->getModule('user')->isAdmin()
+            Yii::app()->getModule('user')->isModerator()
             ||
             (!is_null(Yii::app()->request->cookies['event_'.$model->id]) && Yii::app()->request->cookies['event_'.$model->id]->value == $model->cookie)
         ){
@@ -230,7 +230,7 @@ class EventsController extends UserFrontendController
         $model=$this->loadModel($id);
         $this->title = Yii::t('eventsModule','Update event {name}', array("{name}" => $model->name));
 
-        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(403,'Access denied!');
         }
 
@@ -263,7 +263,7 @@ class EventsController extends UserFrontendController
             // we only allow deletion via POST request
             $model = $this->loadModel($id);
 
-            if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isAdmin()){
+            if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isModerator()){
                 throw new CHttpException(403,'Access denied!');
             }
 

@@ -399,16 +399,16 @@ $sizeOfFeedbackItems = Feedback::model()->count('status_id=:status_id',array(':s
         </div>
     </div>
 
-    <div class="panel panel-default">
+    <!--<div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#adsModuleMenu">
                     <span class="glyphicon glyphicon-file"></span>
-                    <?=Yii::t('adsModule', "Ads");?>
+                    <?/*=Yii::t('adsModule', "Ads");*/?>
                 </a>
             </h4>
         </div>
-    </div>
+    </div>-->
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
@@ -761,6 +761,17 @@ $sizeOfFeedbackItems = Feedback::model()->count('status_id=:status_id',array(':s
                     </tr>
                 </table>
             </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a href="<?=Yii::app()->createUrl('/cms/backend/adminPages/index');?>">
+                                        <span class="glyphicon glyphicon-user">
+                                        </span>
+                    <?=Yii::t('cmsModule','Articles');?>
+                </a>
+            </h4>
         </div>
     </div>
 </div>

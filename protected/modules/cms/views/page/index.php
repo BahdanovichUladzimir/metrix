@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @var $model CmsPage
+ */
 $this->breadcrumbs=array(
     Yii::t('adminModule','Admin')=>Yii::app()->createUrl('/admin'),
     Yii::t('adminModule','Page'),
@@ -21,6 +23,7 @@ $this->widget('booster.widgets.TbExtendedGridView', array(
     'id'=>'page-grid',
     'dataProvider'=>$model->search(),
     'filter'=>$model,
+    'ajaxUpdate' => false,
     'sortableRows'=>true,
     'template' => '{pager}{items}{pager}',
     'columns' => array(
@@ -28,7 +31,7 @@ $this->widget('booster.widgets.TbExtendedGridView', array(
         array(
             'name' => 'name',
             'type' => 'raw',
-            'value' => 'CHtml::link(CHtml::encode(ucfirst($data->name)),array("update","id"=>$data->id))',
+            'value' => 'CHtml::link(CHtml::encode(ucfirst($data->content->heading)),array("update","id"=>$data->id))',
         ),
         array(
             'name' => 'parentId',
@@ -40,7 +43,7 @@ $this->widget('booster.widgets.TbExtendedGridView', array(
         ),
         array(
             'class' => 'booster.widgets.TbButtonColumn',
-            'template' => '{view}<br>{update}<br>{delete}',
+            'template' => '{view} {update} {delete}',
             'buttons' => array
                 (
                 'view' => array(
@@ -49,11 +52,11 @@ $this->widget('booster.widgets.TbExtendedGridView', array(
                 ),
                 'update' => array
                     (
-                    'options' => array('class' => 'btn btn-default'),
+                    'options' => array('class' => 'btn btn-success'),
                 ),
                 'delete' => array
                     (
-                    'options' => array('class' => 'del btn btn-default'),
+                    'options' => array('class' => 'del btn btn-danger'),
                 ),
             ),
         ),

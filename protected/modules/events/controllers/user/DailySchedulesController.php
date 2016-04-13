@@ -9,7 +9,7 @@ class DailySchedulesController extends UserFrontendController
      */
     public function actionView($id){
         $model = $this->loadModel($id);
-        if(Yii::app()->user->getId() != $model->event->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() != $model->event->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(403,'Access denied!');
         }
 
@@ -60,7 +60,7 @@ class DailySchedulesController extends UserFrontendController
      */
     public function actionCreate($event_id){
         $event = Events::model()->findByPk($event_id);
-        if(Yii::app()->user->getId() != $event->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() != $event->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(403,'Access denied!');
         }
         $model=new DailySchedules;

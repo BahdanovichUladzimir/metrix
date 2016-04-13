@@ -13,7 +13,7 @@ class CmsModule extends CWebModule
 	/**
 	 * @var string[] page types.
 	 */
-	public $pageTypes = array('stories','page','news');
+	public $pageTypes = array('stories','page','news','adminPage');
 	/**
 	 * @var array flash message categories.
 	 */

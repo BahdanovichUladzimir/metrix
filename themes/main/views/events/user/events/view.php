@@ -36,7 +36,7 @@ else{
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="edit-wrap actions ta-r">
-                    <?php if(Yii::app()->user->getId() == $model->user_id || Yii::app()->getModule("user")->isAdmin()):?>
+                    <?php if(Yii::app()->user->getId() == $model->user_id || Yii::app()->getModule("user")->isModerator()):?>
                         <a href="#" class="gr-btn edit arr a"><?=Yii::t('eventsModule',"Actions");?></a>
                         <ul class="dropdown-menu">
                             <li><a href="<?=Yii::app()->createUrl("/events/user/events/update", array("id" => $model->id));?>" class="ed-opt it-1 b-spr"><?=Yii::t('core',"Edit");?></a></li>
@@ -114,7 +114,7 @@ else{
             <div class="row">
                 <div class="col-lg-12">
                     <div class="edit-wrap actions ta-r">
-                        <?php if(Yii::app()->user->getId() == $model->user_id || Yii::app()->getModule("user")->isAdmin()):?>
+                        <?php if(Yii::app()->user->getId() == $model->user_id || Yii::app()->getModule("user")->isModerator()):?>
                             <a href="#" class="gr-btn edit arr a"><?=Yii::t('eventsModule',"Actions");?></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?=Yii::app()->createUrl("/events/user/events/guestsList", array("id" => $model->id));?>" class="ed-opt it-1 b-spr"><?=Yii::t('core',"Edit");?></a></li>
@@ -183,7 +183,7 @@ else{
             <div class="row">
                 <div class="col-lg-12">
                     <div class="edit-wrap actions ta-r">
-                        <?php if(Yii::app()->user->getId() == $model->user_id || Yii::app()->getModule("user")->isAdmin()):?>
+                        <?php if(Yii::app()->user->getId() == $model->user_id || Yii::app()->getModule("user")->isModerator()):?>
                             <a href="#" class="gr-btn edit arr a"><?=Yii::t('eventsModule',"Actions");?></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?=Yii::app()->createUrl("/events/user/eventsDoings/index", array("event_id" => $model->id));?>" class="ed-opt it-1 b-spr"><?=Yii::t('core',"Edit");?></a></li>
@@ -221,7 +221,7 @@ else{
             <div class="row">
                 <div class="col-lg-12">
                     <div class="edit-wrap actions ta-r">
-                        <?php if(Yii::app()->user->getId() == $model->user_id || Yii::app()->getModule("user")->isAdmin()):?>
+                        <?php if(Yii::app()->user->getId() == $model->user_id || Yii::app()->getModule("user")->isModerator()):?>
                             <a href="#" class="gr-btn edit arr a"><?=Yii::t('eventsModule',"Actions");?></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<?=Yii::app()->createUrl("/events/user/alcohol/update", array("id" => $model->alcohol->id));?>" class="ed-opt it-1 b-spr"><?=Yii::t('core',"Edit");?></a></li>
@@ -349,7 +349,7 @@ else{
     </div>
 <?php endif;?>
 
-<?php if(Yii::app()->user->getId() == $model->user_id || Yii::app()->getModule("user")->isAdmin()):?>
+<?php if(Yii::app()->user->getId() == $model->user_id || Yii::app()->getModule("user")->isModerator()):?>
     <?php if(sizeof($model->eventsGuests)==0):?>
         <div class="panel">
             <div class="panel-body">

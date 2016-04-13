@@ -24,7 +24,7 @@ class UserDealsController extends UserFrontendController
      * @throws CHttpException
      * @throws CException
      */
-    public function actionView($id){
+    /*public function actionView($id){
 
         if(Yii::app()->user->getId() != $this->deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
             throw new CHttpException(403,'Access denied!');
@@ -45,11 +45,11 @@ class UserDealsController extends UserFrontendController
                 'linksModel' => new DealLinks()
             )
         );
-    }
+    }*/
 
     public function actionPhoto($id){
         $model = $this->loadModel($id);
-        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(403,'Access denied!');
         }
         Yii::import('xupload.models.XUploadForm');
@@ -75,7 +75,7 @@ class UserDealsController extends UserFrontendController
     public function actionVideo($id){
         $model = $this->loadModel($id);
 
-        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(403,'Access denied!');
         }
         Yii::import('xupload.models.XUploadForm');
@@ -100,7 +100,7 @@ class UserDealsController extends UserFrontendController
 
     public function actionSocialMediaVideo($id){
         $model = $this->loadModel($id);
-        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(403,'Access denied!');
         }
         Yii::import('xupload.models.XUploadForm');
@@ -321,7 +321,7 @@ class UserDealsController extends UserFrontendController
     public function actionUpdate($id){
         $model=$this->loadModel($id);
 
-        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(403,'Access denied!');
         }
         Yii::import('xupload.models.XUploadForm');
@@ -579,7 +579,7 @@ class UserDealsController extends UserFrontendController
 
         $deal = Deals::model()->findByPk((int)$id);
         if(!is_null($deal)){
-            if(Yii::app()->user->getId() != $deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+            if(Yii::app()->user->getId() != $deal->user_id && !Yii::app()->getModule('user')->isModerator()){
                 throw new CHttpException(403,'Access denied!');
             }
             if(Yii::app()->request->isPostRequest){
@@ -1063,7 +1063,7 @@ class UserDealsController extends UserFrontendController
     }
 
     public function actionUploadImage($deal_id){
-        if(Yii::app()->user->getId() != $this->deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() != $this->deal->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(403,'Access denied!');
         }
         $largeThumbWidth = Yii::app()->config->get("DEALS_MODULE.LARGE_THUMB_WIDTH");
@@ -1422,7 +1422,7 @@ class UserDealsController extends UserFrontendController
         if(isset($_POST["_method"]) && isset($_POST['image_id'])){
             if($_POST["_method"] == "delete"){
                 $model = DealsImages::model()->findByPk((int)$_POST['image_id']);
-                if(Yii::app()->user->getId() != $model->deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+                if(Yii::app()->user->getId() != $model->deal->user_id && !Yii::app()->getModule('user')->isModerator()){
                     throw new CHttpException(403,'Access denied!');
                 }
                 $model->delete();
@@ -1446,7 +1446,7 @@ class UserDealsController extends UserFrontendController
         if(isset( $_POST["_method"]) && isset($_POST['video_id'])){
             if($_POST["_method"] == "delete"){
                 $model = DealsVideos::model()->findByPk((int)$_POST['video_id']);
-                if(Yii::app()->user->getId() != $model->deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+                if(Yii::app()->user->getId() != $model->deal->user_id && !Yii::app()->getModule('user')->isModerator()){
                     throw new CHttpException(403,'Access denied!');
                 }
                 $model->delete();
@@ -1467,7 +1467,7 @@ class UserDealsController extends UserFrontendController
         if(Yii::app()->request->isAjaxRequest){
             if(isset($_POST) && isset($_POST['image_id']) && isset($_POST['description'])){
                 $model = DealsImages::model()->with('deal')->findByPk((int)$_POST['image_id'],'deal.user_id=:user_id', array(':user_id' => Yii::app()->user->getId()));
-                if(Yii::app()->user->getId() != $model->deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+                if(Yii::app()->user->getId() != $model->deal->user_id && !Yii::app()->getModule('user')->isModerator()){
                     throw new CHttpException(403,'Access denied!');
                 }
                 if(!is_null($model)){
@@ -1509,7 +1509,7 @@ class UserDealsController extends UserFrontendController
         if(Yii::app()->request->isAjaxRequest){
             if(isset($_POST) && isset($_POST['image_id']) && isset($_POST['alias'])){
                 $model = DealsImages::model()->with('deal')->findByPk((int)$_POST['image_id'],'deal.user_id=:user_id', array(':user_id' => Yii::app()->user->getId()));
-                if(Yii::app()->user->getId() != $model->deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+                if(Yii::app()->user->getId() != $model->deal->user_id && !Yii::app()->getModule('user')->isModerator()){
                     throw new CHttpException(403,'Access denied!');
                 }
                 if(!is_null($model)){
@@ -1550,7 +1550,7 @@ class UserDealsController extends UserFrontendController
         if(Yii::app()->request->isAjaxRequest){
             if(isset($_POST) && isset($_POST['image_id']) && isset($_POST['value'])){
                 $model = DealsImages::model()->with('deal')->findByPk((int)$_POST['image_id'],'deal.user_id=:user_id', array(':user_id' => Yii::app()->user->getId()));
-                if(Yii::app()->user->getId() != $model->deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+                if(Yii::app()->user->getId() != $model->deal->user_id && !Yii::app()->getModule('user')->isModerator()){
                     throw new CHttpException(403,'Access denied!');
                 }
                 if(!is_null($model)){
@@ -1592,7 +1592,7 @@ class UserDealsController extends UserFrontendController
         if(Yii::app()->request->isAjaxRequest){
             if(isset($_POST) && isset($_POST['video_id']) && isset($_POST['description'])){
                 $model = DealsVideos::model()->with('deal')->findByPk((int)$_POST['video_id'],'deal.user_id=:user_id', array(':user_id' => Yii::app()->user->getId()));
-                if(Yii::app()->user->getId() != $model->deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+                if(Yii::app()->user->getId() != $model->deal->user_id && !Yii::app()->getModule('user')->isModerator()){
                     throw new CHttpException(403,'Access denied!');
                 }
                 //@todo сделать очистку от скриптов и шлака
@@ -1632,7 +1632,7 @@ class UserDealsController extends UserFrontendController
         if(Yii::app()->request->isAjaxRequest){
             if(isset($_POST) && isset($_POST['video_id']) && isset($_POST['alias'])){
                 $model = DealsVideos::model()->with('deal')->findByPk((int)$_POST['video_id'],'deal.user_id=:user_id', array(':user_id' => Yii::app()->user->getId()));
-                if(Yii::app()->user->getId() != $model->deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+                if(Yii::app()->user->getId() != $model->deal->user_id && !Yii::app()->getModule('user')->isModerator()){
                     throw new CHttpException(403,'Access denied!');
                 }
                 if(!is_null($model)){
@@ -1673,7 +1673,7 @@ class UserDealsController extends UserFrontendController
     public function actionSetDealUpdatedDate($deal_id){
         if(Yii::app()->request->isPostRequest){
             $deal = Deals::model()->findByPk($deal_id);
-            if(Yii::app()->user->getId() != $this->deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+            if(Yii::app()->user->getId() != $this->deal->user_id && !Yii::app()->getModule('user')->isModerator()){
                 throw new CHttpException(403,'Access denied!');
             }
             $deal->updated_date = time();
@@ -1701,7 +1701,7 @@ class UserDealsController extends UserFrontendController
             $deal_id = (int)$_POST['deal_id'];
             $status_id = (int)$_POST['status_id'];
             $deal = Deals::model()->findByPk($deal_id);
-            if(Yii::app()->user->getId() != $deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+            if(Yii::app()->user->getId() != $deal->user_id && !Yii::app()->getModule('user')->isModerator()){
                 throw new CHttpException(403,'Access denied!');
             }
             $status = DealsStatuses::model()->findByPk($status_id);
@@ -1742,10 +1742,11 @@ class UserDealsController extends UserFrontendController
     public function actionSetPaid($id,$paid){
         $deal = Deals::model()->findByPk($id);
         if(!is_null($deal)){
-            if(Yii::app()->user->getId() != $deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+            if(Yii::app()->user->getId() != $deal->user_id && !Yii::app()->getModule('user')->isModerator()){
                 throw new CHttpException(403,'Access denied!');
             }
             $deal->paid = $paid;
+            $deal->setScenario("writeOffForDealsPriorityPlacement");
             if($deal->save()){
                 if($paid == '1'){
                     $paymentAmount = Yii::app()->config->get("DEALS_MODULE.PRIORITY_PLACEMENT_PAYMENT");
@@ -1838,7 +1839,7 @@ class UserDealsController extends UserFrontendController
          */
         $deal = Deals::model()->findByPk($id);
         if(!is_null($deal)){
-            if(Yii::app()->user->getId() != $deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+            if(Yii::app()->user->getId() != $deal->user_id && !Yii::app()->getModule('user')->isModerator()){
                 throw new CHttpException(403,'Access denied!');
             }
             if($enable == '1'){
@@ -1853,9 +1854,9 @@ class UserDealsController extends UserFrontendController
                     $payment->app_category_id = (int)AppCategories::model()->findByAttributes(array('name'=>'deals'))->id;
                     $payment->app_item_id = (int)$deal->id;
                     if($payment->save()){
-                        $deal->setScenario("writeOffForDealsCategoryExceedingLimitPlacement");
                         $deal->exceeding_category_limit_hidden = 0;
                         $deal->exceeding_limit_paid = 1;
+                        $deal->setScenario("writeOffForDealsCategoryExceedingLimitPlacement");
                         if($deal->save()){
                             if(Yii::app()->request->isAjaxRequest){
                                 $message = Yii::t('dealsModule','Show has been successfully enabled for deal "{name}"!', array("{name}" => $deal->name));
@@ -1913,6 +1914,7 @@ class UserDealsController extends UserFrontendController
                 if(Yii::app()->request->isAjaxRequest){
                     $deal->exceeding_category_limit_hidden = 1;
                     $deal->exceeding_limit_paid = 0;
+                    $deal->setScenario("writeOffForDealsCategoryExceedingLimitPlacement");
                     if($deal->save()){
                         $message = Yii::t('dealsModule','Show has been successfully disabled for deal "{name}"!', array("{name}" => $deal->name));
                         echo CJSON::encode(array(

@@ -162,7 +162,7 @@ class CatalogController extends FrontendController
         if(is_null($model)){
             throw new CHttpException(404, Yii::t('core','Page not found.'));
         }
-        if(($model->approve == 0 || $model->status_id == 2 || $model->exceeding_category_limit_hidden == '1')&& $userId !== $model->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(($model->approve == 0 || $model->status_id == 2 || $model->exceeding_category_limit_hidden == '1')&& $userId !== $model->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(404, Yii::t('core','Page not found.'));
         }
 

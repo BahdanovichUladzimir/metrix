@@ -180,7 +180,7 @@ return array(
 		'cms' => array(
 			'class' => 'cms.components.Cms',
 			'defaultLocale' => 'ru',
-			'languages' => array('ru' => 'Русский', 'en' => 'English','uk'=>'Український'),
+			'languages' => array('ru' => 'Русский'/*, 'en' => 'English','uk'=>'Український'*/),
 		),
 		/*'cache' => array(
 			'class' => 'CFileCache',

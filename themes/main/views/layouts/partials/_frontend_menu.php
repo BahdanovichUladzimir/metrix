@@ -162,6 +162,8 @@ else{
                                             <ul>
                                                 <li><?=DealsCategories::getPublicLinkByCatId(22,$this->userCityKey);?></li>
                                                 <li><?=DealsCategories::getPublicLinkByCatId(23,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(24,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(25,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                         <!--<li>

@@ -117,7 +117,12 @@ class DealsCategories extends CActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'status' => array(self::BELONGS_TO, 'DealsCategoriesStatuses', 'status_id'),
-            'dealsCategoriesParams' => array(self::HAS_MANY, 'DealsCategoriesParams', 'deal_category_id'),
+            'dealsCategoriesParams' => array(
+                self::HAS_MANY,
+                'DealsCategoriesParams',
+                'deal_category_id',
+                'order' => 'dealsCategoriesParams.type ASC'
+            ),
             'filtersParams' => array(self::MANY_MANY,
                 'DealsParams',
                 'DealsCategoriesParams(deal_category_id, deal_param_id)',

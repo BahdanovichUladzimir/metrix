@@ -288,7 +288,7 @@ class CalendarController extends UserFrontendController{
      * @throws CHttpException
      */
     private function _checkingAccess(Deals $deal){
-        if(Yii::app()->user->getId() != $deal->user_id && !Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() != $deal->user_id && !Yii::app()->getModule('user')->isModerator()){
             throw new CHttpException(403,'Access denied.');
         }
         if(!$deal->isShowCalendar){

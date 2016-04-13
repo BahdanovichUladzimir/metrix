@@ -224,7 +224,7 @@ class DealCategoriesParams extends CFormModel
 				}
 			}
 		}
-		return $this->_categoriesParams;
+		return $this->sortByTagName($this->_categoriesParams, 'type_id');
 	}
 
 	public function getParams(){
@@ -365,4 +365,11 @@ class DealCategoriesParams extends CFormModel
             }
         }
     }
+
+	public static function sortByTagName($arr, $tagName){
+		$index = array();
+		foreach($arr as $a) $index[] = $a->$tagName;
+		array_multisort($index, $arr);
+		return $arr;
+	}
 }

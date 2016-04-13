@@ -34,6 +34,9 @@ class BackendAccessFilter extends CFilter{
 
             // Initialize the authorization item as an empty string
             $authItem = implode('.',$urlParts);
+            //var_dump($authItem);
+            //exit();
+
 
             // Check if user has access to the controller
             if( $user->checkAccess($authItem.'.*')!==true )

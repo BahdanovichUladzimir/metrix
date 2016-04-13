@@ -182,7 +182,7 @@ $isShowCalendar = false;
         'deal'=>$deal,
     ));?>
 <?php else:?>
-    <?php if($deal->isShowCalendar && ($deal->user_id == Yii::app()->user->getId() || Yii::app()->getModule("user")->isAdmin())):?>
+    <?php if($deal->isShowCalendar && ($deal->user_id == Yii::app()->user->getId() || Yii::app()->getModule("user")->isModerator())):?>
         <?php $this->widget('modules.deals.widgets.dealCalendar.DealCalendarWidget', array(
             'deal'=>$deal,
         ));?>

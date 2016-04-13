@@ -6,7 +6,7 @@
 $this->breadcrumbs=array(
 	Yii::t('adminModule','Admin')=>Yii::app()->createUrl('/admin'),
 	'Deals Params'=>array('index'),
-	$model->name,
+	$model->label,
 );
 
 ?>

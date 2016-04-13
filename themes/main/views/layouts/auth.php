@@ -58,12 +58,12 @@
                         <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
                             <h1 class="main-title a b">
                                 <span class="head"><?=Yii::t('core',"Join Us");?></span>
-                                <span><?=Yii::t('core',"ALL FOR HOLIDAYS");?></span>
+                                <span><?=Yii::t('core',"ALL FOR SPORT IN BELARUS");?></span>
                             </h1>
                             <p>
                                 <?=Yii::t(
                                     'core',
-                                    "Use the site to easily find everything you need for weddings, parties and all kinds of celebrations. Create your ad and find customers throughout the CIS");?>
+                                    "Use the site to easily find everything you need for sport. Create your ad and find customers throughout the Belarus");?>
                             </p>
                         </div>
                     </div>

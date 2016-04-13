@@ -27,7 +27,7 @@ class DealGalleryWidget extends CWidget{
         if(is_null($this->deal) || !($this->deal instanceof Deals)){
             return false;
         }
-        if(Yii::app()->user->getId() == $this->deal->user_id || Yii::app()->getModule('user')->isAdmin()){
+        if(Yii::app()->user->getId() == $this->deal->user_id || Yii::app()->getModule('user')->isModerator()){
             $this->images = $this->deal->dealsImages;
             $this->videos = $this->deal->dealsVideos;
             $this->links = $this->deal->dealLinks;

@@ -140,7 +140,7 @@ class DealLinks extends CActiveRecord
         else{
             return false;
         }
-		if(!Yii::app()->getModule('user')->isAdmin()){
+		if(!Yii::app()->getModule('user')->isModerator()){
 			$this->approve = 0;
 			/*if(!is_null($this->deal->user) && !is_null($this->deal->user->email) && strlen(trim($this->deal->user->email))>0){
 				$name = (!is_null($this->alias) && strlen(trim($this->alias))>0) ? $this->alias : $this->link;
