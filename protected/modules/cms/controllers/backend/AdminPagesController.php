@@ -17,12 +17,10 @@ class AdminPagesController extends BackendController
                     'order' => 'created desc',
                 ),
                 'pagination' => array(
-                    'pageSize' => 20,
+                    'pageSize' => 50,
                 ),
             )
         );
-        Config::var_dump(Yii::app()->user->checkAccess('Cms.Backend.AdminPages.Index'));
-
         $this->render(
             'index',
             array(

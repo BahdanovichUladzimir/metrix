@@ -18,6 +18,9 @@ class BackendAccessFilter extends CFilter{
         // By default we assume that the user is allowed access
         $allow = true;
 
+        /**
+         * @var $user RWebUser
+         */
         $user = Yii::app()->getUser();
         $controller = $filterChain->controller;
         $urlParts = explode('/',$controller->getUniqueId());
@@ -34,25 +37,31 @@ class BackendAccessFilter extends CFilter{
 
             // Initialize the authorization item as an empty string
             $authItem = implode('.',$urlParts);
-            //var_dump($authItem);
             //exit();
 
 
             // Check if user has access to the controller
-            if( $user->checkAccess($authItem.'.*')!==true )
-            {
+            if($user->checkAccess($authItem.'.*')){
+                $allow = true;
+            }
+            else{
                 // Append the action id to the authorization item name
                 $authItem .= '.'.ucfirst($action->id);
+                //var_dump($authItem);
 
                 // Check if the user has access to the controller action
-                if( $user->checkAccess($authItem)!==true )
+                if($user->checkAccess($authItem)){
+                    $allow = true;
+                }
+                else{
                     $allow = false;
+                }
             }
         }
 
+        //exit;
         // User is not allowed access, deny access
-        if( $allow===false )
-        {
+        if(!$allow){
             $controller->accessDenied();
             return false;
         }

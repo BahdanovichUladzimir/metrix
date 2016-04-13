@@ -56,20 +56,21 @@ class CmsModule extends CWebModule
 	 * @return boolean whether the action should be executed
 	 * @throws CHttpException if access is denied.
 	 */
-	public function beforeControllerAction($controller, $action)
+	/*public function beforeControllerAction($controller, $action)
 	{
 		if (parent::beforeControllerAction($controller, $action))
 		{
 			$publicRoutes = array('page/view', 'language/change', 'frontend/dictionary/index', 'frontend/dictionary/letter', 'frontend/dictionary/view');
 			$route = $controller->id.'/'.$action->id;
-			if (!in_array($route, $publicRoutes) && !Yii::app()->cms->checkAccess())
+			if (!in_array($route, $publicRoutes) && !Yii::app()->cms->checkAccess()){
 				throw new CHttpException(403, Yii::t('CmsModule.core', 'You are not allowed to access this page.'));
+			}
 
 			return true;
 		}
 
 		return false;
-	}
+	}*/
 
 	/**
 	 * Returns the module version number.
