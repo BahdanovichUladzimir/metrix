@@ -31,6 +31,7 @@
  * @property CmsPageContent $default the content model for the default language
  * @property CmsPageContent[] $translations the related content models
  * @property Image[] $images the associated images
+ * @property Dictionary[] $dictionary
  *
  * @property array $breadcrumbs the breadcrumbs
  * @property string $urlAlias the URL alias
@@ -60,6 +61,10 @@ class CmsPage extends CmsNode {
     public function behaviors() {
         return array(
                 //'image' => array('class'=>'image.components.ImageBehavior'),
+            'ESaveRelatedBehavior' => array(
+                'class' => 'application.components.ESaveRelatedBehavior'
+            ),
+
         );
     }
 
@@ -104,7 +109,7 @@ class CmsPage extends CmsNode {
                 self::HAS_ONE, 'Event', 'pageId',
             ),
             'cmsPagesDictionary' => array(self::HAS_MANY, 'CmsPagesDictionary', 'page_id'),
-            'dictionary'=>array(self::MANY_MANY, 'Dictionary', 'CmsPagesDictionary(dictionary_id, page_id)'),
+            'dictionary'=>array(self::MANY_MANY, 'Dictionary', 'CmsPagesDictionary(page_id, dictionary_id)'),
 
         );
     }

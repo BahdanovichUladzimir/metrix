@@ -58,7 +58,8 @@ class PageController extends NodeController {
 
         if (isset($_POST['CmsPage'])) {
             $model->attributes = $_POST['CmsPage'];
-            if ($model->save()) {
+            $model->dictionary = (isset($_POST['CmsPage']["dictionary"]))?$_POST['CmsPage']["dictionary"]:NULL;
+            if ($model->saveWithRelated(array('dictionary'))) {
                 Yii::app()->user->setFlash($this->module->flashes['success'], Yii::t('page', 'Page created.'));
                 $this->redirect(array('update', 'id' => $model->id));
             }
@@ -86,7 +87,11 @@ class PageController extends NodeController {
 
             if ($valid) {
                 $model->attributes = $_POST['CmsPage'];
-                $model->save(); // we need to save the page so that the 'updated' column is updated
+                $model->dictionary = (isset($_POST['CmsPage']["dictionary"])) ? $_POST['CmsPage']["dictionary"] : NULL;
+
+                $save = $model->saveWithRelated(array('dictionary')); // we need to save the page so that the 'updated' column is updated
+
+                //Config::var_dump($save);
 
                 foreach ($translations as $content)
                     $content->save();

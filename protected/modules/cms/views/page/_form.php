@@ -1,3 +1,9 @@
+<?php
+/**
+ * @var CmsPage $model
+ */
+;?>
+
 <?php echo $form->textFieldGroup($model,'name'); ?>
 <?php echo $form->dropDownListGroup(
     $model,
@@ -12,6 +18,24 @@
         )
     )
 ); ?>
+
+<div class="form-group">
+    <label class="control-label" for="CmsPage_dictionary"><?=Yii::t("cmsModule",'Dictionary');?></label>
+    <div>
+        <?php
+        $this->widget(
+            'bootstrap.widgets.TbSelect2',
+            array(
+                'model' => $model,
+                'attribute' => 'dictionary',
+                'data' => CHtml::listData(Dictionary::model()->findAll(),'id','name'),
+                'htmlOptions' => array(
+                    'multiple' => 'multiple',
+                ),
+            )
+        );?>
+    </div>
+</div>
 <?php echo $form->dropDownListGroup(
     $model,
     'type',
