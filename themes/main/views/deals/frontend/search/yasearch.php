@@ -23,7 +23,7 @@ if(isset($query) && !is_null($query))
 <div class="row">
     <section class="col-lg-9">
         <div class="cf">
-            <?php $this->widget('widgets.currencySelect.CurrencySelectWidget');?>
+            <?php /*$this->widget('widgets.currencySelect.CurrencySelectWidget');*/?>
             <h1 class="title section-title h1"><?=$this->h1;?></h1>
         </div>
         <?php /*if(is_null($categoriesDataProvider) && is_null($dataProvider)):*/?><!--
@@ -65,16 +65,7 @@ if(isset($query) && !is_null($query))
         --><?php /*endif;*/?>
 
 
-        <div id="ya-site-results" onclick="return {
-        'tld': 'ru',
-        'language': 'ru',
-        'encoding': '',
-        'htmlcss': '1.x',
-        'updatehash': true
-        }">
-
-        </div>
-        <script type="text/javascript">(function(w,d,c){var s=d.createElement('script'),h=d.getElementsByTagName('script')[0];s.type='text/javascript';s.async=true;s.charset='utf-8';s.src=(d.location.protocol==='https:'?'https:':'http:')+'//site.yandex.net/v2.0/js/all.js';h.parentNode.insertBefore(s,h);(w[c]||(w[c]=[])).push(function(){Ya.Site.Results.init();})})(window,document,'yandex_site_callbacks');</script>
+        <div id="ya-site-results" onclick="return {'tld': 'ru','language': 'ru','encoding': '','htmlcss': '1.x','updatehash': true}"></div><script type="text/javascript">(function(w,d,c){var s=d.createElement('script'),h=d.getElementsByTagName('script')[0];s.type='text/javascript';s.async=true;s.charset='utf-8';s.src=(d.location.protocol==='https:'?'https:':'http:')+'//site.yandex.net/v2.0/js/all.js';h.parentNode.insertBefore(s,h);(w[c]||(w[c]=[])).push(function(){Ya.Site.Results.init();})})(window,document,'yandex_site_callbacks');</script>
         <style>
             #ya-site-results
             {
@@ -299,6 +290,7 @@ if(isset($query) && !is_null($query))
                 border-color: #E0E0E0 !important;
             }
         </style>
+
 
     </section>
     <section class="col-lg-3">

@@ -374,6 +374,10 @@ class User extends CActiveRecord
 
         return parent::beforeSave();
     }
+
+    /**
+     * @return bool
+     */
     public function beforeDelete(){
         $criteria = new CDbCriteria();
         $criteria->condition = 'sender_id=:sender_id OR receiver_id=:receiver_id';
@@ -381,10 +385,16 @@ class User extends CActiveRecord
             ':sender_id' => $this->id,
             ':receiver_id' => $this->id
         );
-        if(Dialogues::model()->deleteAll($criteria)){
+        $userDialoguesCount = Dialogues::model()->count($criteria);
+        $removedUserDialoguesCount = 0;
+        if(sizeof($userDialoguesCount)>0){
+            $removedUserDialoguesCount = Dialogues::model()->deleteAll($criteria);
+        }
+        if($userDialoguesCount == $removedUserDialoguesCount){
             return parent::beforeDelete();
         }
         else{
+            Yii::log('User '.$this->username.' dialogues does not remove!');
             return false;
         }
     }

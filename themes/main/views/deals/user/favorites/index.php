@@ -9,7 +9,7 @@
 <div class="row">
     <section class="col-lg-9">
         <div class="cf">
-            <?php $this->widget('widgets.currencySelect.CurrencySelectWidget');?>
+            <?php /*$this->widget('widgets.currencySelect.CurrencySelectWidget');*/?>
             <h1 class="title section-title h1"><?=$this->h1;?></h1>
         </div>
         <?php $this->widget('zii.widgets.CListView', array(

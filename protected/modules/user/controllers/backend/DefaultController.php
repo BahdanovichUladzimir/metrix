@@ -12,7 +12,7 @@ class DefaultController extends BackendController
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
-	public function accessRules()
+	/*public function accessRules()
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -23,7 +23,7 @@ class DefaultController extends BackendController
 				'users'=>array('*'),
 			),
 		);
-	}
+	}*/
 	/**
 	 * Manages all models.
 	 */
@@ -131,21 +131,32 @@ class DefaultController extends BackendController
 	 */
 	public function actionDelete()
 	{
-		/*if(Yii::app()->request->isPostRequest)
-		{*/
-			// we only allow deletion via POST request
-			$model = $this->loadModel();
-			$profile = Profile::model()->findByPk($model->id);
-			$profile->delete();
-			$model->delete();
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_POST['ajax']))
-				$this->redirect(array('/admin/users'));
-		/*}
-		else{
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+        $model = $this->loadModel();
+        $profile = Profile::model()->findByPk($model->id);
+        $profileDelete = true;
+        if(!is_null($profile)){
+            $profileDelete = $profile->delete();
+        }
+        $userDelete = $model->delete();
+        if($profileDelete && $userDelete){
+            if(Yii::app()->request->isAjaxRequest){
 
-		}*/
+            }
+            else{
+                Yii::app()->user->setFlash('userModule.userDeleteSuccess', Yii::t("adminModule", "User <strong>{name}</strong> was deleted successfully!", array("{name}" => $model->username)));
+                $this->redirect(array('/admin/users'));
+            }
+        }
+        else{
+            if(Yii::app()->request->isAjaxRequest){
+                echo CJSON::encode(array());
+                Yii::app()->end();
+            }
+            else{
+                Yii::app()->user->setFlash('userModule.userDeleteError', Yii::t("adminModule", "When delete user <strong>{name}</strong> error occurred!", array("{name}" => $model->username)));
+                $this->redirect(array('/admin/users'));
+            }
+        }
 	}
 	
 	/**
@@ -160,12 +171,12 @@ class DefaultController extends BackendController
             Yii::app()->end();
         }
     }
-	
-	
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 */
+
+
+    /**
+     * @return User
+     * @throws CHttpException
+     */
 	public function loadModel()
 	{
 		if($this->_model===null)

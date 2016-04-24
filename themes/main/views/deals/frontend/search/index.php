@@ -23,7 +23,7 @@ if(isset($query) && !is_null($query))
 <div class="row">
     <section class="col-lg-9">
         <div class="cf">
-            <?php $this->widget('widgets.currencySelect.CurrencySelectWidget');?>
+            <?php /*$this->widget('widgets.currencySelect.CurrencySelectWidget');*/?>
             <h1 class="title section-title h1"><?=$this->h1;?></h1>
         </div>
         <div class="alert alert-<?=$messageStatus;?> alert-dismissible" role="alert">

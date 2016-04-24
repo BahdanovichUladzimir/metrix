@@ -70,7 +70,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/j
 <div class="row">
     <section  class="col-lg-9 col-md-9 col-sm-12">
         <div class="cf">
-            <?php $this->widget('widgets.currencySelect.CurrencySelectWidget');?>
+            <?php /*$this->widget('widgets.currencySelect.CurrencySelectWidget');*/?>
             <?php if($category->for_adults == "1"):?>
                 <h1 class="title section-title h1 for-adults"><?=$this->h1;?></h1>
             <?php else:?>
