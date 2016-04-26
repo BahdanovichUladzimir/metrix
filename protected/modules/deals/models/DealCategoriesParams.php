@@ -96,9 +96,9 @@ class DealCategoriesParams extends CFormModel
 	public function rules()
 	{
 		//берём параметры только текущих категорий
-		//$params = $this->getCurrentCategoriesParams();
+		$params = $this->getCurrentCategoriesParams();
 		//берём все параметры
-		$params = $this->getParams();
+		//$params = $this->getParams();
 
 		// создаём правила валидации для параметров категорий к которым относится товар
 		if(sizeof($params)>0){
@@ -113,7 +113,7 @@ class DealCategoriesParams extends CFormModel
 
 			foreach($params as $param){
 				$param_rule = array();
-				if(isset($_POST['DealCategoriesParams']) && isset($_POST['DealCategoriesParams'][$param->name])){
+				/*if(isset($_POST['DealCategoriesParams']) && isset($_POST['DealCategoriesParams'][$param->name])){*/
 					if ($param->required == '1')
 						array_push($required,$param->name);
 					if ($param->type->name=='float')
@@ -162,7 +162,7 @@ class DealCategoriesParams extends CFormModel
 						if ($param->error_message) $param_rule['message'] = Yii::t('dealsModule',$param->error_message);
 						array_push($rules,$param_rule);
 					}
-				}
+				/*}*/
 			}
 
 			array_push($rules,array(implode(',',$required), 'required'));

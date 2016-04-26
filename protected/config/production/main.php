@@ -47,7 +47,7 @@ return CMap::mergeArray($mainConfig, array(
                     'class'=>'XWebDebugRouter',
                     'config'=>'alignLeft, opaque, runInDebug, fixedPos, collapsed, yamlStyle',
                     'levels'=>'error, warning, trace, profile, info',
-                    'allowedIPs'=>array('46.53.194.205'),
+                    'allowedIPs'=>array('91.149.151.180'),
                 ),*/
 
                 // uncomment the following to show log messages on web pages

@@ -4,10 +4,10 @@
  * @var $model Deals
  * @var DealsCategories $category
  * @var bool $isShowSeoText
+ * @var array $geoObjects
  */
 $emptyHtml = $this->renderPartial('_list_empty', array('title' => $category->name, 'message' => Yii::t('dealsModule','Information currently not available')), true, false);
 Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery.lazyload.min.js');
-
 ?>
 <script>
     $(window).load(function(){
@@ -23,8 +23,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/j
 
     });
 </script>
-<?php if($category->for_adults == "1"):?>
 
+<?php if($category->for_adults == "1"):?>
     <script>
         $(document).ready(function () {
             if(typeof $.cookie('proof_of_age') === "undefined" || $.cookie('proof_of_age') === "no"){
@@ -77,6 +77,39 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/j
                 <h1 class="title section-title h1"><?=$this->h1;?></h1>
             <?php endif;?>
         </div>
+        <?php if($category->hasCoordinatesParam()):;?>
+            <?php /*Config::var_dump($geoObjects);*/?>
+            <div class="panel panel-default category-map-container">
+                <div class="panel-body">
+                    <?php $this->widget('ext.YandexMap.YandexMap', array(
+                        'id' => 'map',
+                        'width' => 100,
+                        'height' => 400,
+                        'zoom' => 11,
+                        'center' => array(Cities::model()->findByPk($this->userCityId)->latitude, Cities::model()->findByPk($this->userCityId)->longitude),
+                        'controls' => array(
+                            'zoomControl' => true,
+                            'typeSelector' => true,
+                            'mapTools' => false,
+                            'smallZoomControl' => false,
+                            'miniMap' => false,
+                            'scaleLine' => false,
+                            'searchControl' => false,
+                            'trafficControl' => false,
+                            //'scrollZoom' => true
+                        ),
+                        'placemark' => $geoObjects
+                    ));?>
+                    <a href="" class="btn btn-default col-xs-12 col-sm-12 col-md-12 col-xs-12">Скрыть карту</a>
+
+                </div>
+
+            </div>
+
+
+
+        <?php endif;?>
+
         <?php $this->widget('zii.widgets.CListView', array(
             'dataProvider'=>$model->search($category->page_count),
             'itemView'=>'_deal',   // refers to the partial view named '_post'

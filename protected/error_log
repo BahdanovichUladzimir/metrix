@@ -1,0 +1,2 @@
+[02-Apr-2016 21:17:38 Europe/Minsk] PHP Fatal error:  Class 'Config' not found in /home/metrixby/public_html/protected/yiic.php on line 4
+[03-Apr-2016 20:11:24 Europe/Minsk] PHP Fatal error:  Call to a member function createUrl() on null in /home/metrixby/public_html/protected/modules/rights/components/behaviors/RAuthItemBehavior.php on line 230

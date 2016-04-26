@@ -10,7 +10,7 @@ if($_SERVER['HTTP_HOST']==='metrix.loc' || $_SERVER['HTTP_HOST']==='www.metrix.l
     defined('YII_ENV') or define('YII_ENV','local.dev');
     $yii=dirname(__FILE__).'/../../lib/yii-1.1.17/framework/yii.php';
 }
-/*elseif($_SERVER['HTTP_HOST']==='dev.metrix.by' || $_SERVER['HTTP_HOST']==='www.dev.metrix.by'){
+elseif($_SERVER['HTTP_HOST']==='dev.metrix.by' || $_SERVER['HTTP_HOST']==='www.dev.metrix.by'){
     error_reporting (E_ALL);
     defined('YII_DEBUG') or define('YII_DEBUG',false);
     defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
@@ -22,7 +22,7 @@ elseif($_SERVER['HTTP_HOST']==='rc.metrix.by' || $_SERVER['HTTP_HOST']==='www.rc
     defined('YII_DEBUG') or define('YII_DEBUG',true);
     defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
     defined('YII_ENV') or define('YII_ENV','rc');
-}*/
+}
 elseif($_SERVER['HTTP_HOST']==='metrix.by' || $_SERVER['HTTP_HOST']==='www.metrix.by'){
     error_reporting (0);
     defined('YII_DEBUG') or define('YII_DEBUG',false);
@@ -31,9 +31,9 @@ elseif($_SERVER['HTTP_HOST']==='metrix.by' || $_SERVER['HTTP_HOST']==='www.metri
 }
 // Иначе выключаем режим отладки и подключаем рабочую конфигурацию
 else {
-    error_reporting (0);
-    defined('YII_DEBUG') or define('YII_DEBUG',false);
-    defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',0);
+    error_reporting (E_ALL);
+    defined('YII_DEBUG') or define('YII_DEBUG',true);
+    defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
     defined('YII_ENV') or define('YII_ENV','production');
 }
 /**bhd,kf**/

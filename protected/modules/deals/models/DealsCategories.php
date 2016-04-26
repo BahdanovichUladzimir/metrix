@@ -51,6 +51,8 @@ class DealsCategories extends CActiveRecord
     public $originalImagePath = NULL;
     public $originalImageUrl = NULL;
     public $children;
+
+    private $_hasCoordinatesParam = NULL;
     private $_hasParent = NULL;
     private $_parentsIds = NULL;
 
@@ -414,15 +416,6 @@ class DealsCategories extends CActiveRecord
         return $categoriesFormatted;
     }
 
-    public static function getCategoryParamsWithParentCategoryParamsRecursively(DealsCategories $category){
-        $params = $category->params;
-        if($category->hasParent()){
-            $parentParams = self::getCategoryParamsWithParentCategoryParamsRecursively($category->getParent());
-            $params = array_merge($params,$parentParams);
-        }
-        return $params;
-    }
-
     public static function getCategoryFilterParamsWithParentCategoryFilterParamsRecursively(DealsCategories $category){
         $params = $category->filtersParams;
         if($category->hasParent()){
@@ -617,6 +610,31 @@ class DealsCategories extends CActiveRecord
         return parent::afterSave();
     }
 
+    public function hasCoordinatesParam(){
+        if(!is_null($this->_hasCoordinatesParam)){
+            return $this->_hasCoordinatesParam;
+        }
+        else{
+            $this->_hasCoordinatesParam = false;
+            foreach ($this->getCategoryParamsWithParentCategoryParamsRecursively() as $param){
+                if($param->type->name == 'coordinates_widget'){
+                    $this->_hasCoordinatesParam = true;
+                    break;
+                }
+            }
+        }
+        return $this->_hasCoordinatesParam;
+    }
+    public function getCategoryParamsWithParentCategoryParamsRecursively(){
+        $params = $this->params;
+        if($this->hasParent()){
+            $parentParams = $this->getParent()->getCategoryParamsWithParentCategoryParamsRecursively();
+            $params = array_merge($params,$parentParams);
+        }
+        return $params;
+    }
+
+
 
     public static function hasChildren($categoryId){
         if(sizeof(self::getCategoryChildren($categoryId))>0){
@@ -702,6 +720,4 @@ class DealsCategories extends CActiveRecord
             return self::getRootParent($category->getParent()->id);
         }
     }
-
-
 }

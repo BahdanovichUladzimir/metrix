@@ -51,6 +51,7 @@ class YandexMap extends CWidget {
         if ($this->zoom)
             $state[] = 'zoom:' . $this->zoom;
 
+        $state[] = 'behaviors:["scrollZoom","drag"]';
         $state = implode(",", $state);
 
         $options = $this->generateOptions($this->options);

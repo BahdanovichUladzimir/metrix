@@ -366,4 +366,21 @@ a.dictionary-word:visited{
     margin-top: 40px;
     margin-bottom: 50px;
 }
-
+h5.balloon-title{
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+a.balloon-read-more-link{
+    font-size: 11px;
+}
+.balloon-body-container{
+    font-size: 12px;
+}
+.balloon-image{
+    min-width: 80px;
+    min-height: 80px;
+}
+.map-obj-params-container{
+    line-height: 1.5;
+}

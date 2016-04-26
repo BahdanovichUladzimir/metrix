@@ -198,3 +198,40 @@ CHtml::$afterRequiredLabel = "<span class='required'>*</span>";
         </div>
     </div>
 <?php endif;?>
+<script>
+    $(document).ready(function () {
+        //var settings = $("#deals-form").data('settings');
+
+        if(typeof settings !== 'undefined'){
+            <?php /*foreach ($paramsModel->rules() as $rule):*/?><!--
+                <?php /*$ruleAttributes = explode(',',$rule[0]);*/?>
+                <?php /*foreach ($ruleAttributes as $attribute):*/?>
+                settings.attributes.push({
+                    enableAjaxValidation:true,
+                    errorCssClass:"has-error",
+                    errorID:"DealCategoriesParams_<?/*=$attribute;*/?>_em_",
+                    hideErrorMessage:false,
+                    id:"DealCategoriesParams_<?/*=$attribute;*/?>",
+                    inputContainer:"div.form-group",
+                    inputID:"DealCategoriesParams_<?/*=$attribute;*/?>",
+                    model:"DealCategoriesParams",
+                    name:"DealCategoriesParams[<?/*=$attribute;*/?>]",
+                    successCssClass:"has-success",
+                    validateOnChange:true,
+                    validateOnType:true,
+                    validatingCssClass:"validating",
+                    validationDelay:200,
+                    value:""
+                });
+                <?php /*endforeach;*/?>
+            --><?php /*endforeach;*/?>
+
+        }
+        //console.log(settings);
+
+        //$("deals-form").data('settings', settings);
+    });
+
+</script>
+
+

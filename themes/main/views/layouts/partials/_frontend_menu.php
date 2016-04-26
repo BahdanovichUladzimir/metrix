@@ -163,15 +163,17 @@ else{
                                                 <li><?=DealsCategories::getPublicLinkByCatId(22,$this->userCityKey);?></li>
                                                 <li><?=DealsCategories::getPublicLinkByCatId(23,$this->userCityKey);?></li>
                                                 <li><?=DealsCategories::getPublicLinkByCatId(24,$this->userCityKey);?></li>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(25,$this->userCityKey);?></li>
-                                            </ul>
-                                        </li>
-                                        <!--<li>
-                                            <ul>
-                                                <li><?/*=DealsCategories::getPublicLinkByCatId(88,$this->userCityKey);*/?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(26,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                         <li>
+                                            <ul>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(27,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(28,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(29,$this->userCityKey);?></li>
+                                            </ul>
+                                        </li>
+                                        <!--<li>
                                             <ul>
                                                 <li><?/*=DealsCategories::getPublicLinkByCatId(5,$this->userCityKey);*/?></li>
                                             </ul>

@@ -13,5 +13,4 @@
     <span class="public-phone" id="public_phone"><?=$invisiblePhone;?></span>
     <a class="gr-btn show-phone fancybox.ajax" id="show_phone" href="<?=Yii::app()->createUrl('/deals/frontend/catalog/getDealContacts', array('deal_id' => $deal->id));?>" data-param_name="phone_1"><?=Yii::t('dealsModule',"Show phone");?></a>
     <span style="color: #a94442" class="text-danger"></span>
-
 </div>

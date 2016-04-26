@@ -104,13 +104,42 @@ class CatalogController extends FrontendController
             Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/fancyBox/source/helpers/jquery.fancybox-thumbs.js');
             Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery-cookie/src/jquery.cookie.js');
 
+            $geoObjects = array();
+            if($category->hasCoordinatesParam()){
+                $paramId = DealsParams::model()->findByAttributes(array('type_id' => DealsParamsTypes::model()->findByAttributes(array('name' => 'coordinates_widget'))->id))->id;
+                foreach ($model->search(999999999)->getData() as $deal){
+                    //$paramsModel = $this->loadParamsModel($deal);
+                    //Config::var_dump($paramsModel);
+
+                    /**
+                     * @var Deals $deal
+                     */
+                    $coordinates = DealsParamsValues::model()->findByAttributes(array('deal_id' => $deal->id, 'param_id' => $paramId))->value;
+                    $geoObj = array(
+                        'lat' => explode(':',$coordinates)[1],
+                        'lon' => explode(':',$coordinates)[0],
+                        'properties' => array(
+                            'hintContent'=> $deal->name,
+                            //'balloonContentHeader' => '<h5 class="balloon-title">'.$deal->name.'</h5>',
+                            'balloonContent' => $this->renderPartial('_mapDeal', array('deal' => $deal), true),
+                            //'balloonContentFooter' => CHtml::link(Yii::t('dealsModule',"More..."),$deal->getPublicUrl(), array('target' => '_blank','class' => 'balloon-read-more-link')),
+                        ),
+                        'options' => array(
+                            'draggable' => false,
+                        )
+                    );
+                    array_push($geoObjects, $geoObj);
+                }
+            }
+
             $this->render(
                 'category',
                 array(
-                    'dataProvider' => $model->search(),
+                    'dataProvider' => $model->search($category->page_count),
                     'model' => $model,
                     'category' => $category,
-                    'isShowSeoText' => $isShowSeoText
+                    'isShowSeoText' => $isShowSeoText,
+                    'geoObjects' => $geoObjects
                 )
             );
 

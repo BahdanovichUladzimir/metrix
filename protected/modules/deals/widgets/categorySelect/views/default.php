@@ -31,7 +31,6 @@ if($model->hasErrors('categories')){
                             subcats_container.html(data.html);
                             wrapper.find('.form-group').addClass("has-success").removeClass('has-error');
                             $(".categories-select-help-block").text('').hide();
-
                         }
                         else if(data.status === 'end'){
                             $("#deal_categories_params").html(data.html);

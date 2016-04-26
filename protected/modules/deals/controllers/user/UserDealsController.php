@@ -515,6 +515,7 @@ class UserDealsController extends UserFrontendController
                         $children = array_merge($children,DealsCategories::getCategoryChildren($category->id));
                     }
                     if(sizeof($children)>0){
+                        $this->myPerformAjaxValidation($model);
                         $html = $this->renderPartial(
                             '_categories_list',
                             array(
@@ -530,8 +531,10 @@ class UserDealsController extends UserFrontendController
 
                     }
                     else{
-
                         $paramsModel = new DealCategoriesParams('update',$categories, $model);
+                        $this->myPerformAjaxValidation($model);
+                        //Config::var_dump($paramsModel->rules());
+                        $this->paramsModelPerformAjaxValidation($paramsModel);
                         $html = $this->renderPartial(
                             '_dealParams',
                             array(
@@ -1971,6 +1974,13 @@ class UserDealsController extends UserFrontendController
     * @param CModel the model to be validated
     */
     protected function performAjaxValidation($model){
+        if(isset($_POST['ajax']) && $_POST['ajax']==='deals-form'){
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+    }
+
+    protected function paramsModelPerformAjaxValidation($model){
         if(isset($_POST['ajax']) && $_POST['ajax']==='deals-form'){
             echo CActiveForm::validate($model);
             Yii::app()->end();

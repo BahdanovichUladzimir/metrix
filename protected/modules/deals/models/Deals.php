@@ -227,9 +227,11 @@ class Deals extends CActiveRecord
                 self::HAS_MANY,
                 'DealsParamsValues',
                 'deal_id',
-                'with' => array('param' => array(
-                    'order' => 'param.type_id'
-                )),
+                'with' => array(
+                    'param' => array(
+                        'order' => 'param.type_id'
+                    )
+                ),
             ),
 			'dealsVideos' => array(self::HAS_MANY, 'DealsVideos', 'deal_id'),
 			'frontendDealsVideos' => array(
@@ -401,14 +403,12 @@ class Deals extends CActiveRecord
     }
 
 
-	public function search($pageSize = '50')
+	public function search($pageSize = 50)
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
 		$criteria=new CDbCriteria;
 		$criteria->with = array(
 			'categories',
-            'dealsParamsValues',
+            //'dealsParamsValues',
             'calendar'
 		);
 		$criteria->together=true;
@@ -426,7 +426,7 @@ class Deals extends CActiveRecord
             $criteria->order = 't.priority DESC, rand('.$this->randSort.') ASC';
         }
         $criteria->order = 't.priority DESC, rand('.$this->randSort.')';
-		$criteria->group=('t.id');
+		//$criteria->group=('t.id');
 		$criteria->compare('t.id',$this->id,true);
 		$criteria->compare('t.name',$this->name,true);
 		$criteria->compare('t.url_segment',$this->url_segment,true);
