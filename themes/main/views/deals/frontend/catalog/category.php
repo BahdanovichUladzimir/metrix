@@ -22,6 +22,20 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/j
         });
 
     });
+    $(document).ready(function () {
+        $(".hide-map").click(function (){
+            var link = $(this);
+            link.closest(".category-map-container").find("#map").slideToggle(function () {
+                if($(this).is(":visible")){
+                    link.text("Скрыть карту");
+                }
+                else{
+                    link.text("Показать на карте");
+                }
+            });
+            return false;
+        });
+    })
 </script>
 
 <?php if($category->for_adults == "1"):?>
@@ -100,7 +114,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/j
                         ),
                         'placemark' => $geoObjects
                     ));?>
-                    <a href="" class="btn btn-default col-xs-12 col-sm-12 col-md-12 col-xs-12">Скрыть карту</a>
+                    <a href="" class="btn btn-default col-xs-12 col-sm-12 col-md-12 col-xs-12 hide-map">Скрыть карту</a>
 
                 </div>
 

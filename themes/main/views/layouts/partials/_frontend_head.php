@@ -11,6 +11,7 @@
     <meta name="format-detection" content="telephone=no"/>
     <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE"/>
     <meta name='yandex-verification' content='7aefd538f5cae119' />
+    <meta name="google-site-verification" content="AVNg1nJnGdfrJ2h2PcJIWQBV8NzzDxBnZalEgFKiJT0" />
     <?php if (!is_null($this->title)): ?>
         <title><?php echo $this->title; ?></title>
         <meta name="description" content="<?= (is_null($this->description)) ? '' : $this->description; ?>">
@@ -95,5 +96,16 @@
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/36964795" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-76883418-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
 </head>
 

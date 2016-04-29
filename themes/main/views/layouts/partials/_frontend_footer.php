@@ -83,8 +83,8 @@
                         <ul class="nav navbar-nav">
                             <li><a href="<?=Yii::app()->createUrl('site/news');?>">Новости</a></li>
                             <li><a href="<?=Yii::app()->createUrl('site/articles');?>">Статьи</a></li>
-                            <li><a rel="nofollow" href="<?=Yii::app()->cms->createUrl('paid_services');?>">Пользовательское соглашение</a></li>
-                            <li><a rel="nofollow" href="<?=Yii::app()->cms->createUrl('instruction');?>">Инструкция</a></li>
+                            <!--<li><a rel="nofollow" href="<?/*=Yii::app()->cms->createUrl('paid_services');*/?>">Пользовательское соглашение</a></li>-->
+                            <!--<li><a rel="nofollow" href="<?/*=Yii::app()->cms->createUrl('instruction');*/?>">Инструкция</a></li>-->
                             <?php /*<li><a rel="nofollow" href="<?=Yii::app()->cms->createUrl('faq');?>">FAQ </a></li>*/?>
                             <li><a rel="nofollow" href="<?=Yii::app()->createUrl('feedback/feedback/create');?>">Обратная связь</a></li>
                         </ul>

@@ -119,7 +119,7 @@ class CatalogController extends FrontendController
                         'lat' => explode(':',$coordinates)[1],
                         'lon' => explode(':',$coordinates)[0],
                         'properties' => array(
-                            'hintContent'=> $deal->name,
+                            'hintContent'=> "<strong class='map-obj-hint'>".$deal->name."</strong>",
                             //'balloonContentHeader' => '<h5 class="balloon-title">'.$deal->name.'</h5>',
                             'balloonContent' => $this->renderPartial('_mapDeal', array('deal' => $deal), true),
                             //'balloonContentFooter' => CHtml::link(Yii::t('dealsModule',"More..."),$deal->getPublicUrl(), array('target' => '_blank','class' => 'balloon-read-more-link')),

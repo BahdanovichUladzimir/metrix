@@ -44,11 +44,11 @@ class PageController extends NodeController {
     /**
      * @return array the action filters for this controller.
      */
-    public function filters() {
+    /*public function filters() {
         return array(
             array('cms.components.CmsPageViewFilter + view'),
         );
-    }
+    }*/
 
     /**
      * Displays the page to create a new model.

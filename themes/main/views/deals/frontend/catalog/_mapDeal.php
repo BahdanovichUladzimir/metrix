@@ -20,7 +20,7 @@
                 'deal' => $deal,
                 'template' => 'map'
             ));?>
-            <?=CHtml::link(Yii::t('dealsModule',"More..."),$deal->getPublicUrl(), array('target' => '_blank','class' => 'balloon-read-more-link'));?>
+            <?=CHtml::link(Yii::t('dealsModule',"More..."),$deal->getPublicUrl(), array('target' => '_blank', 'class' => 'balloon-read-more-link'));?>
         </div>
     </div>
 </div>

@@ -384,3 +384,6 @@ a.balloon-read-more-link{
 .map-obj-params-container{
     line-height: 1.5;
 }
+.map-obj-hint{
+    color: #454545;
+}

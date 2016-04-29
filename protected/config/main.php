@@ -181,6 +181,7 @@ return array(
 			'class' => 'cms.components.Cms',
 			'defaultLocale' => 'ru',
 			'languages' => array('ru' => 'Русский'/*, 'en' => 'English','uk'=>'Український'*/),
+			//'autoCreate' => false
 		),
 		/*'cache' => array(
 			'class' => 'CFileCache',

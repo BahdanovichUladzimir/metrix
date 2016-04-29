@@ -122,7 +122,14 @@
         <div class="panel-body cf">
             <div class="service-info inner">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                        <?php if($deal->forAdults):?>
+                            <h1 class="for-adults"><?=$deal->name;?></h1>
+                        <?php else:?>
+                            <h1><?=$deal->name;?></h1>
+                        <?php endif;?>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <div class="pull-right">
                             <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
                             <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
@@ -235,11 +242,6 @@
                             </li>
                         </ul>
                     </div>
-                <?php endif;?>
-                <?php if($deal->forAdults):?>
-                    <h1 class="title section-title h1 for-adults"><?=$deal->name;?></h1>
-                <?php else:?>
-                    <h1 class="title section-title h1"><?=$deal->name;?></h1>
                 <?php endif;?>
                 <?=$deal->getDealAuthorLink();?>
                 <p><?=$deal->intro;?></p>

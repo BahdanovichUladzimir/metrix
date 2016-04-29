@@ -208,7 +208,7 @@ class DealCategoriesParams extends CFormModel
                     /**
                      * @var $category DealsCategories
                      */
-                    $categoryParams = DealsCategories::getCategoryParamsWithParentCategoryParamsRecursively($category);
+                    $categoryParams = $category->getCategoryParamsWithParentCategoryParamsRecursively();
 					if(isset($categoryParams) && sizeof($categoryParams)>0){
 						foreach($categoryParams as $param){
 							if(!in_array($param->name,$allParamsNamesList)){
