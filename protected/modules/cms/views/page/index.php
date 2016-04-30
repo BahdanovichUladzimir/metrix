@@ -31,7 +31,7 @@ $this->widget('booster.widgets.TbExtendedGridView', array(
         array(
             'name' => 'name',
             'type' => 'raw',
-            'value' => 'CHtml::link(CHtml::encode(ucfirst($data->content->heading)),array("update","id"=>$data->id))',
+            'value' => 'CHtml::link(CHtml::encode(ucfirst($data->content->heading)." (".$data->name.")"),array("update","id"=>$data->id))',
         ),
         array(
             'name' => 'parentId',

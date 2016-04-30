@@ -403,7 +403,7 @@ class Deals extends CActiveRecord
     }
 
 
-	public function search($pageSize = 50)
+	public function search($pageSize = 20)
 	{
 		$criteria=new CDbCriteria;
 		$criteria->with = array(

@@ -142,13 +142,13 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('userModule',"Authorization");
                             <?php echo $form->error($registrationModel,'email', array('class' => 'note text-danger')); ?>
                         </div>
 
-                        <div class="form-group<?=(sizeof($registrationModel->getErrors('invitecode'))>0) ? ' has-error' : '';?>">
-                            <?php echo $form->textField($registrationModel,'invitecode', array('class' => 'form-control', 'placeholder' => Yii::t('core','Enter').' '.$registrationModel->getAttributeLabel("invitecode"))); ?>
-                            <?php echo $form->error($registrationModel,'invitecode', array('class' => 'note text-danger')); ?>
+                        <!--<div class="form-group<?/*=(sizeof($registrationModel->getErrors('invitecode'))>0) ? ' has-error' : '';*/?>">
+                            <?php /*echo $form->textField($registrationModel,'invitecode', array('class' => 'form-control', 'placeholder' => Yii::t('core','Enter').' '.$registrationModel->getAttributeLabel("invitecode"))); */?>
+                            <?php /*echo $form->error($registrationModel,'invitecode', array('class' => 'note text-danger')); */?>
                             <span class="note">
-                                <?php echo Yii::t('userModule',"If you have an invitation code, please enter it in this field. This will be useful for the person who invited you."); ?>
+                                <?php /*echo Yii::t('userModule',"If you have an invitation code, please enter it in this field. This will be useful for the person who invited you."); */?>
                             </span>
-                        </div>
+                        </div>-->
 
 
                         <?php if (UserModule::doCaptcha('registration')): ?>

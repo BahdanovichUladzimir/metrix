@@ -13,66 +13,55 @@
         <div class="footer-nav">
             <div class="container">
                 <nav class="row">
-                    <!--<ul class="nav navbar-nav">
-                        <li class="col-md-2 col-sm-2">&nbsp;<a href="#">Свадьба</a>
+                    <ul class="nav navbar-nav">
+                        <li class="col-md-2 col-sm-2">&nbsp;<?=DealsCategories::getPublicLinkByCatId(1,$this->userCityKey, array('rel' => 'nofollow'));?>
                             <ul class="nav">
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(1,$this->userCityKey);*/?>">Свадебные платья</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(229,$this->userCityKey);*/?>">Прически на свадьбу</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(30,$this->userCityKey);*/?>">Макияж на дому</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(26,$this->userCityKey);*/?>">Свадебные букеты</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(2,$this->userCityKey);*/?>">Обручальные кольца</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(116,$this->userCityKey);*/?>">Подвязка невесты</a></li>
+                                <!--<li><?/*=DealsCategories::getPublicLinkByCatId(5,$this->userCityKey, array('rel' => 'nofollow'));*/?></li>
+                                <li><?/*=DealsCategories::getPublicLinkByCatId(8,$this->userCityKey, array('rel' => 'nofollow'));*/?></li>
+                                <li><?/*=DealsCategories::getPublicLinkByCatId(14,$this->userCityKey, array('rel' => 'nofollow'));*/?></li>-->
                             </ul>
                         </li>
-                        <li class="col-md-2 col-sm-2">&nbsp;<a href="#">Банкет</a>
+                        <li class="col-md-2 col-sm-2">&nbsp;<?=DealsCategories::getPublicLinkByCatId(2,$this->userCityKey, array('rel' => 'nofollow'));?>
                             <ul class="nav">
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(14,$this->userCityKey);*/?>">Костюм жениха</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(110,$this->userCityKey);*/?>">Мужские галстуки</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(193,$this->userCityKey);*/?>">Мужские туфли</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(185,$this->userCityKey);*/?>">Мужское белье</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(73,$this->userCityKey);*/?>">Бутоньерка жениха</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(111,$this->userCityKey);*/?>">Запонки</a></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(5,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(8,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(14,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(10,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(12,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+
                             </ul>
                         </li>
-                        <li class="col-md-2 col-sm-2">&nbsp;<a href="#">Транспорт</a>
+                        <li class="col-md-2 col-sm-2">&nbsp;<?=DealsCategories::getPublicLinkByCatId(2,$this->userCityKey, array('rel' => 'nofollow'));?>
                             <ul class="nav">
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(40,$this->userCityKey);*/?>">Фотографы</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(157,$this->userCityKey);*/?>">Видеооператоры</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(42,$this->userCityKey);*/?>">Свадебный фотоальбом</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(155,$this->userCityKey);*/?>">Фотосессия Love story</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(34,$this->userCityKey);*/?>">Тамада</a></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(13,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(18,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(9,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(16,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(17,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(6,$this->userCityKey, array('rel' => 'nofollow'));?></li>
                             </ul>
                         </li>
-                        <li class="col-md-2 col-sm-2">&nbsp;<a href="#">Транспорт</a>
+                        <li class="col-md-2 col-sm-2">&nbsp;<?=DealsCategories::getPublicLinkByCatId(3,$this->userCityKey, array('rel' => 'nofollow'));?>
                             <ul class="nav">
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(139,$this->userCityKey);*/?>">Оформление свадьбы</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(130,$this->userCityKey);*/?>">Свадебный скрапбукинг</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(74,$this->userCityKey);*/?>">Украшения на машину</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(280,$this->userCityKey);*/?>">Свадебный кортеж</a></li>
                             </ul>
                         </li>
-                        <li class="col-md-2 col-sm-2">&nbsp;<a href="#">Транспорт</a>
+                        <li class="col-md-2 col-sm-2">&nbsp;<?=DealsCategories::getPublicLinkByCatId(4,$this->userCityKey, array('rel' => 'nofollow'));?>
                             <ul class="nav">
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(33,$this->userCityKey);*/?>">Первый танец</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(36,$this->userCityKey);*/?>">Музыканты</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(255,$this->userCityKey);*/?>">Первая брачная ночь</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(288,$this->userCityKey);*/?>">Медовый месяц</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(39,$this->userCityKey);*/?>">Свадебный салют</a></li>
-                                <li><a rel="nofollow" href="<?/*=DealsCategories::getPublicUrlByCatId(35,$this->userCityKey);*/?>">Выездная регистрация</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(287,$this->userCityKey);*/?>">Свадебные голуби</a></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(22,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(23,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(24,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(26,$this->userCityKey, array('rel' => 'nofollow'));?></li>
                             </ul>
                         </li>
-                        <li class="col-md-2 col-sm-2">&nbsp;<a href="#">Транспорт</a>
+                        <li class="col-md-2 col-sm-2">&nbsp;<?=DealsCategories::getPublicLinkByCatId(4,$this->userCityKey, array('rel' => 'nofollow'));?>
                             <ul class="nav">
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(75,$this->userCityKey);*/?>">Кейтеринг</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(358,$this->userCityKey);*/?>">Свадебные агентства</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(124,$this->userCityKey);*/?>">Аренда коттеджа</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(292,$this->userCityKey);*/?>">Выездная регистрация</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(129,$this->userCityKey);*/?>">Подарки</a></li>
-                                <li><a rel="nofollow"  href="<?/*=DealsCategories::getPublicUrlByCatId(39,$this->userCityKey);*/?>">Праздничный салют</a></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(27,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(28,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(29,$this->userCityKey, array('rel' => 'nofollow'));?></li>
+                                <li><?=DealsCategories::getPublicLinkByCatId(41,$this->userCityKey, array('rel' => 'nofollow'));?></li>
                             </ul>
                         </li>
-                    </ul>-->
+                    </ul>
                 </nav>
             </div>
         </div>

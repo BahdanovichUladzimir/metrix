@@ -56,9 +56,9 @@ return CMap::mergeArray($mainConfig, array(
                     'countLimit' => 1, // How many times the same query should be executed to be considered inefficient
                     'slowQueryMin' => 0.01, // Minimum time for the query to be slow
                 ),*/
-                /*array(
+                array(
                     'class'=>'CWebLogRoute',
-                ),*/
+                ),
             ),
         ),
 

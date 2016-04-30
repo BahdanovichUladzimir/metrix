@@ -63,7 +63,7 @@ $isShowCalendar = false;
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                             <?=$paramValue->param->label;?>
                                         </div>
-                                        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
+                                        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 param-value">
                                             <?=($paramValue->value == 0) ? '<img src="/images/No.png" alt="No">' : '<img src="/images/Yes.png" alt="Yes">';?>
                                         </div>
                                     </div>
@@ -78,7 +78,7 @@ $isShowCalendar = false;
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                             <?=$paramValue->param->label;?>
                                         </div>
-                                        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
+                                        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 param-value">
                                             <?=CHtml::link($paramValue->value, DealCategoriesParams::getFormattedUrl($paramValue->value), array('rel' => 'nofollow', 'target' => "_blank"));?>
                                         </div>
                                     </div>
@@ -91,7 +91,7 @@ $isShowCalendar = false;
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                             <?=$paramValue->param->label;?>
                                         </div>
-                                        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
+                                        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 param-value">
                                             <?=CHtml::link($paramValue->value,"mailto:".$paramValue->value);?>
                                         </div>
                                     </div>
@@ -104,7 +104,7 @@ $isShowCalendar = false;
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                             <?=$paramValue->param->label;?>
                                         </div>
-                                        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
+                                        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 param-value">
                                             <?php $this->widget('modules.deals.widgets.dealPhone.DealPhoneWidget', array(
                                                 'deal'=>$deal,
                                                 'phone' => $paramValue->value,
@@ -129,7 +129,7 @@ $isShowCalendar = false;
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                             <?=$paramValue->param->label;?>
                                         </div>
-                                        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
+                                        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 param-value">
                                             <span><?=$paramValue->value;?> <?=(isset($deal->currency)) ? $deal->currency->key : $userCurrency->key;?></span>
                                             <?php if($paramValue->value>0 && $userCurrency->key != $deal->currency->key):?>
                                                 <span><?=ceil($userPrice);?> <?=(isset($deal->currency)) ? $userCurrency->key : $userCurrency->key;?></span>
@@ -148,7 +148,7 @@ $isShowCalendar = false;
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                             <?=$paramValue->param->label;?>
                                         </div>
-                                        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
+                                        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 param-value">
                                             <?=$paramValue->value;?>
                                         </div>
                                     </div>
@@ -166,7 +166,7 @@ $isShowCalendar = false;
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                         <?=$k;?>
                                     </div>
-                                    <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6">
+                                    <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 param-value">
                                         <?=implode(", ", $v);?>
                                     </div>
                                 </div>

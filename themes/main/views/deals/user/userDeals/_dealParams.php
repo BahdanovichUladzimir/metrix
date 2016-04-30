@@ -21,7 +21,7 @@ CHtml::$afterRequiredLabel = "<span class='required'>*</span>";
             $("#DealCategoriesParams_latitude").val("0");
             return false;
         });
-
+        
     });
 </script>
 <?php foreach($categories as $category):?>

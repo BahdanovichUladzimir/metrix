@@ -168,7 +168,7 @@
 
 <div class="form-group">
 	<label class="col-sm-3 control-label" for="DealsCategories_dealsCategoriesParams"><?=Yii::t("dealsModule",'Category params');?></label>
-	<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+	<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 		<?php $this->widget(
 			'bootstrap.widgets.TbSelect2',
 			array(
@@ -181,6 +181,14 @@
 			)
 		);?>
 	</div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <strong><?=Yii::t('dealsModule',"Parent categories params:");?></strong>
+        <ul>
+            <?php foreach($model->getParentsParams() as $parentParam):?>
+                <li><?=$parentParam->label;?> (<?=$parentParam->name;?>)</li>
+            <?php endforeach;?>
+        </ul>
+    </div>
 </div>
 <div class="form-group">
 	<label class="col-sm-3 control-label" for="DealsCategories_dealsCategoriesParams"><?=Yii::t("dealsModule",'Category ratings');?></label>

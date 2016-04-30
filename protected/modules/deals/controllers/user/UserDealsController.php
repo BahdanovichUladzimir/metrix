@@ -123,7 +123,7 @@ class UserDealsController extends UserFrontendController
     }
 
 
-    public function actionCreate(){
+    /*public function actionCreate(){
         if($this->user->agreement == '0'){
             $this->redirect(Yii::app()->createUrl('/user/agreement/agreement?returnUrl='.Yii::app()->request->requestUri));
         };
@@ -298,6 +298,199 @@ class UserDealsController extends UserFrontendController
             'model'=>$model,
             'imagesModel' => $imagesModel,
             'paramsModel'=>$paramsModel,
+            'categoriesList' => DealsCategories::getListData(true, false, 1, true),
+            'statusesList' => DealsStatuses::getListData(),
+            'approveList' => Deals::getApproveListData(),
+            'priorityList' => Deals::getPriorityListData(),
+            'archiveList' => Deals::getArchiveListData(),
+            'usersList' => User::getAllUsersListData(),
+            'citiesList' => Cities::getAllCitiesListData(),
+            'currenciesList' => Currencies::getCurrenciesListData(),
+            'aroundUndergrounds' => $aroundUndergrounds,
+            'user' => $this->user,
+            'postData' => $postData,
+        ));
+    }*/
+
+
+    public function actionCreate(){
+        if($this->user->agreement == '0'){
+            $this->redirect(Yii::app()->createUrl('/user/agreement/agreement?returnUrl='.Yii::app()->request->requestUri));
+        };
+
+        Yii::import('xupload.models.XUploadForm');
+        $aroundUndergrounds = array();
+
+        $model=new Deals('userCreate');
+        $this->performAjaxValidation($model);
+
+        $model->user_id = $this->userId;
+        if(isset($_GET['currentCategory'])){
+            $currentCategoryModel = DealsCategories::model()->findByPk((int)$_GET['currentCategory']);
+            $model->categories = array($currentCategoryModel);
+            /*if(sizeof($currentCategoryModel->getChildren())==0){
+                $paramsModel = $paramsModel=$this->loadParamsModel($model);
+            }*/
+        }
+
+        if(isset($_POST['Deals'])){
+            if(isset($_POST['Deals']['categories']) && is_array($_POST['Deals']['categories']) && sizeof($_POST['Deals']['categories'])>0){
+                $model->categories = DealsCategories::model()->findAllByPk($_POST['Deals']['categories']);
+                if(sizeof($model->categories)>0){
+                    foreach($model->categories as $category){
+                        $criteria = new CDbCriteria();
+                        $criteria->with='categories';
+                        $criteria->condition = 't.user_id=:user_id AND categories.id=:category_id';
+                        $criteria->params = array(
+                            ':user_id' => $this->userId,
+                            ':category_id' => $category->id
+                        );
+                        $userCategoryDealsCount = Deals::model()->count($criteria);
+                        if($userCategoryDealsCount>=$category->free_deals_count){
+                            $model->exceeding_category_limit_hidden = 1;
+                            Yii::app()->user->setFlash(
+                                'backendDealsError',
+                                Yii::t(
+                                    "dealsModule",
+                                    'Exceeded limit deals for the category "{name}"! Turn paid impressions.',
+                                    array('{name}' => $category->name)
+                                )
+                            );
+
+                        }
+                    }
+                }
+                unset($_POST['Deals']['categories']);
+                $model->categoriesTree = DealsCategories::getParentsRecursively($model->categories[0]);
+            }
+        }
+        $model->attributes=$_POST['Deals'];
+
+        $paramsModel=new DealCategoriesParams('update',$model);
+        $this->performAjaxValidation($paramsModel);
+
+        if(isset($_POST['DealCategoriesParams'])){
+            $dealCatsParams = $_POST['DealCategoriesParams'];
+            // если параметр имееет тип phone(телефон). Вырезаем все ненужные символы
+            foreach($dealCatsParams as $k=>$v){
+                $param = DealsParams::model()->findByAttributes(array('name' => $k));
+                if($param->type->name == 'phone'){
+                    $dealCatsParams[$k] = preg_replace("/[^0-9]/", "", $v);
+                }
+            }
+            // получаем из виджета longitude И latitude если они пришли, и задаём параметр coordinates
+            // удаляем из массива longitude и latitude
+            if(isset($dealCatsParams['longitude']) || isset($dealCatsParams['latitude'])){
+                $coordinatesArr = array(
+                    'longitude' => (isset($dealCatsParams['longitude'])) ? $dealCatsParams['longitude'] : "0",
+                    'latitude' => (isset($dealCatsParams['latitude'])) ? $dealCatsParams['latitude'] : "0",
+                );
+                $aroundUndergrounds = Underground::model()->coordinates($paramsModel->latitude, $paramsModel->longitude, 1)->findAll();
+
+                $coordinates = implode(":",$coordinatesArr);
+                $dealCatsParams['coordinates'] = $coordinates;
+                //unset($dealCatsParams['longitude']);
+                //unset($dealCatsParams['latitude']);
+            }
+            $paramsModel->attributes = $dealCatsParams;
+        }
+
+        //Config::var_dump($paramsModel->rules());
+
+
+        if($model->validate() && $paramsModel->validate()){
+            $transaction = Yii::app()->db->beginTransaction();
+            if($saveWithRelated = $model->saveWithRelated(array('categories'))){
+                if(isset($dealCatsParams)){
+                    $isParamSave = false;
+                    $this->_clearParams($model);
+                    foreach($dealCatsParams as $k => $v){
+                        if($k == "latitude" || $k == "longitude"){
+                            continue;
+                        }
+                        if(is_array($v)){
+                            foreach($v as $value){
+                                $dealsParamsValuesModel = new DealsParamsValues;
+                                $dealsParamsValuesModel->deal_id = (int)$model->id;
+                                $param = DealsParams::model()->find('name=:name',array(':name' => $k));
+                                $dealsParamsValuesModel->param_id = $param->id;
+                                if($param->type->name == "phone"){
+                                    $v=preg_replace("#[^0-9]#i","",$value);
+                                }
+                                $dealsParamsValuesModel->value = $value;
+                                if($dealsParamsValuesModel->validate()){
+                                    if($dealsParamsValuesModel->save()){
+                                        $isParamSave = true;
+                                    }
+                                    else{
+                                        $isParamSave = false;
+                                        break;
+                                    }
+                                }
+                                else{
+                                    $transaction->rollback();
+                                    Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When update deal "{name}" error occurred!', array('{name}' => $model->name)));
+                                }
+                            }
+                        }
+                        else{
+                            $dealsParamsValuesModel = new DealsParamsValues;
+                            $dealsParamsValuesModel->deal_id = (int)$model->id;
+                            $param = DealsParams::model()->find('name=:name',array(':name' => $k));
+                            $dealsParamsValuesModel->param_id = $param->id;
+                            if($param->type->name == "phone"){
+                                $v=preg_replace("#[^0-9]#i","",$v);
+                            }
+                            $dealsParamsValuesModel->value = $v;
+                            if($dealsParamsValuesModel->validate()){
+                                if($dealsParamsValuesModel->save()){
+                                    $isParamSave = true;
+                                }
+                                else{
+                                    $isParamSave = false;
+                                    break;
+                                }
+                            }
+                            else{
+                                $transaction->rollback();
+                                Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When update deal "{name}" error occurred!', array('{name}' => $model->name)));
+                            }
+
+                        }
+                    }
+                    if($isParamSave){
+                        $transaction->commit();
+                        Yii::app()->user->setFlash('backendDealsSuccess', Yii::t("dealsModule", 'Deal "{name}" was created successfully!', array('{name}' => $model->name)));
+                        $this->redirect(array('photo','id'=>$model->id));
+                    }
+                    else{
+                        $transaction->rollback();
+                        Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When create deal "{name}" error occurred!', array('{name}' => $model->name)));
+                    }
+
+                }
+                else{
+                    $this->_clearParams($model);
+                    $transaction->commit();
+                    Yii::app()->user->setFlash('backendDealsSuccess', Yii::t("dealsModule", 'Deal "{name}" was created successfully!', array('{name}' => $model->name)));
+                    $this->redirect(array('photo','id'=>$model->id));
+                }
+            }
+            else{
+                $transaction->rollback();
+                Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When create deal "{name}" error occurred!', array('{name}' => $model->name)));
+            }
+        }
+
+        $postData = array();
+        if(isset($_POST)){
+            $postData = $_POST;
+        }
+
+        $this->render('create',array(
+            'model'=>$model,
+            'imagesModel' => new XUploadForm(),
+            'paramsModel' => $paramsModel,
             'categoriesList' => DealsCategories::getListData(true, false, 1, true),
             'statusesList' => DealsStatuses::getListData(),
             'approveList' => Deals::getApproveListData(),
@@ -1974,13 +2167,6 @@ class UserDealsController extends UserFrontendController
     * @param CModel the model to be validated
     */
     protected function performAjaxValidation($model){
-        if(isset($_POST['ajax']) && $_POST['ajax']==='deals-form'){
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
-    }
-
-    protected function paramsModelPerformAjaxValidation($model){
         if(isset($_POST['ajax']) && $_POST['ajax']==='deals-form'){
             echo CActiveForm::validate($model);
             Yii::app()->end();

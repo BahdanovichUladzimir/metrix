@@ -123,7 +123,7 @@ class DealsCategories extends CActiveRecord
                 self::HAS_MANY,
                 'DealsCategoriesParams',
                 'deal_category_id',
-                'order' => 'dealsCategoriesParams.type ASC'
+                'order' => 'dealsCategoriesParams.deal_param_id ASC'
             ),
             'filtersParams' => array(self::MANY_MANY,
                 'DealsParams',
@@ -231,15 +231,16 @@ class DealsCategories extends CActiveRecord
 
         $criteria=new CDbCriteria;
 
-        $criteria->compare('id',$this->id,true);
-        $criteria->compare('parent_id',$this->parent_id,true);
-        $criteria->compare('name',$this->name,true);
+        $criteria->compare('id',$this->id);
+        $criteria->compare('parent_id',$this->parent_id);
+        $criteria->compare('name',$this->name, true);
         //$criteria->compare('url_segment',$this->url_segment,true);
         //$criteria->compare('description',$this->description,true);
-        $criteria->compare('status_id',$this->status_id,true);
-        $criteria->compare('for_adults',$this->for_adults);
+        $criteria->compare('status_id',$this->status_id);
+        //$criteria->compare('for_adults',$this->for_adults);
         $criteria->compare('free_deals_count',$this->free_deals_count);
         $criteria->compare('page_count',$this->page_count);
+        $criteria->compare('priority',$this->priority);
         //$criteria->compare('image',$this->image,true);
 
         return new CActiveDataProvider($this, array(
@@ -447,7 +448,8 @@ class DealsCategories extends CActiveRecord
         return $parents;
     }
 
-    public function getAvailableParamsListData(){
+
+    public function getParentsParamsIds(){
         $parents = self::getParentsRecursively($this);
         $excludedParamsIds = array();
         if(sizeof($parents)>0){
@@ -457,9 +459,20 @@ class DealsCategories extends CActiveRecord
                 }
             }
         }
+        return $excludedParamsIds;
+    }
+
+    public function getParentsParams(){
         $criteria = new CDbCriteria();
         $criteria->order = 'name ASC';
-        $criteria->addNotInCondition('id', $excludedParamsIds);
+        $criteria->addInCondition('id', $this->getParentsParamsIds());
+        return DealsParams::model()->findAll($criteria);
+    }
+
+    public function getAvailableParamsListData(){
+        $criteria = new CDbCriteria();
+        $criteria->order = 'name ASC';
+        $criteria->addNotInCondition('id', $this->getParentsParamsIds());
         return CHtml::listData(DealsParams::model()->findAll($criteria),'id','label');
     }
 
@@ -520,9 +533,9 @@ class DealsCategories extends CActiveRecord
         return $tempDealCat!==null ? $tempDealCat->getPublicUrl($cityKey) : '';
     }
 
-    public static function getPublicLinkByCatId($cat_id, $cityKey){
+    public static function getPublicLinkByCatId($cat_id, $cityKey, $htmlOptions = array()){
         $tempDealCat = self::model()->findByPk($cat_id);
-        return $tempDealCat!==null ? CHtml::link($tempDealCat->name, $tempDealCat->getPublicUrl($cityKey)) : '';
+        return $tempDealCat!==null ? CHtml::link($tempDealCat->name, $tempDealCat->getPublicUrl($cityKey), $htmlOptions) : '';
     }
 
 
@@ -594,9 +607,9 @@ class DealsCategories extends CActiveRecord
             /**
              * @var $category DealsCategories
              */
-            $params[$param->id] = $param->name;
+            $params[$param->id] = $param->label;
         }
-        return implode(', ', $params);
+        return implode(',<br> ', $params);
     }
 
     public function afterSave(){

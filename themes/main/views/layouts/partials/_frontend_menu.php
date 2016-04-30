@@ -79,31 +79,31 @@ else{
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=DealsCategories::model()->findByPk(1)->name;?></a>
                                     <ul class="dropdown-menu columns">
-                                        <li>
+                                        <!--<li>
                                             <ul>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(1,$this->userCityKey);?></li>
+                                                <li><?/*=DealsCategories::getPublicLinkByCatId(1,$this->userCityKey);*/?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(8,$this->userCityKey);?></li>
+                                                <li><?/*=DealsCategories::getPublicLinkByCatId(8,$this->userCityKey);*/?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(124,$this->userCityKey);?></li>
+                                                <li><?/*=DealsCategories::getPublicLinkByCatId(124,$this->userCityKey);*/?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(34,$this->userCityKey);?></li>
+                                                <li><?/*=DealsCategories::getPublicLinkByCatId(34,$this->userCityKey);*/?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(3,$this->userCityKey);?></li>
+                                                <li><?/*=DealsCategories::getPublicLinkByCatId(3,$this->userCityKey);*/?></li>
                                             </ul>
-                                        </li>
+                                        </li>-->
                                     </ul>
                                 </li>
                                 <li class="dropdown">
@@ -138,21 +138,21 @@ else{
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=DealsCategories::model()->findByPk(3)->name;?></a>
                                     <ul class="dropdown-menu columns">
-                                        <li>
+                                        <!--<li>
                                             <ul>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(34,$this->userCityKey);?></li>
+                                                <li><?/*=DealsCategories::getPublicLinkByCatId(34,$this->userCityKey);*/?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(88,$this->userCityKey);?></li>
+                                                <li><?/*=DealsCategories::getPublicLinkByCatId(88,$this->userCityKey);*/?></li>
                                             </ul>
                                         </li>
                                         <li>
                                             <ul>
-                                                <li><?=DealsCategories::getPublicLinkByCatId(5,$this->userCityKey);?></li>
+                                                <li><?/*=DealsCategories::getPublicLinkByCatId(5,$this->userCityKey);*/?></li>
                                             </ul>
-                                        </li>
+                                        </li>-->
                                     </ul>
                                 </li>
                                 <li class="dropdown">
@@ -171,6 +171,7 @@ else{
                                                 <li><?=DealsCategories::getPublicLinkByCatId(27,$this->userCityKey);?></li>
                                                 <li><?=DealsCategories::getPublicLinkByCatId(28,$this->userCityKey);?></li>
                                                 <li><?=DealsCategories::getPublicLinkByCatId(29,$this->userCityKey);?></li>
+                                                <li><?=DealsCategories::getPublicLinkByCatId(41,$this->userCityKey);?></li>
                                             </ul>
                                         </li>
                                         <!--<li>

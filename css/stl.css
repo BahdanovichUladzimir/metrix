@@ -1191,6 +1191,9 @@ table th {
 .table-contacts td:first-child {
 	text-transform: uppercase;
 }
+.table-contacts td:first-child div{
+    text-transform: none;
+}
 .table-contacts strong{
 	color:#000;
 }

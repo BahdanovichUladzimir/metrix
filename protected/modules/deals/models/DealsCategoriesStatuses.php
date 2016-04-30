@@ -18,7 +18,7 @@ class DealsCategoriesStatuses extends CActiveRecord
 	 * return list data array for dropdown widget
 	 */
 	public static function getListData(){
-		return CHtml::listData(self::model()->findAll(array('order'=>'name ASC')),'id','label');
+		return CHtml::listData(self::model()->findAll(array('order'=>'name DESC')),'id','label');
 	}
 
 	/**
