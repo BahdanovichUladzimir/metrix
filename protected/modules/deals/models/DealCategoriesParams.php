@@ -36,12 +36,12 @@ class DealCategoriesParams extends CFormModel
      */
     public $userCity = NULL;
 
-	public function __construct($scenario='', Deals $deal)
+	public function __construct($scenario='', $categories = array(), $deal = NULL)
 	{
 		if(!is_null($deal)){
 			$this->_deal = $deal;
 		}
-		$this->_categories = $deal->categories;
+		$this->_categories = $categories;
 
 		$this->setScenario($scenario);
 		$this->init();
@@ -51,9 +51,9 @@ class DealCategoriesParams extends CFormModel
 
 	public function init(){
 		//берём параметры только текущих категорий
-		$params = $this->getCurrentCategoriesParams();
+		//$params = $this->getCurrentCategoriesParams();
 		//берём все параметры которые есть в базе
-		//$params = $this->getParams();
+		$params = $this->getParams();
 		$currentParams = array();
 		if(!is_null($this->_deal)){
 			$dealParams = $this->_deal->dealsParamsValues;

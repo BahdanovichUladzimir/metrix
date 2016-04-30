@@ -95,7 +95,8 @@ class Deals extends CActiveRecord
     public static $userCityId = NULL;
     public static $paidStatuses = array();
     public static $dealsContactsQualities = array();
-    public static $calendarParamId = 179;
+    public static $calendarParam = NULL;
+    public static $calendarParamId = NULL;
 
     public function init(){
         parent::init();
@@ -110,7 +111,8 @@ class Deals extends CActiveRecord
             1 => Yii::t('dealsModule', 'Paid'),
         );
         self::setDealsContactsQualities();
-        self::$calendarParamId = DealsParams::model()->findByAttributes(array('name' => 'calendar'))->id;
+        self::$calendarParam = DealsParams::model()->findByAttributes(array('name' => 'calendar'));
+        self::$calendarParamId = !is_null(self::$calendarParam) ? self::$calendarParam->id : NULL;
 
     }
 

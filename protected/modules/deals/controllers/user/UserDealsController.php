@@ -123,7 +123,7 @@ class UserDealsController extends UserFrontendController
     }
 
 
-    /*public function actionCreate(){
+    public function actionCreate(){
         if($this->user->agreement == '0'){
             $this->redirect(Yii::app()->createUrl('/user/agreement/agreement?returnUrl='.Yii::app()->request->requestUri));
         };
@@ -310,10 +310,10 @@ class UserDealsController extends UserFrontendController
             'user' => $this->user,
             'postData' => $postData,
         ));
-    }*/
+    }
 
 
-    public function actionCreate(){
+    /*public function actionCreate(){
         if($this->user->agreement == '0'){
             $this->redirect(Yii::app()->createUrl('/user/agreement/agreement?returnUrl='.Yii::app()->request->requestUri));
         };
@@ -328,9 +328,9 @@ class UserDealsController extends UserFrontendController
         if(isset($_GET['currentCategory'])){
             $currentCategoryModel = DealsCategories::model()->findByPk((int)$_GET['currentCategory']);
             $model->categories = array($currentCategoryModel);
-            /*if(sizeof($currentCategoryModel->getChildren())==0){
+            if(sizeof($currentCategoryModel->getChildren())==0){
                 $paramsModel = $paramsModel=$this->loadParamsModel($model);
-            }*/
+            }
         }
 
         if(isset($_POST['Deals'])){
@@ -394,9 +394,6 @@ class UserDealsController extends UserFrontendController
             }
             $paramsModel->attributes = $dealCatsParams;
         }
-
-        //Config::var_dump($paramsModel->rules());
-
 
         if($model->validate() && $paramsModel->validate()){
             $transaction = Yii::app()->db->beginTransaction();
@@ -503,7 +500,7 @@ class UserDealsController extends UserFrontendController
             'user' => $this->user,
             'postData' => $postData,
         ));
-    }
+    }*/
 
     /**
      * @param $id
@@ -2167,6 +2164,13 @@ class UserDealsController extends UserFrontendController
     * @param CModel the model to be validated
     */
     protected function performAjaxValidation($model){
+        if(isset($_POST['ajax']) && $_POST['ajax']==='deals-form'){
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+    }
+
+    protected function paramsModelPerformAjaxValidation($model){
         if(isset($_POST['ajax']) && $_POST['ajax']==='deals-form'){
             echo CActiveForm::validate($model);
             Yii::app()->end();
