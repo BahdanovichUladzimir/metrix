@@ -2,6 +2,7 @@
 assets/*
 !assets/.gitignore
 protected/runtime/*
+protected/config/*
 !protected/runtime/.gitignore
 .idea
 uploads/*
