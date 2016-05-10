@@ -55,7 +55,7 @@ class YandexMap extends CWidget {
         $state = implode(",", $state);
 
         $options = $this->generateOptions($this->options);
-        return "map = new ymaps.Map ('{$this->id}',{" . $state . "},{" . $options . "});";
+        return "map = new ymaps.Map ('{$this->id}',{" . $state . "},{" . $options . "}); var clusterer = new ymaps.Clusterer();";
     }
 
     protected function initMapControl() {
@@ -124,6 +124,7 @@ EQF;
             }
         }
 
+        $placemark .= "map.geoObjects.add(clusterer);";
         return $placemark;
     }
 
@@ -145,7 +146,7 @@ EQF;
         }
 
         $placemark .= "var {$name} = new ymaps.Placemark([{$value['lat']},{$value['lon']}],{" . $properties . "},{" . $options . "});";
-        $placemark .= "map.geoObjects.add({$name});";
+        $placemark .= "clusterer.add({$name});";
 
         return $placemark;
     }

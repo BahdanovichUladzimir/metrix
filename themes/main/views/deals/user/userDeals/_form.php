@@ -69,7 +69,7 @@ $md = "9";
             'enableClientValidation'=>true,
             'type' => 'vertical',
             'clientOptions'=>array(
-                "validateOnSubmit"=> true,
+                "validateOnSubmit"=> false,
                 'validateOnChange' => true,
                 'validateOnType' => true,
             )
@@ -145,48 +145,11 @@ $md = "9";
                                 )
                             ); ?>
                         </div>
-                        <?php /*if($model->isNewRecord):*/?>
-                            <div class="categories-select-container">
-                                <?php /*$this->renderPartial(
-                                    '_categories_list',
-                                    array(
-                                        'categoriesList' => $categoriesList,
-                                        'model' => $model,
-                                        'label' => Yii::t('dealsModule','Categories')
-                                    )
-                                );*/?>
-                                <?php $this->widget('modules.deals.widgets.categorySelect.CategorySelectWidget', array(
-                                    'model'=>$model,
-                                ));?>
-                            </div>
-                        <?php /*else:*/?><!--
-                            <label>
-                                <?/*=Yii::t('dealsModule','Current categories:');*/?>
-                            </label>
-                            <ul>
-                                <?php /*foreach($model->categories as $category):*/?>
-                                    <li><a href="<?/*=DealsCategories::getPublicUrlByCatId($category->id,$this->userCityKey);*/?>"><?/*=$category->name;*/?></a></li>
-                                <?php /*endforeach;*/?>
-                            </ul>
-                        --><?php /*endif;*/?>
-                        <?php /*<div class="select-wrap">
-                            <div class="form-group">
-                                <input type="hidden" name="Deals[status_id]" value="2" id="ytDeals_status_id">
-                                <label class="checkbox">
-                                    <input id="Deals_status_id" <?=($model->status_id == 1) ? 'checked="checked"': "";?>type="checkbox" name="Deals[status_id]" value="1">
-                                    <span class="a-spr"></span> <?=Yii::t('dealsModule','Published');?>
-                                </label>
-                            </div>
-                        </div>"*/;?>
-                        <!--<div class="select-wrap">
-                            <div class="form-group">
-                                <input type="hidden" name="Deals[paid]" value="0" id="ytDeals_paid">
-                                <label class="checkbox">
-                                    <input id="Deals_paid" <?/*=($model->paid == 1) ? 'checked="checked"': "";*/?> type="checkbox" name="Deals[paid]" value="1">
-                                    <span class="a-spr"></span> <?/*=Yii::t('dealsModule','Paid');*/?>
-                                </label>
-                            </div>
-                        </div>-->
+                        <div class="categories-select-container">
+                            <?php $this->widget('modules.deals.widgets.categorySelect.CategorySelectWidget', array(
+                                'model'=>$model,
+                            ));?>
+                        </div>
                     </div>
                 </div>
                 <div id="deal_categories_params">
@@ -194,6 +157,7 @@ $md = "9";
                         <?php $this->renderPartial(
                             '_dealParams',
                             array(
+                                'ajaxLoad' => false,
                                 'model'=>$model,
                                 'categories' => $model->categories,
                                 'paramsModel'=>$paramsModel,
@@ -221,3 +185,32 @@ $md = "9";
         <?php $this->endWidget(); ?>
     </div>
 </div>
+
+<?php $script = '       
+
+    var form = $("#deals-form");
+    var init_settings = form.data("settings");
+    var init_attributes = init_settings.attributes;
+    
+    var deal_categories_params_data = $(window).data("deal_categories_params");
+    if(deal_categories_params_data !== undefined){
+        var init_params_attributes = deal_categories_params_data.attributes;
+        var tmp = [];
+        var result_attributes = tmp.concat(init_attributes, init_params_attributes);
+        
+        init_settings.attributes = result_attributes;
+
+        $("#deals-form").yiiactiveform(init_settings);
+    }
+    
+    $("#deals-form").on("update_deal_categories_params", function(event,data){
+        var new_cat_attributes = data.attributes;
+        var tmp = [];
+        var result_attributes = tmp.concat(init_attributes, new_cat_attributes);
+                       
+        init_settings.attributes = result_attributes;
+        
+        $("#deals-form").yiiactiveform(init_settings);
+     });
+';?>
+<?php Yii::app()->clientScript->registerScript("update-deals_form_params_data",$script, CClientScript::POS_LOAD);?>

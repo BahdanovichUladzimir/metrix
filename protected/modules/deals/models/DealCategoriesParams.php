@@ -36,12 +36,12 @@ class DealCategoriesParams extends CFormModel
      */
     public $userCity = NULL;
 
-	public function __construct($scenario='', $categories = array(), $deal = NULL)
+	public function __construct($scenario='', Deals $deal)
 	{
 		if(!is_null($deal)){
 			$this->_deal = $deal;
 		}
-		$this->_categories = $categories;
+		$this->_categories = $deal->categories;
 
 		$this->setScenario($scenario);
 		$this->init();

@@ -8,7 +8,7 @@ return array(
     'connectionString' => 'mysql:host=localhost;dbname=metrixby_production',
     'emulatePrepare' => true,
     'username' => 'metrixby_admin',
-    'password' => '1Ty*2!8k5hMPE?D',
+    'password' => '-;X7$ScDzW6w',
     'charset' => 'utf8',
     'enableProfiling'=>true,
     'enableParamLogging' => true,

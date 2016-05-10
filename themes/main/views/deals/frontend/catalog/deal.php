@@ -276,8 +276,7 @@
     <?php $this->widget('modules.deals.widgets.dealParams.DealParamsWidget', array(
         'deal'=>$deal,
     ));?>
-
-
+    
     <?php Yii::import('modules.comments.widgets.comments.*');?>
     <?php $this->widget('modules.comments.widgets.comments.CommentsWidget', array(
         'appCategoryId' => 1,

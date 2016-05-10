@@ -129,14 +129,24 @@ class UserDealsController extends UserFrontendController
         };
 
         Yii::import('xupload.models.XUploadForm');
-        $model=new Deals('userCreate');
         $imagesModel = new XUploadForm();
-        $paramsModel = $paramsModel=$this->loadParamsModel($model);
-        $this->myPerformAjaxValidation($model);
+        $postData = array();
+        if(isset($_POST)){
+            $postData = $_POST;
+        }
+
+        $model=new Deals('userCreate');
+        $model->user_id = $this->userId;
+        if(isset($_GET['currentCategory'])){
+            $currentCategoryModel = DealsCategories::model()->findByPk($_GET['currentCategory']);
+            $model->categories = array($currentCategoryModel);
+        }
+        $paramsModel = $this->loadParamsModel($model);
         if(isset($_POST['Deals'])){
-            $categoriesIds = array();
-            if(isset($_POST['Deals']['categories']) && sizeof($_POST['Deals']['categories'])>0){
+            // если в посте пришли id категорийй, находим их и присваиваем модели $model
+            if(isset($_POST['Deals']['categories']) && is_array($_POST['Deals']['categories']) && sizeof($_POST['Deals']['categories'])>0){
                 $categories = DealsCategories::model()->findAllByPk($_POST['Deals']['categories']);
+                //Проверяем лимит товаров для категории
                 if(sizeof($categories)>0){
                     foreach($categories as $category){
                         $criteria = new CDbCriteria();
@@ -161,24 +171,18 @@ class UserDealsController extends UserFrontendController
                         }
                     }
                 }
-                $categoriesIds = $_POST['Deals']['categories'];
-                unset($_POST['Deals']['categories']);
                 $model->categories = $categories;
+                unset($_POST['Deals']['categories']);
                 $model->categoriesTree = DealsCategories::getParentsRecursively($model->categories[0]);
             }
+            $paramsModel=$this->loadParamsModel($model);
+
+            //$this->performAjaxValidation($model);
             $model->attributes=$_POST['Deals'];
-            $model->user_id = $this->userId;
-            $paramsValid = true;
+            $paramsModelValidate = true;
             if(isset($_POST['DealCategoriesParams'])){
                 $dealCatsParams = $_POST['DealCategoriesParams'];
 
-                // если параметр имееет тип phone(телефон). Вырезаем все ненужные символы
-                foreach($dealCatsParams as $k=>$v){
-                    $param = DealsParams::model()->findByAttributes(array('name' => $k));
-                    if($param->type->name == 'phone'){
-                        $dealCatsParams[$k] = preg_replace("/[^0-9]/", "", $v);
-                    }
-                }
                 // получаем из виджета longitude И latitude если они пришли, и задаём параметр coordinates
                 // удаляем из массива longitude и latitude
                 if(isset($dealCatsParams['longitude']) || isset($dealCatsParams['latitude'])){
@@ -188,18 +192,28 @@ class UserDealsController extends UserFrontendController
                     );
                     $coordinates = implode(":",$coordinatesArr);
                     $dealCatsParams['coordinates'] = $coordinates;
-                    //unset($dealCatsParams['longitude']);
-                    //unset($dealCatsParams['latitude']);
+                    unset($dealCatsParams['longitude']);
+                    unset($dealCatsParams['latitude']);
                 }
-                $paramsModel=new DealCategoriesParams('update',DealsCategories::model()->findAllByPk($categoriesIds),$model);
-                $paramsModel->attributes = $dealCatsParams;
-                $paramsValid = $paramsModel->validate();
-            }
 
-            if($model->validate() && $paramsValid){
+                // если параметр имееет тип phone(телефон). Вырезаем все ненужные символы
+                foreach($dealCatsParams as $k=>$v){
+                    $param = DealsParams::model()->findByAttributes(array('name' => $k));
+                    //Config::var_dump($k);
+                    //Config::var_dump($param);
+
+                    if($param->type->name == 'phone'){
+                        $dealCatsParams[$k] = preg_replace("/[^0-9]/", "", $v);
+                    }
+                }
+                $paramsModel->attributes = $dealCatsParams;
+                $paramsModelValidate = $paramsModel->validate();
+            }
+            $this->performAjaxValidation(array($model, $paramsModel));
+
+            if($model->validate() && $paramsModelValidate){
                 $transaction = Yii::app()->db->beginTransaction();
                 if($saveWithRelated = $model->saveWithRelated(array('categories'))){
-
                     if(isset($dealCatsParams)){
                         $isParamSave = false;
                         $this->_clearParams($model);
@@ -280,19 +294,6 @@ class UserDealsController extends UserFrontendController
                     Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When create deal "{name}" error occurred!', array('{name}' => $model->name)));
                 }
             }
-
-        }
-        $aroundUndergrounds = Underground::model()->coordinates($paramsModel->latitude, $paramsModel->longitude, 1)->findAll();
-        $postData = array();
-        if(isset($_POST)){
-            $postData = $_POST;
-        }
-        if(isset($_GET['currentCategory'])){
-            $currentCategoryModel = DealsCategories::model()->findByPk($_GET['currentCategory']);
-            $model->categories = array($currentCategoryModel);
-            if(sizeof($currentCategoryModel->getChildren())==0){
-                $paramsModel = $paramsModel=$this->loadParamsModel($model);
-            }
         }
         $this->render('create',array(
             'model'=>$model,
@@ -306,202 +307,11 @@ class UserDealsController extends UserFrontendController
             'usersList' => User::getAllUsersListData(),
             'citiesList' => Cities::getAllCitiesListData(),
             'currenciesList' => Currencies::getCurrenciesListData(),
-            'aroundUndergrounds' => $aroundUndergrounds,
             'user' => $this->user,
             'postData' => $postData,
         ));
     }
-
-
-    /*public function actionCreate(){
-        if($this->user->agreement == '0'){
-            $this->redirect(Yii::app()->createUrl('/user/agreement/agreement?returnUrl='.Yii::app()->request->requestUri));
-        };
-
-        Yii::import('xupload.models.XUploadForm');
-        $aroundUndergrounds = array();
-
-        $model=new Deals('userCreate');
-        $this->performAjaxValidation($model);
-
-        $model->user_id = $this->userId;
-        if(isset($_GET['currentCategory'])){
-            $currentCategoryModel = DealsCategories::model()->findByPk((int)$_GET['currentCategory']);
-            $model->categories = array($currentCategoryModel);
-            if(sizeof($currentCategoryModel->getChildren())==0){
-                $paramsModel = $paramsModel=$this->loadParamsModel($model);
-            }
-        }
-
-        if(isset($_POST['Deals'])){
-            if(isset($_POST['Deals']['categories']) && is_array($_POST['Deals']['categories']) && sizeof($_POST['Deals']['categories'])>0){
-                $model->categories = DealsCategories::model()->findAllByPk($_POST['Deals']['categories']);
-                if(sizeof($model->categories)>0){
-                    foreach($model->categories as $category){
-                        $criteria = new CDbCriteria();
-                        $criteria->with='categories';
-                        $criteria->condition = 't.user_id=:user_id AND categories.id=:category_id';
-                        $criteria->params = array(
-                            ':user_id' => $this->userId,
-                            ':category_id' => $category->id
-                        );
-                        $userCategoryDealsCount = Deals::model()->count($criteria);
-                        if($userCategoryDealsCount>=$category->free_deals_count){
-                            $model->exceeding_category_limit_hidden = 1;
-                            Yii::app()->user->setFlash(
-                                'backendDealsError',
-                                Yii::t(
-                                    "dealsModule",
-                                    'Exceeded limit deals for the category "{name}"! Turn paid impressions.',
-                                    array('{name}' => $category->name)
-                                )
-                            );
-
-                        }
-                    }
-                }
-                unset($_POST['Deals']['categories']);
-                $model->categoriesTree = DealsCategories::getParentsRecursively($model->categories[0]);
-            }
-        }
-        $model->attributes=$_POST['Deals'];
-
-        $paramsModel=new DealCategoriesParams('update',$model);
-        $this->performAjaxValidation($paramsModel);
-
-        if(isset($_POST['DealCategoriesParams'])){
-            $dealCatsParams = $_POST['DealCategoriesParams'];
-            // если параметр имееет тип phone(телефон). Вырезаем все ненужные символы
-            foreach($dealCatsParams as $k=>$v){
-                $param = DealsParams::model()->findByAttributes(array('name' => $k));
-                if($param->type->name == 'phone'){
-                    $dealCatsParams[$k] = preg_replace("/[^0-9]/", "", $v);
-                }
-            }
-            // получаем из виджета longitude И latitude если они пришли, и задаём параметр coordinates
-            // удаляем из массива longitude и latitude
-            if(isset($dealCatsParams['longitude']) || isset($dealCatsParams['latitude'])){
-                $coordinatesArr = array(
-                    'longitude' => (isset($dealCatsParams['longitude'])) ? $dealCatsParams['longitude'] : "0",
-                    'latitude' => (isset($dealCatsParams['latitude'])) ? $dealCatsParams['latitude'] : "0",
-                );
-                $aroundUndergrounds = Underground::model()->coordinates($paramsModel->latitude, $paramsModel->longitude, 1)->findAll();
-
-                $coordinates = implode(":",$coordinatesArr);
-                $dealCatsParams['coordinates'] = $coordinates;
-                //unset($dealCatsParams['longitude']);
-                //unset($dealCatsParams['latitude']);
-            }
-            $paramsModel->attributes = $dealCatsParams;
-        }
-
-        if($model->validate() && $paramsModel->validate()){
-            $transaction = Yii::app()->db->beginTransaction();
-            if($saveWithRelated = $model->saveWithRelated(array('categories'))){
-                if(isset($dealCatsParams)){
-                    $isParamSave = false;
-                    $this->_clearParams($model);
-                    foreach($dealCatsParams as $k => $v){
-                        if($k == "latitude" || $k == "longitude"){
-                            continue;
-                        }
-                        if(is_array($v)){
-                            foreach($v as $value){
-                                $dealsParamsValuesModel = new DealsParamsValues;
-                                $dealsParamsValuesModel->deal_id = (int)$model->id;
-                                $param = DealsParams::model()->find('name=:name',array(':name' => $k));
-                                $dealsParamsValuesModel->param_id = $param->id;
-                                if($param->type->name == "phone"){
-                                    $v=preg_replace("#[^0-9]#i","",$value);
-                                }
-                                $dealsParamsValuesModel->value = $value;
-                                if($dealsParamsValuesModel->validate()){
-                                    if($dealsParamsValuesModel->save()){
-                                        $isParamSave = true;
-                                    }
-                                    else{
-                                        $isParamSave = false;
-                                        break;
-                                    }
-                                }
-                                else{
-                                    $transaction->rollback();
-                                    Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When update deal "{name}" error occurred!', array('{name}' => $model->name)));
-                                }
-                            }
-                        }
-                        else{
-                            $dealsParamsValuesModel = new DealsParamsValues;
-                            $dealsParamsValuesModel->deal_id = (int)$model->id;
-                            $param = DealsParams::model()->find('name=:name',array(':name' => $k));
-                            $dealsParamsValuesModel->param_id = $param->id;
-                            if($param->type->name == "phone"){
-                                $v=preg_replace("#[^0-9]#i","",$v);
-                            }
-                            $dealsParamsValuesModel->value = $v;
-                            if($dealsParamsValuesModel->validate()){
-                                if($dealsParamsValuesModel->save()){
-                                    $isParamSave = true;
-                                }
-                                else{
-                                    $isParamSave = false;
-                                    break;
-                                }
-                            }
-                            else{
-                                $transaction->rollback();
-                                Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When update deal "{name}" error occurred!', array('{name}' => $model->name)));
-                            }
-
-                        }
-                    }
-                    if($isParamSave){
-                        $transaction->commit();
-                        Yii::app()->user->setFlash('backendDealsSuccess', Yii::t("dealsModule", 'Deal "{name}" was created successfully!', array('{name}' => $model->name)));
-                        $this->redirect(array('photo','id'=>$model->id));
-                    }
-                    else{
-                        $transaction->rollback();
-                        Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When create deal "{name}" error occurred!', array('{name}' => $model->name)));
-                    }
-
-                }
-                else{
-                    $this->_clearParams($model);
-                    $transaction->commit();
-                    Yii::app()->user->setFlash('backendDealsSuccess', Yii::t("dealsModule", 'Deal "{name}" was created successfully!', array('{name}' => $model->name)));
-                    $this->redirect(array('photo','id'=>$model->id));
-                }
-            }
-            else{
-                $transaction->rollback();
-                Yii::app()->user->setFlash('backendDealsError', Yii::t("dealsModule", 'When create deal "{name}" error occurred!', array('{name}' => $model->name)));
-            }
-        }
-
-        $postData = array();
-        if(isset($_POST)){
-            $postData = $_POST;
-        }
-
-        $this->render('create',array(
-            'model'=>$model,
-            'imagesModel' => new XUploadForm(),
-            'paramsModel' => $paramsModel,
-            'categoriesList' => DealsCategories::getListData(true, false, 1, true),
-            'statusesList' => DealsStatuses::getListData(),
-            'approveList' => Deals::getApproveListData(),
-            'priorityList' => Deals::getPriorityListData(),
-            'archiveList' => Deals::getArchiveListData(),
-            'usersList' => User::getAllUsersListData(),
-            'citiesList' => Cities::getAllCitiesListData(),
-            'currenciesList' => Currencies::getCurrenciesListData(),
-            'aroundUndergrounds' => $aroundUndergrounds,
-            'user' => $this->user,
-            'postData' => $postData,
-        ));
-    }*/
-
+    
     /**
      * @param $id
      * @throws CDbException
@@ -509,39 +319,43 @@ class UserDealsController extends UserFrontendController
      * @throws CHttpException
      */
     public function actionUpdate($id){
+        
         $model=$this->loadModel($id);
+        $this->_checkAccess($model);
 
-        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isModerator()){
-            throw new CHttpException(403,'Access denied!');
+        $postData = array();
+        if(isset($_POST)){
+            $postData = $_POST;
         }
-        Yii::import('xupload.models.XUploadForm');
 
+        Yii::import('xupload.models.XUploadForm');
         $imagesModel = new XUploadForm();
         $model->setScenario('userUpdate');
         $paramsModel=$this->loadParamsModel($model);
-        // Эта часть работает только при условии что товар отнросится к 1 категории
-        /**
-         * @var DealsCategories
-         */
-        //$currentCategoryParent = $model->categories[0]->getParent();
-
         $this->myPerformAjaxValidation($model);
 
         if(isset($_POST['Deals'])){
-            $categoriesIds = array();
-            if(isset($_POST['Deals']['categories']) && sizeof($_POST['Deals']['categories'])>0){
-                $categories = DealsCategories::model()->findAllByPk($_POST['Deals']['categories']);
-                $categoriesIds = $_POST['Deals']['categories'];
+            if(isset($_POST['Deals']['categories']) && is_array($_POST['Deals']['categories']) && sizeof($_POST['Deals']['categories'])>0){
+                $model->categories = DealsCategories::model()->findAllByPk($_POST['Deals']['categories']);;
                 unset($_POST['Deals']['categories']);
-                $model->categories = $categories;
-                $model->categoriesTree = DealsCategories::getParentsRecursively($model->categories[0]);
+                //$model->categoriesTree = DealsCategories::getParentsRecursively($model->categories[0]);
             }
             $model->attributes=$_POST['Deals'];
-            //$model->user_id = $this->userId;
-            $paramsValid = true;
+            $paramsModel=new DealCategoriesParams('update',$model);
+            $paramsModelValidate = true;
             if(isset($_POST['DealCategoriesParams'])){
                 $dealCatsParams = $_POST['DealCategoriesParams'];
-                //Config::var_dump($dealCatsParams);
+
+                if(isset($dealCatsParams['longitude']) || isset($dealCatsParams['latitude'])){
+                    $coordinatesArr = array(
+                        'longitude' => (isset($dealCatsParams['longitude'])) ? $dealCatsParams['longitude'] : "0",
+                        'latitude' => (isset($dealCatsParams['latitude'])) ? $dealCatsParams['latitude'] : "0",
+                    );
+                    $coordinates = implode(":",$coordinatesArr);
+                    $dealCatsParams['coordinates'] = $coordinates;
+                    unset($dealCatsParams['longitude']);
+                    unset($dealCatsParams['latitude']);
+                }
 
 
                 // если параметр имееет тип phone(телефон). Вырезаем все ненужные символы
@@ -553,23 +367,13 @@ class UserDealsController extends UserFrontendController
                 }
                 // получаем из виджета longitude И latitude если они пришли, и задаём параметр coordinates
                 // удаляем из массива longitude и latitude
-                if(isset($dealCatsParams['longitude']) || isset($dealCatsParams['latitude'])){
-                    $coordinatesArr = array(
-                        'longitude' => (isset($dealCatsParams['longitude'])) ? $dealCatsParams['longitude'] : "0",
-                        'latitude' => (isset($dealCatsParams['latitude'])) ? $dealCatsParams['latitude'] : "0",
-                    );
-                    $coordinates = implode(":",$coordinatesArr);
-                    $dealCatsParams['coordinates'] = $coordinates;
-                    //unset($dealCatsParams['longitude']);
-                    //unset($dealCatsParams['latitude']);
-                }
 
-                $paramsModel=new DealCategoriesParams('update',DealsCategories::model()->findAllByPk($categoriesIds),$model);
                 $paramsModel->attributes = $dealCatsParams;
-                $paramsValid = $paramsModel->validate();
+                $this->performAjaxValidation($paramsModel);
+                $paramsModelValidate = $paramsModel->validate();
             }
 
-            if($model->validate() && $paramsValid){
+            if($model->validate() && $paramsModelValidate){
                 $transaction = Yii::app()->db->beginTransaction();
                 if($saveWithRelated = $model->saveWithRelated(array('categories'))){
 
@@ -656,12 +460,8 @@ class UserDealsController extends UserFrontendController
             }
 
         }
-        $aroundUndergrounds = Underground::model()->coordinates($paramsModel->latitude, $paramsModel->longitude, 1)->findAll();
+        //$aroundUndergrounds = Underground::model()->coordinates($paramsModel->latitude, $paramsModel->longitude, 1)->findAll();
 
-        $postData = array();
-        if(isset($_POST)){
-            $postData = $_POST;
-        }
         $this->render(
             'update',
             array(
@@ -676,7 +476,7 @@ class UserDealsController extends UserFrontendController
                 'usersList' => User::getAllUsersListData(),
                 'citiesList' => Cities::getAllCitiesListData(),
                 'currenciesList' => Currencies::getCurrenciesListData(),
-                'aroundUndergrounds' => $aroundUndergrounds,
+                //'aroundUndergrounds' => $aroundUndergrounds,
                 'user' => $this->user,
                 'postData' => $postData
             )
@@ -697,15 +497,13 @@ class UserDealsController extends UserFrontendController
             if(isset($_GET['categories'])){
                 $criteria = new CDbCriteria();
                 $criteria->order = 'name ASC';
-                $categories = DealsCategories::model()->findAllByPk($_GET['categories'], $criteria);
-
-                if(sizeof($categories)>0){
+                $model->categories = DealsCategories::model()->findAllByPk($_GET['categories'], $criteria);
+                if(sizeof($model->categories)>0){
                     $children = array();
-                    foreach($categories as $category){
+                    foreach($model->categories as $category){
                         $children = array_merge($children,DealsCategories::getCategoryChildren($category->id));
                     }
                     if(sizeof($children)>0){
-                        $this->myPerformAjaxValidation($model);
                         $html = $this->renderPartial(
                             '_categories_list',
                             array(
@@ -721,15 +519,13 @@ class UserDealsController extends UserFrontendController
 
                     }
                     else{
-                        $paramsModel = new DealCategoriesParams('update',$categories, $model);
-                        $this->myPerformAjaxValidation($model);
-                        //Config::var_dump($paramsModel->rules());
-                        $this->paramsModelPerformAjaxValidation($paramsModel);
+                        $paramsModel = new DealCategoriesParams('update',$model);
                         $html = $this->renderPartial(
                             '_dealParams',
                             array(
+                                'ajaxLoad' => true,
                                 'model'=>$model,
-                                'categories' => $categories,
+                                'categories' => $model->categories,
                                 'paramsModel'=>$paramsModel,
                                 'currenciesList' => Currencies::getCurrenciesListData(),
                             ),
@@ -2142,18 +1938,9 @@ class UserDealsController extends UserFrontendController
      * @return DealCategoriesParams|null
      * @throws CHttpException
      */
-    public function loadParamsModel($deal){
-        if($deal instanceof Deals){
-            $model = new DealCategoriesParams('update',$deal->categories, $deal);
-        }
-        elseif(is_int($deal)){
-            $dealObj = Deals::model()->findByPk($deal);
-            $model = new DealCategoriesParams('update',$dealObj->categories,$dealObj);
-        }
-        else{
-            $model = NULL;
-        }
-        if($model===null){
+    public function loadParamsModel(Deals $deal){
+        $model = new DealCategoriesParams('update',$deal);
+        if(is_null($model)){
             throw new CHttpException(404,'The requested page does not exist.');
         }
         return $model;
@@ -2183,7 +1970,7 @@ class UserDealsController extends UserFrontendController
     protected function myPerformAjaxValidation($model){
         if(isset($_POST['ajax']) && $_POST['ajax']==='deals-form'){
             if(isset($_POST['DealCategoriesParams'])){
-                $paramsModel=new DealCategoriesParams('update',$model->categories,$model);
+                $paramsModel=new DealCategoriesParams('update',$model);
                 echo CActiveForm::validate(array($model,$paramsModel));
             }
             else{
@@ -2293,5 +2080,12 @@ class UserDealsController extends UserFrontendController
         $ih->adaptiveThumb($width, $height);
         $ih->save($thumbPath);
         chmod($thumbPath,0777);
+    }
+
+    private function _checkAccess(Deals $model){
+        if(Yii::app()->user->getId() != $model->user_id && !Yii::app()->getModule('user')->isModerator()){
+            throw new CHttpException(403,'Access denied!');
+        }
+
     }
 }

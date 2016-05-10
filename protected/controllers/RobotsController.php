@@ -13,6 +13,9 @@ class RobotsController extends FrontendController
         $newline = "\r\n";
 
         if(YII_ENV === 'production'){
+            echo "User-agent: *".$newline;
+            echo "Disallow: /".$newline;
+            Yii::app()->end();
             //$newline = "<br>";
 
             // Yandex

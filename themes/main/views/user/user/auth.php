@@ -84,18 +84,18 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('userModule',"Authorization");
                     <input type="submit" class="btn btn-big  btn-primary" value="<?=Yii::t('userModule',"Login");?>"/>
                     <?php $this->endWidget();?>
                     <?php unset($form);?>
-                    <?php $this->widget('application.modules.user.widgets.vkAuth.VkAuthWidget', array(
+                    <?php /*$this->widget('application.modules.user.widgets.vkAuth.VkAuthWidget', array(
                         'appId' => Yii::app()->params['vk']['appId'],
                         'view' => 'link',
                         'redirectUri' => Yii::app()->createAbsoluteUrl('/user/login/VkAuthRedirect')
-                    )); ?>
-                    <?php $this->widget('application.modules.user.widgets.fbAuth.FbAuthWidget', array(
+                    )); */?><!--
+                    --><?php /*$this->widget('application.modules.user.widgets.fbAuth.FbAuthWidget', array(
                         'appId' => Yii::app()->params['fb']['appId'],
                         'view' => 'link',
                         'fields' => 'last_name,first_name,email,id,picture,name,link',
                         'authUrl' => Yii::app()->createUrl('/user/login/fbAuthenticate'),
                         'redirectUrl' => Yii::app()->createUrl('/user/profile/editMainSettings')
-                    )); ?>
+                    )); */?>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -194,18 +194,18 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('userModule',"Authorization");
                             <?php $vkRedierectUrl = '';?>
                         <?php else:?>
                         <?php endif;?>
-                        <?php $this->widget('application.modules.user.widgets.vkAuth.VkAuthWidget', array(
+                        <?php /*$this->widget('application.modules.user.widgets.vkAuth.VkAuthWidget', array(
                             'appId' => Yii::app()->params['vk']['appId'],
                             'view' => 'registration_link',
                             'redirectUri' => Yii::app()->createAbsoluteUrl('/user/login/VkAuthRedirect')
-                        )); ?>
-                        <?php $this->widget('application.modules.user.widgets.fbAuth.FbAuthWidget', array(
+                        )); */?><!--
+                        --><?php /*$this->widget('application.modules.user.widgets.fbAuth.FbAuthWidget', array(
                             'appId' => Yii::app()->params['fb']['appId'],
                             'view' => 'registration_link',
                             'fields' => 'last_name,first_name,email,id,picture,name,link',
                             'authUrl' => Yii::app()->createUrl('/user/login/fbAuthenticate'),
                             'redirectUrl' => Yii::app()->createUrl('/user/profile/editMainSettings')
-                        )); ?>
+                        )); */?>
 
                     <?php endif; ?>
                 </div>

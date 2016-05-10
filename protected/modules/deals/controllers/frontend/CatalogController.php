@@ -107,19 +107,16 @@ class CatalogController extends FrontendController
             $geoObjects = array();
             if($category->hasCoordinatesParam()){
                 $paramId = DealsParams::model()->findByAttributes(array('type_id' => DealsParamsTypes::model()->findByAttributes(array('name' => 'coordinates_widget'))->id))->id;
-                foreach ($model->search(999999999)->getData() as $deal){
-                    //$paramsModel = $this->loadParamsModel($deal);
-                    //Config::var_dump($paramsModel);
-
+                foreach ($model->mapSearch($paramId)->getData() as $deal){
                     /**
                      * @var Deals $deal
                      */
-                    $coordinates = DealsParamsValues::model()->findByAttributes(array('deal_id' => $deal->id, 'param_id' => $paramId))->value;
                     $geoObj = array(
-                        'lat' => explode(':',$coordinates)[1],
-                        'lon' => explode(':',$coordinates)[0],
+                        'lat' => explode(':',$deal->coordinates)[1],
+                        'lon' => explode(':',$deal->coordinates)[0],
                         'properties' => array(
                             'hintContent'=> "<strong class='map-obj-hint'>".$deal->name."</strong>",
+                            'clusterCaption'=> $deal->name,
                             //'balloonContentHeader' => '<h5 class="balloon-title">'.$deal->name.'</h5>',
                             'balloonContent' => $this->renderPartial('_mapDeal', array('deal' => $deal), true),
                             //'balloonContentFooter' => CHtml::link(Yii::t('dealsModule',"More..."),$deal->getPublicUrl(), array('target' => '_blank','class' => 'balloon-read-more-link')),
@@ -338,27 +335,7 @@ class CatalogController extends FrontendController
             )
         );
     }
-
-    /*public function actionFilter($category){
-        $category = $this->loadModel($category);
-        if(isset($_GET['filter']) && isset($_GET['filter']['category'])){
-            $category = $_GET['filter']['category'];
-        }
-        $model=new Deals('filter');
-        $model->unsetAttributes();
-        $model->categoriesSearch = $category;
-        if(isset($_GET['filter'])){
-            $model->filter = $_GET['filter'];
-        }
-        $this->render(
-            'category',
-            array(
-                'dataProvider' => $model->filter(),
-                'category' => $category
-            )
-        );
-    }*/
-
+    
     /**
      * @param $id
      * @return DealsCategories
@@ -393,11 +370,11 @@ class CatalogController extends FrontendController
      */
     public function loadParamsModel($deal){
         if($deal instanceof Deals){
-            $model = new DealCategoriesParams('update',$deal->categories, $deal);
+            $model = new DealCategoriesParams('update',$deal);
         }
         elseif(is_int($deal)){
             $dealObj = Deals::model()->findByPk($deal);
-            $model = new DealCategoriesParams('update',$dealObj->categories,$dealObj);
+            $model = new DealCategoriesParams('update',$dealObj);
         }
         else{
             $model = NULL;

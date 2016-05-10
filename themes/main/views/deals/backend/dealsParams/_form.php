@@ -131,7 +131,8 @@ $form->textFieldGroup(
 	array(
 		'widgetOptions'=>array(
 			'htmlOptions'=>array(
-				'maxlength'=>255
+				'maxlength'=>255,
+				'disabled' => !Yii::app()->getModule('user')->isAdmin()
 			)
 		),
 		'wrapperHtmlOptions' => array(
@@ -163,7 +164,8 @@ $form->textFieldGroup(
 		'widgetOptions'=>array(
 			'htmlOptions'=>array(
 				'maxlength'=>255,
-			),
+                'disabled' => !Yii::app()->getModule('user')->isAdmin()
+            ),
 		),
 		'wrapperHtmlOptions' => array(
 			'class' => 'col-sm-6 col-xs-6',
@@ -194,8 +196,9 @@ $form->textFieldGroup(
 			'htmlOptions'=>array(
 				'rows'=>6,
 				'cols'=>50,
-				'class'=>'span8'
-			)
+				'class'=>'span8',
+                'disabled' => !Yii::app()->getModule('user')->isAdmin()
+            )
 		),
 		'wrapperHtmlOptions' => array(
 			'class' => 'col-sm-6 col-xs-6'

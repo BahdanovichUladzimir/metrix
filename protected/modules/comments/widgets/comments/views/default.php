@@ -36,22 +36,22 @@ Yii::app()->clientScript->registerScript('editCommentButton','
         <a href="#" class="btn btn-primary pull-right add-review a-spr"><?=Yii::t("commentsWidget","Add review");?></a>
         <h2 class="title section-title"><?=Yii::t("commentsWidget","Reviews");?> (<span class="comment-count" id="comment_count" data-value="<?=sizeof($comments);?>"><?=sizeof($comments);?></span>)</h2>
         <?php if($user->getIsCanAddComment($appCategoryItemId)):?>
-        <div class="review dnone">
-            <div class="review-form cf">
-                <div class="pic-upload user-pic">
-                    <input type="file" />
-                    <div class="img">
-                        <img src="/images/user-blank.png" alt="" />
+            <div class="review dnone">
+                <div class="review-form cf">
+                    <div class="pic-upload user-pic">
+                        <input type="file" />
+                        <div class="img">
+                            <img src="/images/user-blank.png" alt="" />
+                        </div>
                     </div>
+                        <?php $this->render("_form",array(
+                            'model' => $model,
+                            'appCategoryId' => $appCategoryId,
+                            'appCategoryItemId' => $appCategoryItemId,
+                            'parentId' => $parentId,
+                        ));?>
                 </div>
-                    <?php $this->render("_form",array(
-                        'model' => $model,
-                        'appCategoryId' => $appCategoryId,
-                        'appCategoryItemId' => $appCategoryItemId,
-                        'parentId' => $parentId,
-                    ));?>
             </div>
-        </div>
         <?php else:?>
             <h4 class="text-danger"><?=Yii::t('commentsWidget','You can\'t add a comment to this deal.');?></h4>
         <?php endif;?>

@@ -347,5 +347,6 @@ return array(
         'webMoney' => array(
             'secretKey' => 'W8uYaoe3lWKIdDE4g3IF'
         ),
+		'universalHash' => 'qN\YI29522W6.Ke'
 	),
 );

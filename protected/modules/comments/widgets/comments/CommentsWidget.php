@@ -24,7 +24,7 @@ class CommentsWidget extends CWidget{
             return false;
         }
 
-        $criteria = new CDbCriteria;
+        $criteria = new CDbCriteria();
         $criteria->condition = 'app_category_id=:app_category_id AND app_category_item_id=:app_category_item_id';
         $criteria->params = array(
             ':app_category_id' => $this->appCategoryId,
@@ -37,7 +37,7 @@ class CommentsWidget extends CWidget{
             array(
                 'widgetId' => self::$widgetId,
                 'comments' => $comments,
-                'model' => new Comments,
+                'model' => new Comments(),
                 'appCategoryId' => $this->appCategoryId,
                 'appCategoryItemId' => $this->appCategoryItemId,
                 'parentId' => $this->parentId,

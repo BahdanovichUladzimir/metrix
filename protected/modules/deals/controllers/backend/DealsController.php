@@ -280,7 +280,8 @@ class DealsController extends BackendController
                 $model = new Deals('adminCreate');
             }
             $categories = DealsCategories::model()->findAllByPk($_POST['categories']);
-            $paramsModel = new DealCategoriesParams('update',$categories, $model);
+            $model->categories = $categories;
+            $paramsModel = new DealCategoriesParams('update',$model);
             $output = $this->renderPartial(
                 '_dealParams',
                 array(
@@ -930,11 +931,11 @@ class DealsController extends BackendController
      */
     public function loadParamsModel($deal){
         if($deal instanceof Deals){
-            $model = new DealCategoriesParams('update',$deal->categories, $deal);
+            $model = new DealCategoriesParams('update',$deal);
         }
         elseif(is_int($deal)){
             $dealObj = Deals::model()->findByPk($deal);
-            $model = new DealCategoriesParams('update',$dealObj->categories,$dealObj);
+            $model = new DealCategoriesParams('update',$dealObj);
         }
         else{
             $model = NULL;
@@ -962,7 +963,7 @@ class DealsController extends BackendController
     protected function myPerformAjaxValidation($model){
         if(isset($_POST['ajax']) && $_POST['ajax']==='deals-form'){
             if(isset($_POST['DealCategoriesParams'])){
-                $paramsModel=new DealCategoriesParams('update',$model->categories,$model);
+                $paramsModel=new DealCategoriesParams('update',$model);
                 echo CActiveForm::validate(array($model,$paramsModel));
             }
             else{

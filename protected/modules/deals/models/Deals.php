@@ -51,6 +51,7 @@
  */
 class Deals extends CActiveRecord
 {
+    public $coordinates;
 	public $categoriesSearch = NULL;
     public $formattedPublishedDate;
     public $formattedCreatedDate;
@@ -176,12 +177,12 @@ class Deals extends CActiveRecord
         );
 
 		return array(
-			array('name, url_segment, intro', 'required'),
+			array('name, intro', 'required'),
 			array('categories', 'required', 'message' => Yii::t('dealsModule','You must select category.')),
 			array('city_id', 'required', 'message' => Yii::t('dealsModule','You must select city.')),
 			array('user_id', 'required', 'on' => 'adminUpdate, adminCreate, userCreate'),
 			array('currency_id, city_id, user_id, approve, archive, priority, paid, exceeding_limit_paid, exceeding_category_limit_hidden', 'numerical', 'integerOnly'=>true),
-			array('name, url_segment, randSort', 'length', 'max'=>255),
+			array('name, randSort', 'length', 'max'=>255),
 			array('description', 'length', 'max'=>50000),
 			array('status_id', 'length', 'max'=>3),
 			array('exceeding_category_limit_hidden', 'length', 'max'=>2),
@@ -604,7 +605,8 @@ class Deals extends CActiveRecord
         if(!is_null($this->ids)){
             $criteria->addInCondition('t.id',$this->ids);
         }
-		return new KeenActiveDataProvider($this, array(
+        $dependency = new CDbCacheDependency('SELECT MAX(created_date) FROM Deals');
+        return new KeenActiveDataProvider(self::model()->cache(3600, $dependency), array(
 			'criteria'=>$criteria,
 			'withKeenLoading' => array('categories'),
 			'pagination'=>array(
@@ -612,6 +614,205 @@ class Deals extends CActiveRecord
 			),
 		));
 	}
+
+    public function mapSearch($coordinatesParamId)
+    {
+        $criteria=new CDbCriteria;
+        $criteria->with = array(
+            'categories',
+            'dealsParamsValues',
+            //'calendar'
+        );
+        $criteria->together=true;
+        $criteria->condition ='t.status_id=:status_id AND t.approve=:approve AND t.`archive`=:archive AND t.`exceeding_category_limit_hidden`=:exceeding_category_limit_hidden';
+        $criteria->params = array(
+            ':status_id' => '1',
+            ':approve' => '1',
+            ':archive' => '0',
+            ':exceeding_category_limit_hidden' => '0',
+        );
+        $criteria->select = array('t.id', 't.name', 't.url_segment', 't.city_id', '(SELECT DealsParamsValues.value FROM DealsParamsValues WHERE DealsParamsValues.deal_id=t.id AND DealsParamsValues.param_id='.$coordinatesParamId.') AS coordinates');
+
+        $criteria->compare('t.url_segment',$this->url_segment,true);
+        $criteria->compare('t.user_id',$this->user_id);
+        if(!is_null($this->categoriesSearch)){
+            $criteria->compare('categories.id',$this->categoriesSearch,true);
+        }
+        if(!is_null($this->city)){
+            $cityObj = Cities::model()->findByAttributes(array('key'=>$this->city));
+            $criteria->addCondition("t.city_id=:city_id");
+            $criteria->params[':city_id'] = (int)$cityObj->id;
+        }
+        if(!is_null($this->filter) && is_array($this->filter) && sizeof($this->filter)>0){
+            foreach($this->filter as $param=>$value){
+                if($param === "calendarDate" && strlen(trim($this->filter['calendarDate']))>0){
+                    $dateTime = trim($value);
+                    $unixDateTime = DateTime::createFromFormat('!d.m.Y', $dateTime)->format('U');
+
+                    $sql = "SELECT DAYOFYEAR(FROM_UNIXTIME(".$unixDateTime.")) AS dayOfYear, YEAR(FROM_UNIXTIME(".$unixDateTime.")) AS year;";
+                    $connection = Yii::app()->db;
+                    $command = $connection->createCommand($sql);
+                    $dataReader = $command->queryRow();
+
+                    $condition = '
+                        `t`.`id` NOT IN (SELECT `Calendar`.`deal_id` FROM `Calendar`
+                        WHERE DAYOFYEAR(FROM_UNIXTIME(`Calendar`.`start`))<='.$dataReader["dayOfYear"].'
+                        AND DAYOFYEAR(FROM_UNIXTIME(`Calendar`.`end`))>='.$dataReader["dayOfYear"].'
+                        AND YEAR(FROM_UNIXTIME(`Calendar`.`start`))="'.$dataReader["year"].'"
+                        AND YEAR(FROM_UNIXTIME(`Calendar`.`end`))="'.$dataReader["year"].'"
+                        )
+                    ';
+
+                    if(array_key_exists("calendarTime", $this->filter) && strlen(trim($this->filter['calendarTime']))>0){
+                        $dateTime = $dateTime." ".trim($this->filter['calendarTime']);
+                        $unixDateTime = DateTime::createFromFormat('!d.m.Y H:i', $dateTime)->format('U');
+
+                        $condition = '
+                            `t`.`id` NOT IN (SELECT `Calendar`.`deal_id` FROM `Calendar`
+                            WHERE `Calendar`.`start`<='.$unixDateTime.'
+                            AND `Calendar`.`end`>='.$unixDateTime.')
+                        ';
+                    }
+                    $criteria->addCondition($condition);
+                }
+                if(in_array($param,self::$paramsFilters)){
+                    if(is_array($value)){
+                        $paramModel = DealsParams::model()->find('name=:name',array(':name' => $param));
+                        //Config::var_dump($paramModel->type->name);
+
+                        //Config::var_dump(self::$userCurrencyId);
+
+
+                        if(isset($value['min']) && isset($value['max'])){
+                            if(is_numeric($value['min']) && is_numeric($value['max'])){
+                                $condition = '
+                                        `t`.`id` IN (SELECT `DealsParamsValues`.`deal_id` FROM `DealsParamsValues`
+                                        WHERE `DealsParamsValues`.`param_id`='.$paramModel->id.'
+                                        AND `DealsParamsValues`.`value`
+                                        BETWEEN '.$value["min"].' AND '.$value["max"].')
+                                    ';
+                                if($paramModel->type->name === "price"){
+                                    if(!is_null(self::$userCurrencyId)){
+                                        // Получаем текущую валюту
+                                        $userCurrency = Currencies::model()->findByPk(self::$userCurrencyId);
+                                        if(!is_null($userCurrency)){
+                                            $connection=Yii::app()->db; // так можно делать, если в конфигурации настроен компонент соединения "db"
+                                            // Выбираем все id товаров с текущей валютой
+                                            $cityCondition = is_null(self::$userCityId) ? '' : " AND `Deals`.`city_id`=".self::$userCityId." ";
+                                            // @todo Добавить условие по категориям
+                                            /*if(!is_null($this->categoriesSearch)){
+                                                $categoriesJoin = '
+
+                                                ';
+                                                $categoriesCondition = '
+                                                ';
+                                            }
+                                            else{
+                                                $categoriesJoin = '';
+                                                $categoriesCondition = '';
+                                            }*/
+                                            $sql = '
+                                                SELECT `DealsParamsValues`.`deal_id`
+                                                FROM `DealsParamsValues`
+                                                LEFT JOIN `Deals` ON(`DealsParamsValues`.`deal_id`=`Deals`.`id`)
+                                                WHERE `DealsParamsValues`.`param_id`='.$paramModel->id.'
+                                                '.$cityCondition.'
+                                                AND `Deals`.`currency_id`='.$userCurrency->id.'
+                                                AND `DealsParamsValues`.`value`
+                                                BETWEEN '.$value["min"].' AND '.$value["max"].'
+                                            ';
+                                            $command=$connection->createCommand($sql);
+                                            /**
+                                             * @var array Массив idшников товаров у которых валюта такая же как текущая
+                                             */
+                                            $ids = array(0);
+                                            $ids=array_merge($ids,$command->queryColumn());
+
+                                            // Берём оставшиеся валюты и получаем idшники товаров с условием курса валют
+                                            foreach(Currencies::model()->findAll('id<>:id', array(':id' => $userCurrency->id)) as $currency){
+                                                $sql = '
+                                                    SELECT `DealsParamsValues`.`deal_id`
+                                                    FROM `DealsParamsValues`
+                                                    LEFT JOIN `Deals` ON(`DealsParamsValues`.`deal_id`=`Deals`.`id`)
+                                                    WHERE `DealsParamsValues`.`param_id`='.$paramModel->id.'
+                                                    '.$cityCondition.'
+                                                    AND `Deals`.`currency_id`='.$currency->id.'
+                                                    AND `Deals`.`city_id`
+                                                    AND `DealsParamsValues`.`value`
+                                                    BETWEEN '.$value["min"]/$currency->rate*$userCurrency->rate.' AND '.$value["max"]/$currency->rate*$userCurrency->rate.'
+                                                ';
+                                                $command=$connection->createCommand($sql);
+                                                $tmpIds = $command->queryColumn();
+                                                $ids=array_merge($ids,$tmpIds);
+
+                                            }
+                                            $condition = '
+                                                `t`.`id` IN ('.implode(',',$ids).')
+                                            ';
+                                        }
+                                    }
+                                }
+                                $criteria->addCondition($condition);
+                            }
+                            elseif(is_numeric($value['min'])){
+                                $condition = '
+                                    `t`.`id` IN (SELECT `DealsParamsValues`.`deal_id` FROM `DealsParamsValues`
+                                    WHERE `DealsParamsValues`.`param_id`='.$paramModel->id.'
+                                    AND `DealsParamsValues`.`value`>'.$value["min"].')
+                                ';
+                                $criteria->addCondition($condition);
+                            }
+                            elseif(is_numeric($value['max'])){
+                                $condition = '
+                                    `t`.`id` IN (SELECT `DealsParamsValues`.`deal_id` FROM `DealsParamsValues`
+                                    WHERE `DealsParamsValues`.`param_id`='.$paramModel->id.'
+                                    AND `DealsParamsValues`.`value`<'.$value["max"].')
+                                ';
+                                $criteria->addCondition($condition);
+                            }
+
+                        }
+                        else{
+                            $values = array();
+                            foreach($value as $k=>$v){
+                                if(strlen($v)>0){
+                                    $values[] = "'".CHtml::encode($v)."'";
+                                }
+                                else{
+                                    $values[] = '';
+                                }
+                            }
+                            $values = implode(', ',$values);
+                            if(strlen(trim($values)) > 0){
+                                $condition = '
+                                    `t`.`id` IN (SELECT `DealsParamsValues`.`deal_id` FROM `DealsParamsValues`
+                                    WHERE `DealsParamsValues`.`param_id`='.$paramModel->id.'
+                                    AND `DealsParamsValues`.`value` IN ('.$values.'))
+                                ';
+                                $criteria->addCondition($condition);
+                            }
+                        }
+                    }
+                    else{
+                        $paramModel = DealsParams::model()->find('name=:name',array(':name' => $param));
+                        $criteria->addCondition('dealsParamsValues.id=:param_id AND dealsParamsValues.value=:value');
+                        $criteria->params[":param_id"] = $paramModel->id;
+                        $criteria->params[":value"] = $value;
+                    }
+
+                }
+            }
+        }
+        if(!is_null($this->ids)){
+            $criteria->addInCondition('t.id',$this->ids);
+        }
+        $dependency = new CDbCacheDependency('SELECT MAX(created_date) FROM Deals');
+        return new KeenActiveDataProvider(self::model()->cache(3600, $dependency), array(
+            'criteria'=>$criteria,
+            'withKeenLoading' => array('categories'),
+            'pagination'=>false,
+        ));
+    }
 
 	public function userSearch($userId = NULL)
 	{

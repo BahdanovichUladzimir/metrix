@@ -24,9 +24,9 @@ elseif($_SERVER['HTTP_HOST']==='rc.metrix.by' || $_SERVER['HTTP_HOST']==='www.rc
     defined('YII_ENV') or define('YII_ENV','rc');
 }
 elseif($_SERVER['HTTP_HOST']==='metrix.by' || $_SERVER['HTTP_HOST']==='www.metrix.by'){
-    error_reporting (0);
-    defined('YII_DEBUG') or define('YII_DEBUG',false);
-    defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',0);
+    error_reporting (E_ALL);
+    defined('YII_DEBUG') or define('YII_DEBUG',true);
+    defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
     defined('YII_ENV') or define('YII_ENV','production');
 }
 // Иначе выключаем режим отладки и подключаем рабочую конфигурацию

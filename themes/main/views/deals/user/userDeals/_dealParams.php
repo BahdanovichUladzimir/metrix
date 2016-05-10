@@ -6,6 +6,7 @@
  * @var $paramsModel DealCategoriesParams
  * @var array $currenciesList
  * @var array $categories
+ * @var bool $ajaxLoad
  */
 $xs = "12";
 $sm = "12";
@@ -14,15 +15,52 @@ $md = "9";
 CHtml::$afterRequiredLabel = "<span class='required'>*</span>";
 ;?>
 <script>
-    $("#deals-form").trigger('update_deal_categories_params');
     $(document).ready(function(){
         $("#coordinate_picker_clear").click(function(){
             $("#DealCategoriesParams_longitude").val("0");
             $("#DealCategoriesParams_latitude").val("0");
             return false;
         });
-        
+
+
+        var attributes = [];
+        <?php foreach($paramsModel->getCurrentCategoriesParams() as $categoriesParam):?>
+            attributes.push({
+                <?php if($categoriesParam->required):?>
+                clientValidation: function (value, messages, attribute) {
+                    if(jQuery.trim(value) == ''){
+                        //messages.push("Необходимо заполнить поле \""+attribute.label+"\".");
+                        messages.push("<?=Yii::t('dealsModule','Field {name} is required.', array('{name}' => $categoriesParam->label));?>");
+                    }
+                },
+                <?php endif;?>
+                enableAjaxValidation : true,
+                validateOnChange : true,
+                id:'DealCategoriesParams_<?=$categoriesParam->name;?>',
+                inputID:'DealCategoriesParams_<?=$categoriesParam->name;?>',
+                errorID:'DealCategoriesParams_<?=$categoriesParam->name;?>_em_',
+                model:'Deals',
+                name:'<?=$categoriesParam->name;?>',
+                label: '<?=$categoriesParam->label;?>',
+                status : 1,
+                errorCssClass : "has-error",
+                hideErrorMessage : false,
+                inputContainer:"div.form-group",
+                successCssClass:"has-success",
+                validateOnType:true,
+                validatingCssClass:"validating",
+                validationDelay:200
+            });
+        <?php endforeach;?>
+        var data = {};
+        data.attributes = attributes;
+        <?php if($ajaxLoad):?>
+            $("#deals-form").trigger('update_deal_categories_params',data);
+        <?php else:?>
+            $(window).data('deal_categories_params',data);
+        <?php endif;?>
     });
+
 </script>
 <?php foreach($categories as $category):?>
     <?=CHtml::hiddenField('Deals[categories][]',$category->id);?>
@@ -155,7 +193,9 @@ CHtml::$afterRequiredLabel = "<span class='required'>*</span>";
                                 )
                             );?>
                         <?php endif;?>
-                        <div style="<?=(sizeof($paramsModel->getErrors($categoriesParam->name))>0) ? 'display:block' : 'display:none';?>" id="DealCategoriesParams_<?=$categoriesParam->name;?>_em_" class="help-block error"><?=$paramsModel->getError($categoriesParam->name);?></div>
+                        <?php if($fieldType != 'price'):?>
+                            <div style="<?=(sizeof($paramsModel->getErrors($categoriesParam->name))>0) ? 'display:block' : 'display:none';?>" id="DealCategoriesParams_<?=$categoriesParam->name;?>_em_" class="help-block error"><?=$paramsModel->getError($categoriesParam->name);?></div>
+                        <?php endif;?>
                     </div>
                 </div>
             </div>
@@ -198,40 +238,6 @@ CHtml::$afterRequiredLabel = "<span class='required'>*</span>";
         </div>
     </div>
 <?php endif;?>
-<script>
-    $(document).ready(function () {
-        //var settings = $("#deals-form").data('settings');
 
-        if(typeof settings !== 'undefined'){
-            <?php /*foreach ($paramsModel->rules() as $rule):*/?><!--
-                <?php /*$ruleAttributes = explode(',',$rule[0]);*/?>
-                <?php /*foreach ($ruleAttributes as $attribute):*/?>
-                settings.attributes.push({
-                    enableAjaxValidation:true,
-                    errorCssClass:"has-error",
-                    errorID:"DealCategoriesParams_<?/*=$attribute;*/?>_em_",
-                    hideErrorMessage:false,
-                    id:"DealCategoriesParams_<?/*=$attribute;*/?>",
-                    inputContainer:"div.form-group",
-                    inputID:"DealCategoriesParams_<?/*=$attribute;*/?>",
-                    model:"DealCategoriesParams",
-                    name:"DealCategoriesParams[<?/*=$attribute;*/?>]",
-                    successCssClass:"has-success",
-                    validateOnChange:true,
-                    validateOnType:true,
-                    validatingCssClass:"validating",
-                    validationDelay:200,
-                    value:""
-                });
-                <?php /*endforeach;*/?>
-            --><?php /*endforeach;*/?>
-
-        }
-        //console.log(settings);
-
-        //$("deals-form").data('settings', settings);
-    });
-
-</script>
 
 

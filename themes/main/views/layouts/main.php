@@ -105,9 +105,10 @@
 <?php Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/jquery-cookie/src/jquery.cookie.min.js', CClientScript::POS_END);?>
 <?php Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/scripts.js', CClientScript::POS_END);?>
 <?php Yii::app()->clientScript->registerScriptFile(Yii::app()->request->baseUrl.'/js/uppod-0.5.26.js', CClientScript::POS_END);?>
-<?php if(Yii::app()->user->checkAccess('Translate.Translate.Update') && Yii::app()->user->checkAccess('Translate.Translate.Create')):?>
-    <?php Yii::app()->translate->renderMissingTranslationsEditor();?>
-<?php endif;?>
+
+<?php /*if(Yii::app()->user->checkAccess('Translate.Translate.Update') && Yii::app()->user->checkAccess('Translate.Translate.Create')):*/?><!--
+    <?php /*Yii::app()->translate->renderMissingTranslationsEditor();*/?>
+--><?php /*endif;*/?>
 
 
 
